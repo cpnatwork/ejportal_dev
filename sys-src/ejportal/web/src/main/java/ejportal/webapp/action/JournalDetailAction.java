@@ -1,300 +1,470 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.webapp.action;
-
-import ejportal.service.JournalManager;
-import ejportal.service.dto.JournalBaseTO;
-import ejportal.model.Journal;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.dao.DataIntegrityViolationException;
+
+import com.opensymphony.xwork2.Action;
+
+import ejportal.model.Journal;
+import ejportal.service.JournalManager;
+import ejportal.service.dto.JournalBaseTO;
+
 /**
- * Created by IntelliJ IDEA.
- * User: Nina
- * Date: 14.06.2010
- * Time: 14:19:28
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: Nina Date: 14.06.2010 Time: 14:19:28 To
+ * change this template use File | Settings | File Templates.
  */
 
 public class JournalDetailAction extends JournalBaseAction {
-    private JournalManager journalManager;
-    private Journal journal;
-    private JournalBaseTO journalBaseTO;
-    private SelectData selectData = new SelectData();
 
-       /*
-//Zugriff auf die journalId (fuer das Menue)
-    public long getJournalId(){
-        //bei Journal bearbeiten gibt es kein journal sondern nur eine journalBaseTO
-        if (journalBaseTO !=null && journalBaseTO.getId() !=null){
-               return journalBaseTO.getId();
-        }
-        return journal.getId();
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5960420736816836701L;
 
-    public void setId(Long journalId) {
-        this.journalId = journalId;
-    }
+	/** The journal manager. */
+	private JournalManager journalManager;
 
-    public Long getId() {
-        return journalId;
-    }
-*/
+	/** The journal. */
+	private Journal journal;
 
-    
-    //Dropdown lists
+	/** The journal base to. */
+	private JournalBaseTO journalBaseTO;
 
-    public Map<String, String> getListZugangUeber() {
-        return selectData.getJournalZugangUeber();
-    }
+	/** The select data. */
+	private final SelectData selectData = new SelectData();
 
-    public Map<String, String> getListNutzungsbestimmungen() {
-        return selectData.getJournalNutzungsbestimmungen();
-    }
+	/*
+	 * //Zugriff auf die journalId (fuer das Menue) public long getJournalId(){
+	 * //bei Journal bearbeiten gibt es kein journal sondern nur eine
+	 * journalBaseTO if (journalBaseTO !=null && journalBaseTO.getId() !=null){
+	 * return journalBaseTO.getId(); } return journal.getId(); }
+	 * 
+	 * public void setId(Long journalId) { this.journalId = journalId; }
+	 * 
+	 * public Long getId() { return journalId; }
+	 */
 
-    public Map<String, String> getListStatus() {
-        return selectData.getJournalStatus();
-    }      
+	// Dropdown lists
 
+	/**
+	 * Gets the list zugang ueber.
+	 * 
+	 * @return the list zugang ueber
+	 */
+	public Map<String, String> getListZugangUeber() {
+		return this.selectData.getJournalZugangUeber();
+	}
 
+	/**
+	 * Gets the list nutzungsbestimmungen.
+	 * 
+	 * @return the list nutzungsbestimmungen
+	 */
+	public Map<String, String> getListNutzungsbestimmungen() {
+		return this.selectData.getJournalNutzungsbestimmungen();
+	}
 
-    //Verlag aendern
-    private long verlagId;
+	/**
+	 * Gets the list status.
+	 * 
+	 * @return the list status
+	 */
+	public Map<String, String> getListStatus() {
+		return this.selectData.getJournalStatus();
+	}
 
-    public void setJournalManager(JournalManager journalManager) {
-        this.journalManager = journalManager;
-    }
+	// Verlag aendern
+	/** The verlag id. */
+	private long verlagId;
 
-    //Provider aendern
-    private long providerId;
+	/**
+	 * Sets the journal manager.
+	 * 
+	 * @param journalManager
+	 *            the new journal manager
+	 */
+	public void setJournalManager(final JournalManager journalManager) {
+		this.journalManager = journalManager;
+	}
 
-    //Konsortium aendern
-    private long konsortiumId;
+	// Provider aendern
+	/** The provider id. */
+	private long providerId;
 
-    //Paket aendern
-    private long paketId;
+	// Konsortium aendern
+	/** The konsortium id. */
+	private long konsortiumId;
 
-    //Fach aendern
-    private long fachId;
+	// Paket aendern
+	/** The paket id. */
+	private long paketId;
 
-    //Bibliotheksmitarbeiter ändern
-    private long bibId;
+	// Fach aendern
+	/** The fach id. */
+	private long fachId;
 
+	// Bibliotheksmitarbeiter ï¿½ndern
+	/** The bib id. */
+	private long bibId;
 
-    public List getFaecher() {
-        List retVal = new ArrayList();
-        // FIXME org.hibernate.LazyInitializationException
-//        Hibernate.initialize(getJournal().getFaecher());
-//        retVal = getJournal().getFaecher();
-        return retVal;
-    }
+	/**
+	 * Gets the faecher.
+	 * 
+	 * @return the faecher
+	 */
+	public List getFaecher() {
+		final List retVal = new ArrayList();
+		// FIXME org.hibernate.LazyInitializationException
+		// Hibernate.initialize(getJournal().getFaecher());
+		// retVal = getJournal().getFaecher();
+		return retVal;
+	}
 
-    public Journal getJournal() {
-        return journal;
-    }
+	/**
+	 * Gets the journal.
+	 * 
+	 * @return the journal
+	 */
+	public Journal getJournal() {
+		return this.journal;
+	}
 
-    public void setJournal(Journal journal) {
-        this.journal = journal;
-    }
+	/**
+	 * Sets the journal.
+	 * 
+	 * @param journal
+	 *            the new journal
+	 */
+	public void setJournal(final Journal journal) {
+		this.journal = journal;
+	}
 
-    public JournalBaseTO getJournalBaseTO() {
-        return journalBaseTO;
-    }
+	/**
+	 * Gets the journal base to.
+	 * 
+	 * @return the journal base to
+	 */
+	public JournalBaseTO getJournalBaseTO() {
+		return this.journalBaseTO;
+	}
 
-    public void setJournalBaseTO(JournalBaseTO journalBaseTO) {
-        this.journalBaseTO = journalBaseTO;
-    }
+	/**
+	 * Sets the journal base to.
+	 * 
+	 * @param journalBaseTO
+	 *            the new journal base to
+	 */
+	public void setJournalBaseTO(final JournalBaseTO journalBaseTO) {
+		this.journalBaseTO = journalBaseTO;
+	}
 
-    //TODO Die naechsten beiden Methoden sind Pfusch...da sollten wir uns was schoeneres ueberlegen.
+	// TODO Die naechsten beiden Methoden sind Pfusch...da sollten wir uns was
+	// schoeneres ueberlegen.
 
-    /**public String changeVerlag(){
-        getSession().setAttribute("journalid",journalId);
-        return "selectVerlag";
-    }
+	/**
+	 * public String changeVerlag(){
+	 * getSession().setAttribute("journalid",journalId); return "selectVerlag";
+	 * }
+	 * 
+	 * public void setVerlagById(long verlagId){ this.journalId = (Long)
+	 * getSession().getAttribute("journalid");
+	 * getSession().removeAttribute("journalid");
+	 * journalManager.connectJournalVerlag(this.journalId, verlagId); }
+	 * 
+	 * @return the string
+	 */
 
-    public void setVerlagById(long verlagId){
-        this.journalId = (Long) getSession().getAttribute("journalid");
-        getSession().removeAttribute("journalid");
-        journalManager.connectJournalVerlag(this.journalId, verlagId);
-    }
-    **/
+	public String delete() {
+		try {
+			this.journalManager.remove(this.journalId);
+			this.saveMessage(this.getText("journal.deleted"));
+		} catch (final DataIntegrityViolationException dive) {
+			this.saveMessage("Dieses Journal wird noch verwendet und kann deshalb nicht entfernt werden.");
+			return Action.ERROR;
+		}
 
-    public String delete() {
-        try {
-            journalManager.remove(journalId);
-            saveMessage(getText("journal.deleted"));
-        }
-        catch (DataIntegrityViolationException dive){
-            saveMessage("Dieses Journal wird noch verwendet und kann deshalb nicht entfernt werden.");
-            return ERROR;
-        }
-        
-        return SUCCESS;
-    }
+		return Action.SUCCESS;
+	}
 
-    public String load(){
-        log.debug(">>> JournalDetailAction.load: journalId="+journalId);
-        if (journalId != null) {
-            journal = journalManager.get(journalId);
-        } else {
-            return ERROR;
-        }
+	/**
+	 * Load.
+	 * 
+	 * @return the string
+	 */
+	public String load() {
+		this.log.debug(">>> JournalDetailAction.load: journalId="
+				+ this.journalId);
+		if (this.journalId != null) {
+			this.journal = this.journalManager.get(this.journalId);
+		} else
+			return Action.ERROR;
 
-        return SUCCESS;
+		return Action.SUCCESS;
 
-    }
+	}
 
-    //TODO edit + save evtl in eigene Action? JournalEditAction?
-    public String edit() {
-        log.debug(">>> JournalDetailAction.edit: journalId"+journalId);
-        if (journalId != null) {
-            journalBaseTO = journalManager.getJournalBaseTO(journalId);
+	// TODO edit + save evtl in eigene Action? JournalEditAction?
+	/**
+	 * Edits the.
+	 * 
+	 * @return the string
+	 */
+	public String edit() {
+		this.log.debug(">>> JournalDetailAction.edit: journalId"
+				+ this.journalId);
+		if (this.journalId != null) {
+			this.journalBaseTO = this.journalManager
+					.getJournalBaseTO(this.journalId);
 
-        } else {
-            journalBaseTO = new JournalBaseTO();
-        }
+		} else {
+			this.journalBaseTO = new JournalBaseTO();
+		}
 
-        return "edit";
-    }
+		return "edit";
+	}
 
-    public String save() throws Exception {
-        log.debug(">>> JournalDetailAction.save: journalId"+journalId);
-        if (cancel != null) {
-            return CANCEL;
-        }
+	/**
+	 * Save.
+	 * 
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public String save() throws Exception {
+		this.log.debug(">>> JournalDetailAction.save: journalId"
+				+ this.journalId);
+		if (this.cancel != null)
+			return BaseAction.CANCEL;
 
-        if (delete != null) {
-            return delete();
-        }
+		if (this.delete != null)
+			return this.delete();
 
-        boolean isNew = (journalBaseTO.getId() == null);
+		final boolean isNew = (this.journalBaseTO.getId() == null);
 
-        //Prüfen, ob Titel angegeben worden ist.
-        if (journalBaseTO.getTitel().compareTo("") == 0) {
-            saveMessage(getText("Geben Sie einen Titel ein!"));
-            return "back";
-        }
-        if(journalBaseTO.getTitel().length() > 254){
-            saveMessage(getText("Geben Sie bitte einen kürzeren Titel ein!"));
-            return "back";
-        }
-        
+		// Prï¿½fen, ob Titel angegeben worden ist.
+		if (this.journalBaseTO.getTitel().compareTo("") == 0) {
+			this.saveMessage(this.getText("Geben Sie einen Titel ein!"));
+			return "back";
+		}
+		if (this.journalBaseTO.getTitel().length() > 254) {
+			this.saveMessage(this
+					.getText("Geben Sie bitte einen kï¿½rzeren Titel ein!"));
+			return "back";
+		}
 
-        if (isNew){ // Create
-            journal = journalManager.create(journalBaseTO);              
-        }
-        else{ // Update
-            journal = journalManager.saveBaseTO(journalBaseTO);           
-        }
-        String key = (isNew) ? "journal.added" : "journal.updated";
-        saveMessage(getText(key));
+		if (isNew) { // Create
+			this.journal = this.journalManager.create(this.journalBaseTO);
+		} else { // Update
+			this.journal = this.journalManager.saveBaseTO(this.journalBaseTO);
+		}
+		final String key = (isNew) ? "journal.added" : "journal.updated";
+		this.saveMessage(this.getText(key));
 
-        //journalId setzen
-        this.journalId=journal.getId();
+		// journalId setzen
+		this.journalId = this.journal.getId();
 
-        /**
-        if (!isNew) {
-            return INPUT;
-        } else {
-            return SUCCESS;
-        }
-         **/
+		/**
+		 * if (!isNew) { return INPUT; } else { return SUCCESS; }
+		 **/
 
-    return SUCCESS;
-    }
+		return Action.SUCCESS;
+	}
 
-    
-    //Verlag aendern
+	// Verlag aendern
 
-    public void setVerlagId(long verlagId) {
-        this.verlagId = verlagId;
-    }
+	/**
+	 * Sets the verlag id.
+	 * 
+	 * @param verlagId
+	 *            the new verlag id
+	 */
+	public void setVerlagId(final long verlagId) {
+		this.verlagId = verlagId;
+	}
 
-    public String changeVerlag(){
-        journalManager.connectJournalVerlag(this.journalId, this.verlagId);
-        load();
-        saveMessage("Verlag wurde neu zugewiesen.");
-        return SUCCESS;
-    }
-    //Provider aendern
+	/**
+	 * Change verlag.
+	 * 
+	 * @return the string
+	 */
+	public String changeVerlag() {
+		this.journalManager.connectJournalVerlag(this.journalId, this.verlagId);
+		this.load();
+		this.saveMessage("Verlag wurde neu zugewiesen.");
+		return Action.SUCCESS;
+	}
 
-    public void setProviderId(long providerId) {
-        this.providerId = providerId;
-    }
+	// Provider aendern
 
-    public String changeProvider(){
-        journalManager.connectJournalProvider(this.journalId, this.providerId);
-        load();
-        saveMessage("Provider wurde neu zugewiesen.");
-        return SUCCESS;
-    }
+	/**
+	 * Sets the provider id.
+	 * 
+	 * @param providerId
+	 *            the new provider id
+	 */
+	public void setProviderId(final long providerId) {
+		this.providerId = providerId;
+	}
 
-    //Konsortium aendern
+	/**
+	 * Change provider.
+	 * 
+	 * @return the string
+	 */
+	public String changeProvider() {
+		this.journalManager.connectJournalProvider(this.journalId,
+				this.providerId);
+		this.load();
+		this.saveMessage("Provider wurde neu zugewiesen.");
+		return Action.SUCCESS;
+	}
 
-    public void setKonsortiumId(long konsortiumId) {
-        this.konsortiumId = konsortiumId;
-    }
+	// Konsortium aendern
 
-    public String changeKonsortium(){
-        journalManager.connectJournalKonsortium(this.journalId, this.konsortiumId);
-        load();
-        saveMessage("Konsortium wurde neu zugewiesen.");
-        return SUCCESS;
-    }
-        //Paket aendern
+	/**
+	 * Sets the konsortium id.
+	 * 
+	 * @param konsortiumId
+	 *            the new konsortium id
+	 */
+	public void setKonsortiumId(final long konsortiumId) {
+		this.konsortiumId = konsortiumId;
+	}
 
-    public void setPaketId(long paketId) {
-        this.paketId = paketId;
-    }
+	/**
+	 * Change konsortium.
+	 * 
+	 * @return the string
+	 */
+	public String changeKonsortium() {
+		this.journalManager.connectJournalKonsortium(this.journalId,
+				this.konsortiumId);
+		this.load();
+		this.saveMessage("Konsortium wurde neu zugewiesen.");
+		return Action.SUCCESS;
+	}
 
-    public String changePaket(){
-        journalManager.connectJournalPaket(this.journalId, this.paketId);
-        load();
-        saveMessage("Paket wurde neu zugewiesen.");
-        return SUCCESS;
-    }
+	// Paket aendern
 
-    //Bibliotheksmitarbeiter aendern
+	/**
+	 * Sets the paket id.
+	 * 
+	 * @param paketId
+	 *            the new paket id
+	 */
+	public void setPaketId(final long paketId) {
+		this.paketId = paketId;
+	}
 
-    public void setBibId(long bibId) {
-        this.bibId = bibId;
-    }
+	/**
+	 * Change paket.
+	 * 
+	 * @return the string
+	 */
+	public String changePaket() {
+		this.journalManager.connectJournalPaket(this.journalId, this.paketId);
+		this.load();
+		this.saveMessage("Paket wurde neu zugewiesen.");
+		return Action.SUCCESS;
+	}
 
-    public String changeBibliotheksmitarbeiter(){
-        journalManager.connectJournalBibliotheksmitarbeiter(this.journalId, this.bibId);
-        load();
-        saveMessage("Bibliothek wurde neu zugewiesen.");
-        return SUCCESS;
-    }
+	// Bibliotheksmitarbeiter aendern
 
-      //Fach aendern
+	/**
+	 * Sets the bib id.
+	 * 
+	 * @param bibId
+	 *            the new bib id
+	 */
+	public void setBibId(final long bibId) {
+		this.bibId = bibId;
+	}
 
-    public void setFachId(long fachId) {
-        this.fachId = fachId;
-    }
+	/**
+	 * Change bibliotheksmitarbeiter.
+	 * 
+	 * @return the string
+	 */
+	public String changeBibliotheksmitarbeiter() {
+		this.journalManager.connectJournalBibliotheksmitarbeiter(
+				this.journalId, this.bibId);
+		this.load();
+		this.saveMessage("Bibliothek wurde neu zugewiesen.");
+		return Action.SUCCESS;
+	}
 
-    public long getFachId() {
-        return fachId;
-    }
+	// Fach aendern
 
-    public String changeFach(){
-        if(!journalManager.connectJournalFach(this.journalId, this.fachId)){
-            saveMessage("Das Fach ist bereits vorhanden.");
-        }
-        else{
-            saveMessage("Das Fach wurde erfolgreich hinzugefügt.");       
-        }
-        load();
-        return SUCCESS;
-    }
+	/**
+	 * Sets the fach id.
+	 * 
+	 * @param fachId
+	 *            the new fach id
+	 */
+	public void setFachId(final long fachId) {
+		this.fachId = fachId;
+	}
 
-    //ein Fach vom Journal abhängen
-    public String dropFach(){
-        if(!journalManager.disconnectJournalFach(this.journalId, this.fachId)){
-            saveMessage("Die Zuordnung des Fachs wurde erfolgreich aufgehoben.");
-        }
-        load();
-        return SUCCESS;
-    }
+	/**
+	 * Gets the fach id.
+	 * 
+	 * @return the fach id
+	 */
+	public long getFachId() {
+		return this.fachId;
+	}
+
+	/**
+	 * Change fach.
+	 * 
+	 * @return the string
+	 */
+	public String changeFach() {
+		if (!this.journalManager
+				.connectJournalFach(this.journalId, this.fachId)) {
+			this.saveMessage("Das Fach ist bereits vorhanden.");
+		} else {
+			this.saveMessage("Das Fach wurde erfolgreich hinzugefï¿½gt.");
+		}
+		this.load();
+		return Action.SUCCESS;
+	}
+
+	// ein Fach vom Journal abhï¿½ngen
+	/**
+	 * Drop fach.
+	 * 
+	 * @return the string
+	 */
+	public String dropFach() {
+		if (!this.journalManager.disconnectJournalFach(this.journalId,
+				this.fachId)) {
+			this.saveMessage("Die Zuordnung des Fachs wurde erfolgreich aufgehoben.");
+		}
+		this.load();
+		return Action.SUCCESS;
+	}
 }

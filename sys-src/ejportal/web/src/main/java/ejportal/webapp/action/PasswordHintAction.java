@@ -1,87 +1,121 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.webapp.action;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.appfuse.model.User;
-import ejportal.webapp.util.RequestUtil;
-import org.springframework.security.userdetails.UsernameNotFoundException;
 import org.springframework.mail.MailException;
+import org.springframework.security.userdetails.UsernameNotFoundException;
+
+import com.opensymphony.xwork2.Action;
+
+import ejportal.webapp.util.RequestUtil;
 
 /**
  * Action class to send password hints to registered users.
- *
+ * 
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
  */
 public class PasswordHintAction extends BaseAction {
-    private static final long serialVersionUID = -4037514607101222025L;
-    private String username;
 
-    /**
-     * @param username The username to set.
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -4037514607101222025L;
 
-    /**
-     * Execute sending the password hint via e-mail.
-     *
-     * @return success if username works, input if not
-     */
-    public String execute() {
-        List<Object> args = new ArrayList<Object>();
+	/** The username. */
+	private String username;
 
-        // ensure that the username has been sent
-        if (username == null) {
-            log.warn("Username not specified, notifying user that it's a required field.");
+	/**
+	 * Sets the username.
+	 * 
+	 * @param username
+	 *            The username to set.
+	 */
+	public void setUsername(final String username) {
+		this.username = username;
+	}
 
-            args.add(getText("user.username"));
-            addActionError(getText("errors.requiredField", args));
-            return INPUT;
-        }
+	/**
+	 * Execute sending the password hint via e-mail.
+	 * 
+	 * @return success if username works, input if not
+	 */
+	@Override
+	public String execute() {
+		final List<Object> args = new ArrayList<Object>();
 
-        if (log.isDebugEnabled()) {
-            log.debug("Processing Password Hint...");
-        }
+		// ensure that the username has been sent
+		if (this.username == null) {
+			this.log.warn("Username not specified, notifying user that it's a required field.");
 
-        // look up the user's information
-        try {
-            User user = userManager.getUserByUsername(username);
-            String hint = user.getPasswordHint();
+			args.add(this.getText("user.username"));
+			this.addActionError(this.getText("errors.requiredField", args));
+			return Action.INPUT;
+		}
 
-            if (hint == null || hint.trim().equals("")) {
-                log.warn("User '" + username + "' found, but no password hint exists.");
-                addActionError(getText("login.passwordHint.missing"));
-                return INPUT;
-            }
+		if (this.log.isDebugEnabled()) {
+			this.log.debug("Processing Password Hint...");
+		}
 
-            StringBuffer msg = new StringBuffer();
-            msg.append("Your password hint is: ").append(hint);
-            msg.append("\n\nLogin at: ").append(RequestUtil.getAppURL(getRequest()));
+		// look up the user's information
+		try {
+			final User user = this.userManager.getUserByUsername(this.username);
+			final String hint = user.getPasswordHint();
 
-            mailMessage.setTo(user.getEmail());
-            String subject = '[' + getText("webapp.name") + "] " + getText("user.passwordHint");
-            mailMessage.setSubject(subject);
-            mailMessage.setText(msg.toString());
-            mailEngine.send(mailMessage);
-            
-            args.add(username);
-            args.add(user.getEmail());
-            
-            saveMessage(getText("login.passwordHint.sent", args));
-        } catch (UsernameNotFoundException e) {
-            log.warn(e.getMessage());
-            args.add(username);
-            addActionError(getText("login.passwordHint.error", args));
-            getSession().setAttribute("errors", getActionErrors());
-            return INPUT;
-        } catch (MailException me) {
-            addActionError(me.getCause().getLocalizedMessage());
-            getSession().setAttribute("errors", getActionErrors());
-            return INPUT;
-        }
+			if ((hint == null) || hint.trim().equals("")) {
+				this.log.warn("User '" + this.username
+						+ "' found, but no password hint exists.");
+				this.addActionError(this.getText("login.passwordHint.missing"));
+				return Action.INPUT;
+			}
 
-        return SUCCESS;
-    }
+			final StringBuffer msg = new StringBuffer();
+			msg.append("Your password hint is: ").append(hint);
+			msg.append("\n\nLogin at: ").append(
+					RequestUtil.getAppURL(this.getRequest()));
+
+			this.mailMessage.setTo(user.getEmail());
+			final String subject = '[' + this.getText("webapp.name") + "] "
+					+ this.getText("user.passwordHint");
+			this.mailMessage.setSubject(subject);
+			this.mailMessage.setText(msg.toString());
+			this.mailEngine.send(this.mailMessage);
+
+			args.add(this.username);
+			args.add(user.getEmail());
+
+			this.saveMessage(this.getText("login.passwordHint.sent", args));
+		} catch (final UsernameNotFoundException e) {
+			this.log.warn(e.getMessage());
+			args.add(this.username);
+			this.addActionError(this.getText("login.passwordHint.error", args));
+			this.getSession().setAttribute("errors", this.getActionErrors());
+			return Action.INPUT;
+		} catch (final MailException me) {
+			this.addActionError(me.getCause().getLocalizedMessage());
+			this.getSession().setAttribute("errors", this.getActionErrors());
+			return Action.INPUT;
+		}
+
+		return Action.SUCCESS;
+	}
 }

@@ -1,159 +1,287 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.webapp.action;
 
-import ejportal.model.Exemplar;
+import java.util.List;
+
+import com.opensymphony.xwork2.Action;
+
 import ejportal.model.Journal;
 import ejportal.model.Rechnung;
 import ejportal.service.JournalManager;
 import ejportal.service.RechnungManager;
 import ejportal.service.dto.RechnungBaseTO;
-import org.springframework.dao.DataIntegrityViolationException;
-
-import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tselmeg
- * Date: 09.08.2010
- * Time: 15:55:42
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: Tselmeg Date: 09.08.2010 Time: 15:55:42 To
+ * change this template use File | Settings | File Templates.
  */
 public class RechnungAction extends JournalBaseAction {
-    private RechnungManager rechnungManager;
-    private JournalManager journalManager;
-    private Rechnung rechnung;
-    private Journal journal;
-    private RechnungBaseTO rechnungBaseTO;
-    private Long rechnungId;
 
-    // ExemplarId fürs Menü
-    private Long exemplarId;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5522924092728345436L;
 
-    public Long getExemplarId() {
-        return exemplarId;
-    }
+	/** The rechnung manager. */
+	private RechnungManager rechnungManager;
 
-    public void setExemplarId(Long exemplarId) {
-        this.exemplarId = exemplarId;
-    }
+	/** The journal manager. */
+	private JournalManager journalManager;
 
+	/** The rechnung. */
+	private Rechnung rechnung;
 
-    // List
-    public List<Rechnung> getListForExemplar() {
-        return rechnungManager.getListForExemplar(exemplarId);
-    }
+	/** The journal. */
+	private Journal journal;
 
-    // CRUD
-    public String delete() {
-        rechnungManager.remove(rechnungId);
-        saveMessage("Rechnung wurde erfolgreich entfernt.");
+	/** The rechnung base to. */
+	private RechnungBaseTO rechnungBaseTO;
 
-        return SUCCESS;
-    }
+	/** The rechnung id. */
+	private Long rechnungId;
 
-    public String load() {
-        if (rechnungId != null) {
-            rechnung = rechnungManager.get(rechnungId);
-        } else {
-            return ERROR;
-        }
+	// ExemplarId fürs Menü
+	/** The exemplar id. */
+	private Long exemplarId;
 
-        return SUCCESS;
-    }
+	/**
+	 * Gets the exemplar id.
+	 * 
+	 * @return the exemplar id
+	 */
+	public Long getExemplarId() {
+		return this.exemplarId;
+	}
 
-    public String edit() {
-        if (rechnungId != null) {
-            rechnung = rechnungManager.get(rechnungId);
-            rechnungBaseTO = rechnungManager.getRechnungBaseTO(rechnungId);
-        } else {
-            rechnungBaseTO = new RechnungBaseTO();
-        }
-        return "edit";
-    }
+	/**
+	 * Sets the exemplar id.
+	 * 
+	 * @param exemplarId
+	 *            the new exemplar id
+	 */
+	public void setExemplarId(final Long exemplarId) {
+		this.exemplarId = exemplarId;
+	}
 
-    public String save() throws Exception {
-        if (cancel != null) {
-            return CANCEL;
-        }
+	// List
+	/**
+	 * Gets the list for exemplar.
+	 * 
+	 * @return the list for exemplar
+	 */
+	public List<Rechnung> getListForExemplar() {
+		return this.rechnungManager.getListForExemplar(this.exemplarId);
+	}
 
-        if (delete != null) {
-            return delete();
-        }
+	// CRUD
+	/**
+	 * Delete.
+	 * 
+	 * @return the string
+	 */
+	public String delete() {
+		this.rechnungManager.remove(this.rechnungId);
+		this.saveMessage("Rechnung wurde erfolgreich entfernt.");
 
-        boolean isNew = (rechnungBaseTO.getRechnungId() == null);
+		return Action.SUCCESS;
+	}
 
-        //Prüfen, ob Rechnung leer ist.
-        if (rechnungBaseTO.getBetrag() <= 0) {
-            saveMessage(getText("Bitte geben Sie einen Betrag ein!"));
-            return "back";
-        }
-        if (rechnungBaseTO.getBezugsform().compareTo("") == 0) {
-            saveMessage(getText("Bitte geben Sie eine Bezugsform ein!"));
-            return "back";
-        }
-        if (rechnungBaseTO.getBezugsjahr().compareTo("") == 0) {
-            saveMessage(getText("Bitte geben Sie ein Bezugsjahr ein!"));
-            return "back";
-        }
+	/**
+	 * Load.
+	 * 
+	 * @return the string
+	 */
+	public String load() {
+		if (this.rechnungId != null) {
+			this.rechnung = this.rechnungManager.get(this.rechnungId);
+		} else
+			return Action.ERROR;
 
-        if (isNew){
-            rechnung = rechnungManager.create(rechnungBaseTO, exemplarId);
-        }
-        else{
-            rechnung = rechnungManager.saveBaseTO(rechnungBaseTO);
-        }
+		return Action.SUCCESS;
+	}
 
-        String key = (isNew) ? "Rechnung wurde erfolgreich erstellt." : "Rechnung wurde erfolgreich aktualisiert.";
-        saveMessage(key);
+	/**
+	 * Edits the.
+	 * 
+	 * @return the string
+	 */
+	public String edit() {
+		if (this.rechnungId != null) {
+			this.rechnung = this.rechnungManager.get(this.rechnungId);
+			this.rechnungBaseTO = this.rechnungManager
+					.getRechnungBaseTO(this.rechnungId);
+		} else {
+			this.rechnungBaseTO = new RechnungBaseTO();
+		}
+		return "edit";
+	}
 
-        return SUCCESS;
-    }
+	/**
+	 * Save.
+	 * 
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public String save() throws Exception {
+		if (this.cancel != null)
+			return BaseAction.CANCEL;
 
-    public String loadExemplare() {
-        if (journalId != null) {
-            journal = journalManager.get(journalId);
-        } else {
-            return ERROR;
-        }
+		if (this.delete != null)
+			return this.delete();
 
-        return SUCCESS;
-    }
+		final boolean isNew = (this.rechnungBaseTO.getRechnungId() == null);
 
-    // Getter und Setter
+		// Prüfen, ob Rechnung leer ist.
+		if (this.rechnungBaseTO.getBetrag() <= 0) {
+			this.saveMessage(this.getText("Bitte geben Sie einen Betrag ein!"));
+			return "back";
+		}
+		if (this.rechnungBaseTO.getBezugsform().compareTo("") == 0) {
+			this.saveMessage(this
+					.getText("Bitte geben Sie eine Bezugsform ein!"));
+			return "back";
+		}
+		if (this.rechnungBaseTO.getBezugsjahr().compareTo("") == 0) {
+			this.saveMessage(this
+					.getText("Bitte geben Sie ein Bezugsjahr ein!"));
+			return "back";
+		}
 
-    public Long getRechnungId() {
-        return rechnungId;
-    }
+		if (isNew) {
+			this.rechnung = this.rechnungManager.create(this.rechnungBaseTO,
+					this.exemplarId);
+		} else {
+			this.rechnung = this.rechnungManager
+					.saveBaseTO(this.rechnungBaseTO);
+		}
 
-    public void setRechnungId(Long rechnungId) {
-        this.rechnungId = rechnungId;
-    }
+		final String key = (isNew) ? "Rechnung wurde erfolgreich erstellt."
+				: "Rechnung wurde erfolgreich aktualisiert.";
+		this.saveMessage(key);
 
-    public void setRechnungManager(RechnungManager rechnungManager) {
-        this.rechnungManager = rechnungManager;
-    }
+		return Action.SUCCESS;
+	}
 
-    public Rechnung getRechnung() {
-        return rechnung;
-    }
+	/**
+	 * Load exemplare.
+	 * 
+	 * @return the string
+	 */
+	public String loadExemplare() {
+		if (this.journalId != null) {
+			this.journal = this.journalManager.get(this.journalId);
+		} else
+			return Action.ERROR;
 
-    public void setRechnung(Rechnung rechnung) {
-        this.rechnung = rechnung;
-    }
+		return Action.SUCCESS;
+	}
 
-    public RechnungBaseTO getRechnungBaseTO() {
-        return rechnungBaseTO;
-    }
+	// Getter und Setter
 
-    public void setRechnungBaseTO(RechnungBaseTO rechnungBaseTO) {
-        this.rechnungBaseTO = rechnungBaseTO;
-    }
+	/**
+	 * Gets the rechnung id.
+	 * 
+	 * @return the rechnung id
+	 */
+	public Long getRechnungId() {
+		return this.rechnungId;
+	}
 
-    public void setJournalManager(JournalManager journalManager) {
-        this.journalManager = journalManager;
-    }
+	/**
+	 * Sets the rechnung id.
+	 * 
+	 * @param rechnungId
+	 *            the new rechnung id
+	 */
+	public void setRechnungId(final Long rechnungId) {
+		this.rechnungId = rechnungId;
+	}
 
-    public Journal getJournal() {
-        return journal;
-    }
+	/**
+	 * Sets the rechnung manager.
+	 * 
+	 * @param rechnungManager
+	 *            the new rechnung manager
+	 */
+	public void setRechnungManager(final RechnungManager rechnungManager) {
+		this.rechnungManager = rechnungManager;
+	}
+
+	/**
+	 * Gets the rechnung.
+	 * 
+	 * @return the rechnung
+	 */
+	public Rechnung getRechnung() {
+		return this.rechnung;
+	}
+
+	/**
+	 * Sets the rechnung.
+	 * 
+	 * @param rechnung
+	 *            the new rechnung
+	 */
+	public void setRechnung(final Rechnung rechnung) {
+		this.rechnung = rechnung;
+	}
+
+	/**
+	 * Gets the rechnung base to.
+	 * 
+	 * @return the rechnung base to
+	 */
+	public RechnungBaseTO getRechnungBaseTO() {
+		return this.rechnungBaseTO;
+	}
+
+	/**
+	 * Sets the rechnung base to.
+	 * 
+	 * @param rechnungBaseTO
+	 *            the new rechnung base to
+	 */
+	public void setRechnungBaseTO(final RechnungBaseTO rechnungBaseTO) {
+		this.rechnungBaseTO = rechnungBaseTO;
+	}
+
+	/**
+	 * Sets the journal manager.
+	 * 
+	 * @param journalManager
+	 *            the new journal manager
+	 */
+	public void setJournalManager(final JournalManager journalManager) {
+		this.journalManager = journalManager;
+	}
+
+	/**
+	 * Gets the journal.
+	 * 
+	 * @return the journal
+	 */
+	public Journal getJournal() {
+		return this.journal;
+	}
 
 }

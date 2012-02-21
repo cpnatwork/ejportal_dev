@@ -1,232 +1,559 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.service.dto;
 
 import java.util.Date;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Florian
- * Date: 01.07.2010
- * Time: 13:15:54
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: Florian Date: 01.07.2010 Time: 13:15:54 To
+ * change this template use File | Settings | File Templates.
  */
 public class JournalBaseTO {
-    private Long id;
-    private String herausgeber;       
 
-    private String titel;
-    private String kurztitel;
-    private String issn;
-    private String issnPrint;
-    private String kommentar;
-    private String kommentarAdmin;
-    private String kommentarIntranet;
+	/** The id. */
+	private Long id;
 
-    private String zugangUeber;
+	/** The herausgeber. */
+	private String herausgeber;
 
-    private Date anmeldedatum;
-    private Date freischaltdatum;
-    private String zugangsId;
-    private String zugangsPasswort;
-    private String nutzungsbestimmungen;
-    private Date rotschaltungsdatum;
-    private String rotschaltungsbemerkungen;
-    private String status;
-    private Date aenderungsdatum;
-    private String zdbNummer;
-    private String anker;
-    private boolean readMeTitelbezogen;
-    private String importId;
-    private Date bearbeitungsdatum;
+	/** The titel. */
+	private String titel;
 
-    public Long getId() {
-        return id;
-    }
+	/** The kurztitel. */
+	private String kurztitel;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/** The issn. */
+	private String issn;
 
-    public String getHerausgeber() {
-        return herausgeber;
-    }
+	/** The issn print. */
+	private String issnPrint;
 
-    public void setHerausgeber(String herausgeber) {
-        this.herausgeber = herausgeber;
-    }
+	/** The kommentar. */
+	private String kommentar;
 
-    public String getTitel() {
-        return titel;
-    }
+	/** The kommentar admin. */
+	private String kommentarAdmin;
 
-    public void setTitel(String titel) {
-        this.titel = titel;
-    }
+	/** The kommentar intranet. */
+	private String kommentarIntranet;
 
-    public String getKurztitel() {
-        return kurztitel;
-    }
+	/** The zugang ueber. */
+	private String zugangUeber;
 
-    public void setKurztitel(String kurztitel) {
-        this.kurztitel = kurztitel;
-    }
+	/** The anmeldedatum. */
+	private Date anmeldedatum;
 
-    public String getIssn() {
-        return issn;
-    }
+	/** The freischaltdatum. */
+	private Date freischaltdatum;
 
-    public void setIssn(String issn) {
-        this.issn = issn;
-    }
+	/** The zugangs id. */
+	private String zugangsId;
 
-    public String getIssnPrint() {
-        return issnPrint;
-    }
+	/** The zugangs passwort. */
+	private String zugangsPasswort;
 
-    public void setIssnPrint(String issnPrint) {
-        this.issnPrint = issnPrint;
-    }
+	/** The nutzungsbestimmungen. */
+	private String nutzungsbestimmungen;
 
-    public String getKommentar() {
-        return kommentar;
-    }
+	/** The rotschaltungsdatum. */
+	private Date rotschaltungsdatum;
 
-    public void setKommentar(String kommentar) {
-        this.kommentar = kommentar;
-    }
+	/** The rotschaltungsbemerkungen. */
+	private String rotschaltungsbemerkungen;
 
-    public String getKommentarAdmin() {
-        return kommentarAdmin;
-    }
+	/** The status. */
+	private String status;
 
-    public void setKommentarAdmin(String kommentarAdmin) {
-        this.kommentarAdmin = kommentarAdmin;
-    }
+	/** The aenderungsdatum. */
+	private Date aenderungsdatum;
 
-    public String getKommentarIntranet() {
-        return kommentarIntranet;
-    }
+	/** The zdb nummer. */
+	private String zdbNummer;
 
-    public void setKommentarIntranet(String kommentarIntranet) {
-        this.kommentarIntranet = kommentarIntranet;
-    }
+	/** The anker. */
+	private String anker;
 
-    public String getZugangUeber() {
-        return zugangUeber;
-    }
+	/** The read me titelbezogen. */
+	private boolean readMeTitelbezogen;
 
-    public void setZugangUeber(String zugangUeber) {
-        this.zugangUeber = zugangUeber;
-    }
+	/** The import id. */
+	private String importId;
 
-    public Date getAnmeldedatum() {
-        return anmeldedatum;
-    }
+	/** The bearbeitungsdatum. */
+	private Date bearbeitungsdatum;
 
-    public void setAnmeldedatum(Date anmeldedatum) {
-        this.anmeldedatum = anmeldedatum;
-    }
+	/**
+	 * Gets the id.
+	 * 
+	 * @return the id
+	 */
+	public Long getId() {
+		return this.id;
+	}
 
-    public Date getFreischaltdatum() {
-        return freischaltdatum;
-    }
+	/**
+	 * Sets the id.
+	 * 
+	 * @param id
+	 *            the new id
+	 */
+	public void setId(final Long id) {
+		this.id = id;
+	}
 
-    public void setFreischaltdatum(Date freischaltdatum) {
-        this.freischaltdatum = freischaltdatum;
-    }
+	/**
+	 * Gets the herausgeber.
+	 * 
+	 * @return the herausgeber
+	 */
+	public String getHerausgeber() {
+		return this.herausgeber;
+	}
 
-    public String getZugangsId() {
-        return zugangsId;
-    }
+	/**
+	 * Sets the herausgeber.
+	 * 
+	 * @param herausgeber
+	 *            the new herausgeber
+	 */
+	public void setHerausgeber(final String herausgeber) {
+		this.herausgeber = herausgeber;
+	}
 
-    public void setZugangsId(String zugangsId) {
-        this.zugangsId = zugangsId;
-    }
+	/**
+	 * Gets the titel.
+	 * 
+	 * @return the titel
+	 */
+	public String getTitel() {
+		return this.titel;
+	}
 
-    public String getZugangsPasswort() {
-        return zugangsPasswort;
-    }
+	/**
+	 * Sets the titel.
+	 * 
+	 * @param titel
+	 *            the new titel
+	 */
+	public void setTitel(final String titel) {
+		this.titel = titel;
+	}
 
-    public void setZugangsPasswort(String zugangsPasswort) {
-        this.zugangsPasswort = zugangsPasswort;
-    }
+	/**
+	 * Gets the kurztitel.
+	 * 
+	 * @return the kurztitel
+	 */
+	public String getKurztitel() {
+		return this.kurztitel;
+	}
 
-    public String getNutzungsbestimmungen() {
-        return nutzungsbestimmungen;
-    }
+	/**
+	 * Sets the kurztitel.
+	 * 
+	 * @param kurztitel
+	 *            the new kurztitel
+	 */
+	public void setKurztitel(final String kurztitel) {
+		this.kurztitel = kurztitel;
+	}
 
-    public void setNutzungsbestimmungen(String nutzungsbestimmungen) {
-        this.nutzungsbestimmungen = nutzungsbestimmungen;
-    }
+	/**
+	 * Gets the issn.
+	 * 
+	 * @return the issn
+	 */
+	public String getIssn() {
+		return this.issn;
+	}
 
-    public Date getRotschaltungsdatum() {
-        return rotschaltungsdatum;
-    }
+	/**
+	 * Sets the issn.
+	 * 
+	 * @param issn
+	 *            the new issn
+	 */
+	public void setIssn(final String issn) {
+		this.issn = issn;
+	}
 
-    public void setRotschaltungsdatum(Date rotschaltungsdatum) {
-        this.rotschaltungsdatum = rotschaltungsdatum;
-    }
+	/**
+	 * Gets the issn print.
+	 * 
+	 * @return the issn print
+	 */
+	public String getIssnPrint() {
+		return this.issnPrint;
+	}
 
-    public String getRotschaltungsbemerkungen() {
-        return rotschaltungsbemerkungen;
-    }
+	/**
+	 * Sets the issn print.
+	 * 
+	 * @param issnPrint
+	 *            the new issn print
+	 */
+	public void setIssnPrint(final String issnPrint) {
+		this.issnPrint = issnPrint;
+	}
 
-    public void setRotschaltungsbemerkungen(String rotschaltungsbemerkungen) {
-        this.rotschaltungsbemerkungen = rotschaltungsbemerkungen;
-    }
+	/**
+	 * Gets the kommentar.
+	 * 
+	 * @return the kommentar
+	 */
+	public String getKommentar() {
+		return this.kommentar;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	/**
+	 * Sets the kommentar.
+	 * 
+	 * @param kommentar
+	 *            the new kommentar
+	 */
+	public void setKommentar(final String kommentar) {
+		this.kommentar = kommentar;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	/**
+	 * Gets the kommentar admin.
+	 * 
+	 * @return the kommentar admin
+	 */
+	public String getKommentarAdmin() {
+		return this.kommentarAdmin;
+	}
 
-    public Date getAenderungsdatum() {
-        return aenderungsdatum;
-    }
+	/**
+	 * Sets the kommentar admin.
+	 * 
+	 * @param kommentarAdmin
+	 *            the new kommentar admin
+	 */
+	public void setKommentarAdmin(final String kommentarAdmin) {
+		this.kommentarAdmin = kommentarAdmin;
+	}
 
-    public void setAenderungsdatum(Date aenderungsdatum) {
-        this.aenderungsdatum = aenderungsdatum;
-    }
+	/**
+	 * Gets the kommentar intranet.
+	 * 
+	 * @return the kommentar intranet
+	 */
+	public String getKommentarIntranet() {
+		return this.kommentarIntranet;
+	}
 
-    public String getZdbNummer() {
-        return zdbNummer;
-    }
+	/**
+	 * Sets the kommentar intranet.
+	 * 
+	 * @param kommentarIntranet
+	 *            the new kommentar intranet
+	 */
+	public void setKommentarIntranet(final String kommentarIntranet) {
+		this.kommentarIntranet = kommentarIntranet;
+	}
 
-    public void setZdbNummer(String zdbNummer) {
-        this.zdbNummer = zdbNummer;
-    }
+	/**
+	 * Gets the zugang ueber.
+	 * 
+	 * @return the zugang ueber
+	 */
+	public String getZugangUeber() {
+		return this.zugangUeber;
+	}
 
-    public String getAnker() {
-        return anker;
-    }
+	/**
+	 * Sets the zugang ueber.
+	 * 
+	 * @param zugangUeber
+	 *            the new zugang ueber
+	 */
+	public void setZugangUeber(final String zugangUeber) {
+		this.zugangUeber = zugangUeber;
+	}
 
-    public void setAnker(String anker) {
-        this.anker = anker;
-    }
+	/**
+	 * Gets the anmeldedatum.
+	 * 
+	 * @return the anmeldedatum
+	 */
+	public Date getAnmeldedatum() {
+		return this.anmeldedatum;
+	}
 
-    public boolean getReadMeTitelbezogen() {
-        return readMeTitelbezogen;
-    }
+	/**
+	 * Sets the anmeldedatum.
+	 * 
+	 * @param anmeldedatum
+	 *            the new anmeldedatum
+	 */
+	public void setAnmeldedatum(final Date anmeldedatum) {
+		this.anmeldedatum = anmeldedatum;
+	}
 
-    public void setReadMeTitelbezogen(boolean readMeTitelbezogen) {
-        this.readMeTitelbezogen = readMeTitelbezogen;
-    }
+	/**
+	 * Gets the freischaltdatum.
+	 * 
+	 * @return the freischaltdatum
+	 */
+	public Date getFreischaltdatum() {
+		return this.freischaltdatum;
+	}
 
-    public String getImportId() {
-        return importId;
-    }
+	/**
+	 * Sets the freischaltdatum.
+	 * 
+	 * @param freischaltdatum
+	 *            the new freischaltdatum
+	 */
+	public void setFreischaltdatum(final Date freischaltdatum) {
+		this.freischaltdatum = freischaltdatum;
+	}
 
-    public void setImportId(String importId) {
-        this.importId = importId;
-    }
+	/**
+	 * Gets the zugangs id.
+	 * 
+	 * @return the zugangs id
+	 */
+	public String getZugangsId() {
+		return this.zugangsId;
+	}
 
-    public Date getBearbeitungsdatum() {
-        return bearbeitungsdatum;
-    }
+	/**
+	 * Sets the zugangs id.
+	 * 
+	 * @param zugangsId
+	 *            the new zugangs id
+	 */
+	public void setZugangsId(final String zugangsId) {
+		this.zugangsId = zugangsId;
+	}
 
-    public void setBearbeitungsdatum(Date bearbeitungsdatum) {
-        this.bearbeitungsdatum = bearbeitungsdatum;
-    }
+	/**
+	 * Gets the zugangs passwort.
+	 * 
+	 * @return the zugangs passwort
+	 */
+	public String getZugangsPasswort() {
+		return this.zugangsPasswort;
+	}
+
+	/**
+	 * Sets the zugangs passwort.
+	 * 
+	 * @param zugangsPasswort
+	 *            the new zugangs passwort
+	 */
+	public void setZugangsPasswort(final String zugangsPasswort) {
+		this.zugangsPasswort = zugangsPasswort;
+	}
+
+	/**
+	 * Gets the nutzungsbestimmungen.
+	 * 
+	 * @return the nutzungsbestimmungen
+	 */
+	public String getNutzungsbestimmungen() {
+		return this.nutzungsbestimmungen;
+	}
+
+	/**
+	 * Sets the nutzungsbestimmungen.
+	 * 
+	 * @param nutzungsbestimmungen
+	 *            the new nutzungsbestimmungen
+	 */
+	public void setNutzungsbestimmungen(final String nutzungsbestimmungen) {
+		this.nutzungsbestimmungen = nutzungsbestimmungen;
+	}
+
+	/**
+	 * Gets the rotschaltungsdatum.
+	 * 
+	 * @return the rotschaltungsdatum
+	 */
+	public Date getRotschaltungsdatum() {
+		return this.rotschaltungsdatum;
+	}
+
+	/**
+	 * Sets the rotschaltungsdatum.
+	 * 
+	 * @param rotschaltungsdatum
+	 *            the new rotschaltungsdatum
+	 */
+	public void setRotschaltungsdatum(final Date rotschaltungsdatum) {
+		this.rotschaltungsdatum = rotschaltungsdatum;
+	}
+
+	/**
+	 * Gets the rotschaltungsbemerkungen.
+	 * 
+	 * @return the rotschaltungsbemerkungen
+	 */
+	public String getRotschaltungsbemerkungen() {
+		return this.rotschaltungsbemerkungen;
+	}
+
+	/**
+	 * Sets the rotschaltungsbemerkungen.
+	 * 
+	 * @param rotschaltungsbemerkungen
+	 *            the new rotschaltungsbemerkungen
+	 */
+	public void setRotschaltungsbemerkungen(
+			final String rotschaltungsbemerkungen) {
+		this.rotschaltungsbemerkungen = rotschaltungsbemerkungen;
+	}
+
+	/**
+	 * Gets the status.
+	 * 
+	 * @return the status
+	 */
+	public String getStatus() {
+		return this.status;
+	}
+
+	/**
+	 * Sets the status.
+	 * 
+	 * @param status
+	 *            the new status
+	 */
+	public void setStatus(final String status) {
+		this.status = status;
+	}
+
+	/**
+	 * Gets the aenderungsdatum.
+	 * 
+	 * @return the aenderungsdatum
+	 */
+	public Date getAenderungsdatum() {
+		return this.aenderungsdatum;
+	}
+
+	/**
+	 * Sets the aenderungsdatum.
+	 * 
+	 * @param aenderungsdatum
+	 *            the new aenderungsdatum
+	 */
+	public void setAenderungsdatum(final Date aenderungsdatum) {
+		this.aenderungsdatum = aenderungsdatum;
+	}
+
+	/**
+	 * Gets the zdb nummer.
+	 * 
+	 * @return the zdb nummer
+	 */
+	public String getZdbNummer() {
+		return this.zdbNummer;
+	}
+
+	/**
+	 * Sets the zdb nummer.
+	 * 
+	 * @param zdbNummer
+	 *            the new zdb nummer
+	 */
+	public void setZdbNummer(final String zdbNummer) {
+		this.zdbNummer = zdbNummer;
+	}
+
+	/**
+	 * Gets the anker.
+	 * 
+	 * @return the anker
+	 */
+	public String getAnker() {
+		return this.anker;
+	}
+
+	/**
+	 * Sets the anker.
+	 * 
+	 * @param anker
+	 *            the new anker
+	 */
+	public void setAnker(final String anker) {
+		this.anker = anker;
+	}
+
+	/**
+	 * Gets the read me titelbezogen.
+	 * 
+	 * @return the read me titelbezogen
+	 */
+	public boolean getReadMeTitelbezogen() {
+		return this.readMeTitelbezogen;
+	}
+
+	/**
+	 * Sets the read me titelbezogen.
+	 * 
+	 * @param readMeTitelbezogen
+	 *            the new read me titelbezogen
+	 */
+	public void setReadMeTitelbezogen(final boolean readMeTitelbezogen) {
+		this.readMeTitelbezogen = readMeTitelbezogen;
+	}
+
+	/**
+	 * Gets the import id.
+	 * 
+	 * @return the import id
+	 */
+	public String getImportId() {
+		return this.importId;
+	}
+
+	/**
+	 * Sets the import id.
+	 * 
+	 * @param importId
+	 *            the new import id
+	 */
+	public void setImportId(final String importId) {
+		this.importId = importId;
+	}
+
+	/**
+	 * Gets the bearbeitungsdatum.
+	 * 
+	 * @return the bearbeitungsdatum
+	 */
+	public Date getBearbeitungsdatum() {
+		return this.bearbeitungsdatum;
+	}
+
+	/**
+	 * Sets the bearbeitungsdatum.
+	 * 
+	 * @param bearbeitungsdatum
+	 *            the new bearbeitungsdatum
+	 */
+	public void setBearbeitungsdatum(final Date bearbeitungsdatum) {
+		this.bearbeitungsdatum = bearbeitungsdatum;
+	}
 }

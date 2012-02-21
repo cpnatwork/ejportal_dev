@@ -1,302 +1,680 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.model;
+
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import org.appfuse.model.BaseObject;
 
-import javax.persistence.*;
-import java.util.Date;
-
 /**
- * Created by IntelliJ IDEA.
- * User: ag35ogub
- * Date: 09.08.2010
- * Time: 14:43:18
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: ag35ogub Date: 09.08.2010 Time: 14:43:18 To
+ * change this template use File | Settings | File Templates.
  */
 
 @Entity
 public class Journalkosten extends BaseObject {
 
-    private Long journalkostenId;
+	/** The journalkosten id. */
+	private Long journalkostenId;
 
-    private float oPreisPO;
-    private String waehrungPO;
-    private String mwStPO;
+	/** The o preis po. */
+	private float oPreisPO;
 
-    private float oPreisO;
-    private String waehrungO;
-    private String mwStO;
+	/** The waehrung po. */
+	private String waehrungPO;
 
-    private float oPreisP;
-    private String waehrungP;
-    private String mwStP;
+	/** The mw st po. */
+	private String mwStPO;
 
-    private float iPreisPO;
-    private String iWaehrungPO;
-    private String iMwStPO;
+	/** The o preis o. */
+	private float oPreisO;
 
-    private float iPreisO;
-    private String iWaehrungO;
-    private String iMwStO;
+	/** The waehrung o. */
+	private String waehrungO;
 
-    private float iPreisP;
-    private String iWaehrungP;
-    private String iMwStP;
+	/** The mw st o. */
+	private String mwStO;
 
-    private float impact;
-    private Date impactDatum;
+	/** The o preis p. */
+	private float oPreisP;
 
-    // relation
+	/** The waehrung p. */
+	private String waehrungP;
 
-    private Journal journal;
+	/** The mw st p. */
+	private String mwStP;
 
+	/** The i preis po. */
+	private float iPreisPO;
 
-    /* GETTER UND SETTER */
+	/** The i waehrung po. */
+	private String iWaehrungPO;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getJournalkostenId() {
-        return journalkostenId;
-    }
+	/** The i mw st po. */
+	private String iMwStPO;
 
-    public void setJournalkostenId(Long journalkostenId) {
-        this.journalkostenId = journalkostenId;
-    }
+	/** The i preis o. */
+	private float iPreisO;
 
-    public float getOPreisPO() {
-        return oPreisPO;
-    }
+	/** The i waehrung o. */
+	private String iWaehrungO;
 
-    public void setOPreisPO(float oPreisPO) {
-        this.oPreisPO = oPreisPO;
-    }
+	/** The i mw st o. */
+	private String iMwStO;
 
-    public String getWaehrungPO() {
-        return waehrungPO;
-    }
+	/** The i preis p. */
+	private float iPreisP;
 
-    public void setWaehrungPO(String waehrungPO) {
-        this.waehrungPO = waehrungPO;
-    }
+	/** The i waehrung p. */
+	private String iWaehrungP;
 
-    public String getMwStPO() {
-        return mwStPO;
-    }
+	/** The i mw st p. */
+	private String iMwStP;
 
-    public void setMwStPO(String mwStPO) {
-        this.mwStPO = mwStPO;
-    }
+	/** The impact. */
+	private float impact;
 
-    public float getOPreisO() {
-        return oPreisO;
-    }
+	/** The impact datum. */
+	private Date impactDatum;
 
-    public void setOPreisO(float oPreisO) {
-        this.oPreisO = oPreisO;
-    }
+	// relation
 
-    public String getWaehrungO() {
-        return waehrungO;
-    }
+	/** The journal. */
+	private Journal journal;
 
-    public void setWaehrungO(String waehrungO) {
-        this.waehrungO = waehrungO;
-    }
+	/* GETTER UND SETTER */
 
-    public String getMwStO() {
-        return mwStO;
-    }
+	/**
+	 * Gets the journalkosten id.
+	 * 
+	 * @return the journalkosten id
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public Long getJournalkostenId() {
+		return this.journalkostenId;
+	}
 
-    public void setMwStO(String mwStO) {
-        this.mwStO = mwStO;
-    }
+	/**
+	 * Sets the journalkosten id.
+	 * 
+	 * @param journalkostenId
+	 *            the new journalkosten id
+	 */
+	public void setJournalkostenId(final Long journalkostenId) {
+		this.journalkostenId = journalkostenId;
+	}
 
-    public float getOPreisP() {
-        return oPreisP;
-    }
+	/**
+	 * Gets the o preis po.
+	 * 
+	 * @return the o preis po
+	 */
+	public float getOPreisPO() {
+		return this.oPreisPO;
+	}
 
-    public void setOPreisP(float oPreisP) {
-        this.oPreisP = oPreisP;
-    }
+	/**
+	 * Sets the o preis po.
+	 * 
+	 * @param oPreisPO
+	 *            the new o preis po
+	 */
+	public void setOPreisPO(final float oPreisPO) {
+		this.oPreisPO = oPreisPO;
+	}
 
-    public String getWaehrungP() {
-        return waehrungP;
-    }
+	/**
+	 * Gets the waehrung po.
+	 * 
+	 * @return the waehrung po
+	 */
+	public String getWaehrungPO() {
+		return this.waehrungPO;
+	}
 
-    public void setWaehrungP(String waehrungP) {
-        this.waehrungP = waehrungP;
-    }
+	/**
+	 * Sets the waehrung po.
+	 * 
+	 * @param waehrungPO
+	 *            the new waehrung po
+	 */
+	public void setWaehrungPO(final String waehrungPO) {
+		this.waehrungPO = waehrungPO;
+	}
 
-    public String getMwStP() {
-        return mwStP;
-    }
+	/**
+	 * Gets the mw st po.
+	 * 
+	 * @return the mw st po
+	 */
+	public String getMwStPO() {
+		return this.mwStPO;
+	}
 
-    public void setMwStP(String mwStP) {
-        this.mwStP = mwStP;
-    }
+	/**
+	 * Sets the mw st po.
+	 * 
+	 * @param mwStPO
+	 *            the new mw st po
+	 */
+	public void setMwStPO(final String mwStPO) {
+		this.mwStPO = mwStPO;
+	}
 
-    public float getIPreisPO() {
-        return iPreisPO;
-    }
+	/**
+	 * Gets the o preis o.
+	 * 
+	 * @return the o preis o
+	 */
+	public float getOPreisO() {
+		return this.oPreisO;
+	}
 
-    public void setIPreisPO(float iPreisPO) {
-        this.iPreisPO = iPreisPO;
-    }
+	/**
+	 * Sets the o preis o.
+	 * 
+	 * @param oPreisO
+	 *            the new o preis o
+	 */
+	public void setOPreisO(final float oPreisO) {
+		this.oPreisO = oPreisO;
+	}
 
-    public String getIWaehrungPO() {
-        return iWaehrungPO;
-    }
+	/**
+	 * Gets the waehrung o.
+	 * 
+	 * @return the waehrung o
+	 */
+	public String getWaehrungO() {
+		return this.waehrungO;
+	}
 
-    public void setIWaehrungPO(String iWaehrungPO) {
-        this.iWaehrungPO = iWaehrungPO;
-    }
+	/**
+	 * Sets the waehrung o.
+	 * 
+	 * @param waehrungO
+	 *            the new waehrung o
+	 */
+	public void setWaehrungO(final String waehrungO) {
+		this.waehrungO = waehrungO;
+	}
 
-    public String getIMwStPO() {
-        return iMwStPO;
-    }
+	/**
+	 * Gets the mw st o.
+	 * 
+	 * @return the mw st o
+	 */
+	public String getMwStO() {
+		return this.mwStO;
+	}
 
-    public void setIMwStPO(String iMwStPO) {
-        this.iMwStPO = iMwStPO;
-    }
+	/**
+	 * Sets the mw st o.
+	 * 
+	 * @param mwStO
+	 *            the new mw st o
+	 */
+	public void setMwStO(final String mwStO) {
+		this.mwStO = mwStO;
+	}
 
-    public float getIPreisO() {
-        return iPreisO;
-    }
+	/**
+	 * Gets the o preis p.
+	 * 
+	 * @return the o preis p
+	 */
+	public float getOPreisP() {
+		return this.oPreisP;
+	}
 
-    public void setIPreisO(float iPreisO) {
-        this.iPreisO = iPreisO;
-    }
+	/**
+	 * Sets the o preis p.
+	 * 
+	 * @param oPreisP
+	 *            the new o preis p
+	 */
+	public void setOPreisP(final float oPreisP) {
+		this.oPreisP = oPreisP;
+	}
 
-    public String getIWaehrungO() {
-        return iWaehrungO;
-    }
+	/**
+	 * Gets the waehrung p.
+	 * 
+	 * @return the waehrung p
+	 */
+	public String getWaehrungP() {
+		return this.waehrungP;
+	}
 
-    public void setIWaehrungO(String iWaehrungO) {
-        this.iWaehrungO = iWaehrungO;
-    }
+	/**
+	 * Sets the waehrung p.
+	 * 
+	 * @param waehrungP
+	 *            the new waehrung p
+	 */
+	public void setWaehrungP(final String waehrungP) {
+		this.waehrungP = waehrungP;
+	}
 
-    public String getIMwStO() {
-        return iMwStO;
-    }
+	/**
+	 * Gets the mw st p.
+	 * 
+	 * @return the mw st p
+	 */
+	public String getMwStP() {
+		return this.mwStP;
+	}
 
-    public void setIMwStO(String iMwStO) {
-        this.iMwStO = iMwStO;
-    }
+	/**
+	 * Sets the mw st p.
+	 * 
+	 * @param mwStP
+	 *            the new mw st p
+	 */
+	public void setMwStP(final String mwStP) {
+		this.mwStP = mwStP;
+	}
 
-    public float getIPreisP() {
-        return iPreisP;
-    }
+	/**
+	 * Gets the i preis po.
+	 * 
+	 * @return the i preis po
+	 */
+	public float getIPreisPO() {
+		return this.iPreisPO;
+	}
 
-    public void setIPreisP(float iPreisP) {
-        this.iPreisP = iPreisP;
-    }
+	/**
+	 * Sets the i preis po.
+	 * 
+	 * @param iPreisPO
+	 *            the new i preis po
+	 */
+	public void setIPreisPO(final float iPreisPO) {
+		this.iPreisPO = iPreisPO;
+	}
 
-    public String getIWaehrungP() {
-        return iWaehrungP;
-    }
+	/**
+	 * Gets the i waehrung po.
+	 * 
+	 * @return the i waehrung po
+	 */
+	public String getIWaehrungPO() {
+		return this.iWaehrungPO;
+	}
 
-    public void setIWaehrungP(String iWaehrungP) {
-        this.iWaehrungP = iWaehrungP;
-    }
+	/**
+	 * Sets the i waehrung po.
+	 * 
+	 * @param iWaehrungPO
+	 *            the new i waehrung po
+	 */
+	public void setIWaehrungPO(final String iWaehrungPO) {
+		this.iWaehrungPO = iWaehrungPO;
+	}
 
-    public String getIMwStP() {
-        return iMwStP;
-    }
+	/**
+	 * Gets the i mw st po.
+	 * 
+	 * @return the i mw st po
+	 */
+	public String getIMwStPO() {
+		return this.iMwStPO;
+	}
 
-    public void setIMwStP(String iMwStP) {
-        this.iMwStP = iMwStP;
-    }
+	/**
+	 * Sets the i mw st po.
+	 * 
+	 * @param iMwStPO
+	 *            the new i mw st po
+	 */
+	public void setIMwStPO(final String iMwStPO) {
+		this.iMwStPO = iMwStPO;
+	}
 
-    public float getImpact() {
-        return impact;
-    }
+	/**
+	 * Gets the i preis o.
+	 * 
+	 * @return the i preis o
+	 */
+	public float getIPreisO() {
+		return this.iPreisO;
+	}
 
-    public void setImpact(float impact) {
-        this.impact = impact;
-    }
+	/**
+	 * Sets the i preis o.
+	 * 
+	 * @param iPreisO
+	 *            the new i preis o
+	 */
+	public void setIPreisO(final float iPreisO) {
+		this.iPreisO = iPreisO;
+	}
 
-    public Date getImpactDatum() {
-        return impactDatum;
-    }
+	/**
+	 * Gets the i waehrung o.
+	 * 
+	 * @return the i waehrung o
+	 */
+	public String getIWaehrungO() {
+		return this.iWaehrungO;
+	}
 
-    public void setImpactDatum(Date impactDatum) {
-        this.impactDatum = impactDatum;
-    }
-    
-    @OneToOne( fetch=FetchType.EAGER )
-    public Journal getJournal() {
-        return journal;
-    }
+	/**
+	 * Sets the i waehrung o.
+	 * 
+	 * @param iWaehrungO
+	 *            the new i waehrung o
+	 */
+	public void setIWaehrungO(final String iWaehrungO) {
+		this.iWaehrungO = iWaehrungO;
+	}
 
-    public void setJournal(Journal journal) {
-        this.journal = journal;
-    }
+	/**
+	 * Gets the i mw st o.
+	 * 
+	 * @return the i mw st o
+	 */
+	public String getIMwStO() {
+		return this.iMwStO;
+	}
 
+	/**
+	 * Sets the i mw st o.
+	 * 
+	 * @param iMwStO
+	 *            the new i mw st o
+	 */
+	public void setIMwStO(final String iMwStO) {
+		this.iMwStO = iMwStO;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	/**
+	 * Gets the i preis p.
+	 * 
+	 * @return the i preis p
+	 */
+	public float getIPreisP() {
+		return this.iPreisP;
+	}
 
-        Journalkosten that = (Journalkosten) o;
+	/**
+	 * Sets the i preis p.
+	 * 
+	 * @param iPreisP
+	 *            the new i preis p
+	 */
+	public void setIPreisP(final float iPreisP) {
+		this.iPreisP = iPreisP;
+	}
 
-        if (Float.compare(that.iPreisO, iPreisO) != 0) return false;
-        if (Float.compare(that.iPreisP, iPreisP) != 0) return false;
-        if (Float.compare(that.iPreisPO, iPreisPO) != 0) return false;
-        if (Float.compare(that.impact, impact) != 0) return false;
-        if (Float.compare(that.oPreisO, oPreisO) != 0) return false;
-        if (Float.compare(that.oPreisP, oPreisP) != 0) return false;
-        if (Float.compare(that.oPreisPO, oPreisPO) != 0) return false;
-        if (iMwStO != null ? !iMwStO.equals(that.iMwStO) : that.iMwStO != null) return false;
-        if (iMwStP != null ? !iMwStP.equals(that.iMwStP) : that.iMwStP != null) return false;
-        if (iMwStPO != null ? !iMwStPO.equals(that.iMwStPO) : that.iMwStPO != null) return false;
-        if (iWaehrungO != null ? !iWaehrungO.equals(that.iWaehrungO) : that.iWaehrungO != null) return false;
-        if (iWaehrungP != null ? !iWaehrungP.equals(that.iWaehrungP) : that.iWaehrungP != null) return false;
-        if (iWaehrungPO != null ? !iWaehrungPO.equals(that.iWaehrungPO) : that.iWaehrungPO != null) return false;
-        if (impactDatum != null ? !impactDatum.equals(that.impactDatum) : that.impactDatum != null) return false;
-        if (journal != null ? !journal.equals(that.journal) : that.journal != null) return false;
-        if (journalkostenId != null ? !journalkostenId.equals(that.journalkostenId) : that.journalkostenId != null)
-            return false;
-        if (mwStO != null ? !mwStO.equals(that.mwStO) : that.mwStO != null) return false;
-        if (mwStP != null ? !mwStP.equals(that.mwStP) : that.mwStP != null) return false;
-        if (mwStPO != null ? !mwStPO.equals(that.mwStPO) : that.mwStPO != null) return false;
-        if (waehrungO != null ? !waehrungO.equals(that.waehrungO) : that.waehrungO != null) return false;
-        if (waehrungP != null ? !waehrungP.equals(that.waehrungP) : that.waehrungP != null) return false;
-        if (waehrungPO != null ? !waehrungPO.equals(that.waehrungPO) : that.waehrungPO != null) return false;
+	/**
+	 * Gets the i waehrung p.
+	 * 
+	 * @return the i waehrung p
+	 */
+	public String getIWaehrungP() {
+		return this.iWaehrungP;
+	}
 
-        return true;
-    }
+	/**
+	 * Sets the i waehrung p.
+	 * 
+	 * @param iWaehrungP
+	 *            the new i waehrung p
+	 */
+	public void setIWaehrungP(final String iWaehrungP) {
+		this.iWaehrungP = iWaehrungP;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = journalkostenId != null ? journalkostenId.hashCode() : 0;
-        result = 31 * result + (oPreisPO != +0.0f ? Float.floatToIntBits(oPreisPO) : 0);
-        result = 31 * result + (waehrungPO != null ? waehrungPO.hashCode() : 0);
-        result = 31 * result + (mwStPO != null ? mwStPO.hashCode() : 0);
-        result = 31 * result + (oPreisO != +0.0f ? Float.floatToIntBits(oPreisO) : 0);
-        result = 31 * result + (waehrungO != null ? waehrungO.hashCode() : 0);
-        result = 31 * result + (mwStO != null ? mwStO.hashCode() : 0);
-        result = 31 * result + (oPreisP != +0.0f ? Float.floatToIntBits(oPreisP) : 0);
-        result = 31 * result + (waehrungP != null ? waehrungP.hashCode() : 0);
-        result = 31 * result + (mwStP != null ? mwStP.hashCode() : 0);
-        result = 31 * result + (iPreisPO != +0.0f ? Float.floatToIntBits(iPreisPO) : 0);
-        result = 31 * result + (iWaehrungPO != null ? iWaehrungPO.hashCode() : 0);
-        result = 31 * result + (iMwStPO != null ? iMwStPO.hashCode() : 0);
-        result = 31 * result + (iPreisO != +0.0f ? Float.floatToIntBits(iPreisO) : 0);
-        result = 31 * result + (iWaehrungO != null ? iWaehrungO.hashCode() : 0);
-        result = 31 * result + (iMwStO != null ? iMwStO.hashCode() : 0);
-        result = 31 * result + (iPreisP != +0.0f ? Float.floatToIntBits(iPreisP) : 0);
-        result = 31 * result + (iWaehrungP != null ? iWaehrungP.hashCode() : 0);
-        result = 31 * result + (iMwStP != null ? iMwStP.hashCode() : 0);
-        result = 31 * result + (impact != +0.0f ? Float.floatToIntBits(impact) : 0);
-        result = 31 * result + (impactDatum != null ? impactDatum.hashCode() : 0);
-        result = 31 * result + (journal != null ? journal.hashCode() : 0);
-        return result;
-    }
+	/**
+	 * Gets the i mw st p.
+	 * 
+	 * @return the i mw st p
+	 */
+	public String getIMwStP() {
+		return this.iMwStP;
+	}
 
-    @Override
-    public String toString() {
-        return "Journalkosten{" +
-                "journalkostenId=" + journalkostenId +
-                '}';
-    }
+	/**
+	 * Sets the i mw st p.
+	 * 
+	 * @param iMwStP
+	 *            the new i mw st p
+	 */
+	public void setIMwStP(final String iMwStP) {
+		this.iMwStP = iMwStP;
+	}
+
+	/**
+	 * Gets the impact.
+	 * 
+	 * @return the impact
+	 */
+	public float getImpact() {
+		return this.impact;
+	}
+
+	/**
+	 * Sets the impact.
+	 * 
+	 * @param impact
+	 *            the new impact
+	 */
+	public void setImpact(final float impact) {
+		this.impact = impact;
+	}
+
+	/**
+	 * Gets the impact datum.
+	 * 
+	 * @return the impact datum
+	 */
+	public Date getImpactDatum() {
+		return this.impactDatum;
+	}
+
+	/**
+	 * Sets the impact datum.
+	 * 
+	 * @param impactDatum
+	 *            the new impact datum
+	 */
+	public void setImpactDatum(final Date impactDatum) {
+		this.impactDatum = impactDatum;
+	}
+
+	/**
+	 * Gets the journal.
+	 * 
+	 * @return the journal
+	 */
+	@OneToOne(fetch = FetchType.EAGER)
+	public Journal getJournal() {
+		return this.journal;
+	}
+
+	/**
+	 * Sets the journal.
+	 * 
+	 * @param journal
+	 *            the new journal
+	 */
+	public void setJournal(final Journal journal) {
+		this.journal = journal;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o)
+			return true;
+		if ((o == null) || (this.getClass() != o.getClass()))
+			return false;
+
+		final Journalkosten that = (Journalkosten) o;
+
+		if (Float.compare(that.iPreisO, this.iPreisO) != 0)
+			return false;
+		if (Float.compare(that.iPreisP, this.iPreisP) != 0)
+			return false;
+		if (Float.compare(that.iPreisPO, this.iPreisPO) != 0)
+			return false;
+		if (Float.compare(that.impact, this.impact) != 0)
+			return false;
+		if (Float.compare(that.oPreisO, this.oPreisO) != 0)
+			return false;
+		if (Float.compare(that.oPreisP, this.oPreisP) != 0)
+			return false;
+		if (Float.compare(that.oPreisPO, this.oPreisPO) != 0)
+			return false;
+		if (this.iMwStO != null ? !this.iMwStO.equals(that.iMwStO)
+				: that.iMwStO != null)
+			return false;
+		if (this.iMwStP != null ? !this.iMwStP.equals(that.iMwStP)
+				: that.iMwStP != null)
+			return false;
+		if (this.iMwStPO != null ? !this.iMwStPO.equals(that.iMwStPO)
+				: that.iMwStPO != null)
+			return false;
+		if (this.iWaehrungO != null ? !this.iWaehrungO.equals(that.iWaehrungO)
+				: that.iWaehrungO != null)
+			return false;
+		if (this.iWaehrungP != null ? !this.iWaehrungP.equals(that.iWaehrungP)
+				: that.iWaehrungP != null)
+			return false;
+		if (this.iWaehrungPO != null ? !this.iWaehrungPO
+				.equals(that.iWaehrungPO) : that.iWaehrungPO != null)
+			return false;
+		if (this.impactDatum != null ? !this.impactDatum
+				.equals(that.impactDatum) : that.impactDatum != null)
+			return false;
+		if (this.journal != null ? !this.journal.equals(that.journal)
+				: that.journal != null)
+			return false;
+		if (this.journalkostenId != null ? !this.journalkostenId
+				.equals(that.journalkostenId) : that.journalkostenId != null)
+			return false;
+		if (this.mwStO != null ? !this.mwStO.equals(that.mwStO)
+				: that.mwStO != null)
+			return false;
+		if (this.mwStP != null ? !this.mwStP.equals(that.mwStP)
+				: that.mwStP != null)
+			return false;
+		if (this.mwStPO != null ? !this.mwStPO.equals(that.mwStPO)
+				: that.mwStPO != null)
+			return false;
+		if (this.waehrungO != null ? !this.waehrungO.equals(that.waehrungO)
+				: that.waehrungO != null)
+			return false;
+		if (this.waehrungP != null ? !this.waehrungP.equals(that.waehrungP)
+				: that.waehrungP != null)
+			return false;
+		if (this.waehrungPO != null ? !this.waehrungPO.equals(that.waehrungPO)
+				: that.waehrungPO != null)
+			return false;
+
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int result = this.journalkostenId != null ? this.journalkostenId
+				.hashCode() : 0;
+		result = (31 * result)
+				+ (this.oPreisPO != +0.0f ? Float.floatToIntBits(this.oPreisPO)
+						: 0);
+		result = (31 * result)
+				+ (this.waehrungPO != null ? this.waehrungPO.hashCode() : 0);
+		result = (31 * result)
+				+ (this.mwStPO != null ? this.mwStPO.hashCode() : 0);
+		result = (31 * result)
+				+ (this.oPreisO != +0.0f ? Float.floatToIntBits(this.oPreisO)
+						: 0);
+		result = (31 * result)
+				+ (this.waehrungO != null ? this.waehrungO.hashCode() : 0);
+		result = (31 * result)
+				+ (this.mwStO != null ? this.mwStO.hashCode() : 0);
+		result = (31 * result)
+				+ (this.oPreisP != +0.0f ? Float.floatToIntBits(this.oPreisP)
+						: 0);
+		result = (31 * result)
+				+ (this.waehrungP != null ? this.waehrungP.hashCode() : 0);
+		result = (31 * result)
+				+ (this.mwStP != null ? this.mwStP.hashCode() : 0);
+		result = (31 * result)
+				+ (this.iPreisPO != +0.0f ? Float.floatToIntBits(this.iPreisPO)
+						: 0);
+		result = (31 * result)
+				+ (this.iWaehrungPO != null ? this.iWaehrungPO.hashCode() : 0);
+		result = (31 * result)
+				+ (this.iMwStPO != null ? this.iMwStPO.hashCode() : 0);
+		result = (31 * result)
+				+ (this.iPreisO != +0.0f ? Float.floatToIntBits(this.iPreisO)
+						: 0);
+		result = (31 * result)
+				+ (this.iWaehrungO != null ? this.iWaehrungO.hashCode() : 0);
+		result = (31 * result)
+				+ (this.iMwStO != null ? this.iMwStO.hashCode() : 0);
+		result = (31 * result)
+				+ (this.iPreisP != +0.0f ? Float.floatToIntBits(this.iPreisP)
+						: 0);
+		result = (31 * result)
+				+ (this.iWaehrungP != null ? this.iWaehrungP.hashCode() : 0);
+		result = (31 * result)
+				+ (this.iMwStP != null ? this.iMwStP.hashCode() : 0);
+		result = (31 * result)
+				+ (this.impact != +0.0f ? Float.floatToIntBits(this.impact) : 0);
+		result = (31 * result)
+				+ (this.impactDatum != null ? this.impactDatum.hashCode() : 0);
+		result = (31 * result)
+				+ (this.journal != null ? this.journal.hashCode() : 0);
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Journalkosten{" + "journalkostenId=" + this.journalkostenId
+				+ '}';
+	}
 }

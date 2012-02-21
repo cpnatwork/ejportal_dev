@@ -1,225 +1,472 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.SecondaryTable;
+import javax.persistence.SecondaryTables;
+import javax.persistence.Table;
 
 import org.appfuse.model.BaseObject;
 
-import javax.persistence.*;
-
 /**
- * Created by IntelliJ IDEA.
- * User: Florian
- * Date: 09.08.2010
- * Time: 11:50:47
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: Florian Date: 09.08.2010 Time: 11:50:47 To
+ * change this template use File | Settings | File Templates.
  */
 
 @Entity
-@Table(name="ezb1")
-@SecondaryTables({
-        @SecondaryTable(name="ezb2"),
-        @SecondaryTable(name="ezb3")
-})
+@Table(name = "ezb1")
+@SecondaryTables({ @SecondaryTable(name = "ezb2"),
+		@SecondaryTable(name = "ezb3") })
 public class EzbDaten extends BaseObject {
 
-    private long ezbId;
-    private String titel;
-    private String zdbNummer;
-    private int ampelfarbe;
-    private String verlag;
-    private String typ;
-    private String preistyp;
-    private String zugangsbedingung;
-    private String issne;
-    private String issnp;
-    private String biburl;
-    private String volltexturl;
-    private String frontdoorurl;
-    private String link;
+	/** The ezb id. */
+	private long ezbId;
 
-    @Id
-    public long getEzbId() {
-        return ezbId;
-    }
+	/** The titel. */
+	private String titel;
 
-    public void setEzbId(long ezbId) {
-        this.ezbId = ezbId;
-    }
+	/** The zdb nummer. */
+	private String zdbNummer;
 
-    public String getTitel() {
-        return titel;
-    }
+	/** The ampelfarbe. */
+	private int ampelfarbe;
 
-    public void setTitel(String titel) {
-        this.titel = titel;
-    }
+	/** The verlag. */
+	private String verlag;
 
+	/** The typ. */
+	private String typ;
 
-    public int getAmpelfarbe() {
-        return ampelfarbe;
-    }
+	/** The preistyp. */
+	private String preistyp;
 
-    public void setAmpelfarbe(int ampelfarbe) {
-        this.ampelfarbe = ampelfarbe;
-    }
+	/** The zugangsbedingung. */
+	private String zugangsbedingung;
 
-    public String getVerlag() {
-        return verlag;
-    }
+	/** The issne. */
+	private String issne;
 
-    public void setVerlag(String verlag) {
-        this.verlag = verlag;
-    }
+	/** The issnp. */
+	private String issnp;
 
-    public String getTyp() {
-        return typ;
-    }
+	/** The biburl. */
+	private String biburl;
 
-    public void setTyp(String typ) {
-        this.typ = typ;
-    }
+	/** The volltexturl. */
+	private String volltexturl;
 
-    public String getPreistyp() {
-        return preistyp;
-    }
+	/** The frontdoorurl. */
+	private String frontdoorurl;
 
-    public void setPreistyp(String preistyp) {
-        this.preistyp = preistyp;
-    }
+	/** The link. */
+	private String link;
 
-    public String getZugangsbedingung() {
-        return zugangsbedingung;
-    }
+	/**
+	 * Gets the ezb id.
+	 * 
+	 * @return the ezb id
+	 */
+	@Id
+	public long getEzbId() {
+		return this.ezbId;
+	}
 
-    public void setZugangsbedingung(String zugangsbedingung) {
-        this.zugangsbedingung = zugangsbedingung;
-    }
+	/**
+	 * Sets the ezb id.
+	 * 
+	 * @param ezbId
+	 *            the new ezb id
+	 */
+	public void setEzbId(final long ezbId) {
+		this.ezbId = ezbId;
+	}
 
-    @Column(table="ezb2")
-    public String getIssne() {
-        return issne;
-    }
+	/**
+	 * Gets the titel.
+	 * 
+	 * @return the titel
+	 */
+	public String getTitel() {
+		return this.titel;
+	}
 
-    public void setIssne(String issne) {
-        this.issne = issne;
-    }
+	/**
+	 * Sets the titel.
+	 * 
+	 * @param titel
+	 *            the new titel
+	 */
+	public void setTitel(final String titel) {
+		this.titel = titel;
+	}
 
-    @Column(table="ezb2")
-    public String getIssnp() {
-        return issnp;
-    }
+	/**
+	 * Gets the ampelfarbe.
+	 * 
+	 * @return the ampelfarbe
+	 */
+	public int getAmpelfarbe() {
+		return this.ampelfarbe;
+	}
 
-    public void setIssnp(String issnp) {
-        this.issnp = issnp;
-    }
+	/**
+	 * Sets the ampelfarbe.
+	 * 
+	 * @param ampelfarbe
+	 *            the new ampelfarbe
+	 */
+	public void setAmpelfarbe(final int ampelfarbe) {
+		this.ampelfarbe = ampelfarbe;
+	}
 
-    @Column(table="ezb2")
-    public String getZdbNummer() {
-        return zdbNummer;
-    }
+	/**
+	 * Gets the verlag.
+	 * 
+	 * @return the verlag
+	 */
+	public String getVerlag() {
+		return this.verlag;
+	}
 
-    public void setZdbNummer(String zdbNummer) {
-        this.zdbNummer = zdbNummer;
-    }
+	/**
+	 * Sets the verlag.
+	 * 
+	 * @param verlag
+	 *            the new verlag
+	 */
+	public void setVerlag(final String verlag) {
+		this.verlag = verlag;
+	}
 
-    @Column(table="ezb2")
-    public String getBiburl() {
-        return biburl;
-    }
+	/**
+	 * Gets the typ.
+	 * 
+	 * @return the typ
+	 */
+	public String getTyp() {
+		return this.typ;
+	}
 
-    public void setBiburl(String biburl) {
-        this.biburl = biburl;
-    }
+	/**
+	 * Sets the typ.
+	 * 
+	 * @param typ
+	 *            the new typ
+	 */
+	public void setTyp(final String typ) {
+		this.typ = typ;
+	}
 
-    @Column(table="ezb3")
-    public String getVolltexturl() {
-        return volltexturl;
-    }
+	/**
+	 * Gets the preistyp.
+	 * 
+	 * @return the preistyp
+	 */
+	public String getPreistyp() {
+		return this.preistyp;
+	}
 
-    public void setVolltexturl(String volltexturl) {
-        this.volltexturl = volltexturl;
-    }
+	/**
+	 * Sets the preistyp.
+	 * 
+	 * @param preistyp
+	 *            the new preistyp
+	 */
+	public void setPreistyp(final String preistyp) {
+		this.preistyp = preistyp;
+	}
 
-    @Column(table="ezb3")
-    public String getFrontdoorurl() {
-        return frontdoorurl;
-    }
+	/**
+	 * Gets the zugangsbedingung.
+	 * 
+	 * @return the zugangsbedingung
+	 */
+	public String getZugangsbedingung() {
+		return this.zugangsbedingung;
+	}
 
-    public void setFrontdoorurl(String frontdoorurl) {
-        this.frontdoorurl = frontdoorurl;
-    }
+	/**
+	 * Sets the zugangsbedingung.
+	 * 
+	 * @param zugangsbedingung
+	 *            the new zugangsbedingung
+	 */
+	public void setZugangsbedingung(final String zugangsbedingung) {
+		this.zugangsbedingung = zugangsbedingung;
+	}
 
-    @Column(table="ezb3")
-    public String getLink() {
-        return link;
-    }
+	/**
+	 * Gets the issne.
+	 * 
+	 * @return the issne
+	 */
+	@Column(table = "ezb2")
+	public String getIssne() {
+		return this.issne;
+	}
 
-    public void setLink(String link) {
-        this.link = link;
-    }
+	/**
+	 * Sets the issne.
+	 * 
+	 * @param issne
+	 *            the new issne
+	 */
+	public void setIssne(final String issne) {
+		this.issne = issne;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	/**
+	 * Gets the issnp.
+	 * 
+	 * @return the issnp
+	 */
+	@Column(table = "ezb2")
+	public String getIssnp() {
+		return this.issnp;
+	}
 
-        EzbDaten ezbDaten = (EzbDaten) o;
+	/**
+	 * Sets the issnp.
+	 * 
+	 * @param issnp
+	 *            the new issnp
+	 */
+	public void setIssnp(final String issnp) {
+		this.issnp = issnp;
+	}
 
-        if (ampelfarbe != ezbDaten.ampelfarbe) return false;
-        if (ezbId != ezbDaten.ezbId) return false;
-        if (biburl != null ? !biburl.equals(ezbDaten.biburl) : ezbDaten.biburl != null) return false;
-        if (frontdoorurl != null ? !frontdoorurl.equals(ezbDaten.frontdoorurl) : ezbDaten.frontdoorurl != null)
-            return false;
-        if (issne != null ? !issne.equals(ezbDaten.issne) : ezbDaten.issne != null) return false;
-        if (issnp != null ? !issnp.equals(ezbDaten.issnp) : ezbDaten.issnp != null) return false;
-        if (link != null ? !link.equals(ezbDaten.link) : ezbDaten.link != null) return false;
-        if (preistyp != null ? !preistyp.equals(ezbDaten.preistyp) : ezbDaten.preistyp != null) return false;
-        if (titel != null ? !titel.equals(ezbDaten.titel) : ezbDaten.titel != null) return false;
-        if (typ != null ? !typ.equals(ezbDaten.typ) : ezbDaten.typ != null) return false;
-        if (verlag != null ? !verlag.equals(ezbDaten.verlag) : ezbDaten.verlag != null) return false;
-        if (volltexturl != null ? !volltexturl.equals(ezbDaten.volltexturl) : ezbDaten.volltexturl != null)
-            return false;
-        if (zdbNummer != null ? !zdbNummer.equals(ezbDaten.zdbNummer) : ezbDaten.zdbNummer != null) return false;
-        if (zugangsbedingung != null ? !zugangsbedingung.equals(ezbDaten.zugangsbedingung) : ezbDaten.zugangsbedingung != null)
-            return false;
+	/**
+	 * Gets the zdb nummer.
+	 * 
+	 * @return the zdb nummer
+	 */
+	@Column(table = "ezb2")
+	public String getZdbNummer() {
+		return this.zdbNummer;
+	}
 
-        return true;
-    }
+	/**
+	 * Sets the zdb nummer.
+	 * 
+	 * @param zdbNummer
+	 *            the new zdb nummer
+	 */
+	public void setZdbNummer(final String zdbNummer) {
+		this.zdbNummer = zdbNummer;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = (int) (ezbId ^ (ezbId >>> 32));
-        result = 31 * result + (titel != null ? titel.hashCode() : 0);
-        result = 31 * result + (zdbNummer != null ? zdbNummer.hashCode() : 0);
-        result = 31 * result + ampelfarbe;
-        result = 31 * result + (verlag != null ? verlag.hashCode() : 0);
-        result = 31 * result + (typ != null ? typ.hashCode() : 0);
-        result = 31 * result + (preistyp != null ? preistyp.hashCode() : 0);
-        result = 31 * result + (zugangsbedingung != null ? zugangsbedingung.hashCode() : 0);
-        result = 31 * result + (issne != null ? issne.hashCode() : 0);
-        result = 31 * result + (issnp != null ? issnp.hashCode() : 0);
-        result = 31 * result + (biburl != null ? biburl.hashCode() : 0);
-        result = 31 * result + (volltexturl != null ? volltexturl.hashCode() : 0);
-        result = 31 * result + (frontdoorurl != null ? frontdoorurl.hashCode() : 0);
-        result = 31 * result + (link != null ? link.hashCode() : 0);
-        return result;
-    }
+	/**
+	 * Gets the biburl.
+	 * 
+	 * @return the biburl
+	 */
+	@Column(table = "ezb2")
+	public String getBiburl() {
+		return this.biburl;
+	}
 
-    @Override
-    public String toString() {
-        return "EzbDaten{" +
-                "ezbId=" + ezbId +
-                ", titel='" + titel + '\'' +
-                ", zdbNummer='" + zdbNummer + '\'' +
-                ", ampelfarbe=" + ampelfarbe +
-                ", verlag='" + verlag + '\'' +
-                ", typ='" + typ + '\'' +
-                ", preistyp='" + preistyp + '\'' +
-                ", zugangsbedingung='" + zugangsbedingung + '\'' +
-                ", issne='" + issne + '\'' +
-                ", issnp='" + issnp + '\'' +
-                ", biburl='" + biburl + '\'' +
-                ", volltexturl='" + volltexturl + '\'' +
-                ", frontdoorurl='" + frontdoorurl + '\'' +
-                ", link='" + link + '\'' +
-                '}';
-    }
+	/**
+	 * Sets the biburl.
+	 * 
+	 * @param biburl
+	 *            the new biburl
+	 */
+	public void setBiburl(final String biburl) {
+		this.biburl = biburl;
+	}
+
+	/**
+	 * Gets the volltexturl.
+	 * 
+	 * @return the volltexturl
+	 */
+	@Column(table = "ezb3")
+	public String getVolltexturl() {
+		return this.volltexturl;
+	}
+
+	/**
+	 * Sets the volltexturl.
+	 * 
+	 * @param volltexturl
+	 *            the new volltexturl
+	 */
+	public void setVolltexturl(final String volltexturl) {
+		this.volltexturl = volltexturl;
+	}
+
+	/**
+	 * Gets the frontdoorurl.
+	 * 
+	 * @return the frontdoorurl
+	 */
+	@Column(table = "ezb3")
+	public String getFrontdoorurl() {
+		return this.frontdoorurl;
+	}
+
+	/**
+	 * Sets the frontdoorurl.
+	 * 
+	 * @param frontdoorurl
+	 *            the new frontdoorurl
+	 */
+	public void setFrontdoorurl(final String frontdoorurl) {
+		this.frontdoorurl = frontdoorurl;
+	}
+
+	/**
+	 * Gets the link.
+	 * 
+	 * @return the link
+	 */
+	@Column(table = "ezb3")
+	public String getLink() {
+		return this.link;
+	}
+
+	/**
+	 * Sets the link.
+	 * 
+	 * @param link
+	 *            the new link
+	 */
+	public void setLink(final String link) {
+		this.link = link;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o)
+			return true;
+		if ((o == null) || (this.getClass() != o.getClass()))
+			return false;
+
+		final EzbDaten ezbDaten = (EzbDaten) o;
+
+		if (this.ampelfarbe != ezbDaten.ampelfarbe)
+			return false;
+		if (this.ezbId != ezbDaten.ezbId)
+			return false;
+		if (this.biburl != null ? !this.biburl.equals(ezbDaten.biburl)
+				: ezbDaten.biburl != null)
+			return false;
+		if (this.frontdoorurl != null ? !this.frontdoorurl
+				.equals(ezbDaten.frontdoorurl) : ezbDaten.frontdoorurl != null)
+			return false;
+		if (this.issne != null ? !this.issne.equals(ezbDaten.issne)
+				: ezbDaten.issne != null)
+			return false;
+		if (this.issnp != null ? !this.issnp.equals(ezbDaten.issnp)
+				: ezbDaten.issnp != null)
+			return false;
+		if (this.link != null ? !this.link.equals(ezbDaten.link)
+				: ezbDaten.link != null)
+			return false;
+		if (this.preistyp != null ? !this.preistyp.equals(ezbDaten.preistyp)
+				: ezbDaten.preistyp != null)
+			return false;
+		if (this.titel != null ? !this.titel.equals(ezbDaten.titel)
+				: ezbDaten.titel != null)
+			return false;
+		if (this.typ != null ? !this.typ.equals(ezbDaten.typ)
+				: ezbDaten.typ != null)
+			return false;
+		if (this.verlag != null ? !this.verlag.equals(ezbDaten.verlag)
+				: ezbDaten.verlag != null)
+			return false;
+		if (this.volltexturl != null ? !this.volltexturl
+				.equals(ezbDaten.volltexturl) : ezbDaten.volltexturl != null)
+			return false;
+		if (this.zdbNummer != null ? !this.zdbNummer.equals(ezbDaten.zdbNummer)
+				: ezbDaten.zdbNummer != null)
+			return false;
+		if (this.zugangsbedingung != null ? !this.zugangsbedingung
+				.equals(ezbDaten.zugangsbedingung)
+				: ezbDaten.zugangsbedingung != null)
+			return false;
+
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int result = (int) (this.ezbId ^ (this.ezbId >>> 32));
+		result = (31 * result)
+				+ (this.titel != null ? this.titel.hashCode() : 0);
+		result = (31 * result)
+				+ (this.zdbNummer != null ? this.zdbNummer.hashCode() : 0);
+		result = (31 * result) + this.ampelfarbe;
+		result = (31 * result)
+				+ (this.verlag != null ? this.verlag.hashCode() : 0);
+		result = (31 * result) + (this.typ != null ? this.typ.hashCode() : 0);
+		result = (31 * result)
+				+ (this.preistyp != null ? this.preistyp.hashCode() : 0);
+		result = (31 * result)
+				+ (this.zugangsbedingung != null ? this.zugangsbedingung
+						.hashCode() : 0);
+		result = (31 * result)
+				+ (this.issne != null ? this.issne.hashCode() : 0);
+		result = (31 * result)
+				+ (this.issnp != null ? this.issnp.hashCode() : 0);
+		result = (31 * result)
+				+ (this.biburl != null ? this.biburl.hashCode() : 0);
+		result = (31 * result)
+				+ (this.volltexturl != null ? this.volltexturl.hashCode() : 0);
+		result = (31 * result)
+				+ (this.frontdoorurl != null ? this.frontdoorurl.hashCode() : 0);
+		result = (31 * result) + (this.link != null ? this.link.hashCode() : 0);
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#toString()
+	 */
+	@Override
+	public String toString() {
+		return "EzbDaten{" + "ezbId=" + this.ezbId + ", titel='" + this.titel
+				+ '\'' + ", zdbNummer='" + this.zdbNummer + '\''
+				+ ", ampelfarbe=" + this.ampelfarbe + ", verlag='"
+				+ this.verlag + '\'' + ", typ='" + this.typ + '\''
+				+ ", preistyp='" + this.preistyp + '\''
+				+ ", zugangsbedingung='" + this.zugangsbedingung + '\''
+				+ ", issne='" + this.issne + '\'' + ", issnp='" + this.issnp
+				+ '\'' + ", biburl='" + this.biburl + '\'' + ", volltexturl='"
+				+ this.volltexturl + '\'' + ", frontdoorurl='"
+				+ this.frontdoorurl + '\'' + ", link='" + this.link + '\''
+				+ '}';
+	}
 }

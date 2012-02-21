@@ -1,3 +1,23 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.webapp.filter;
 
 import java.io.IOException;
@@ -15,32 +35,52 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Borrowed from the Display Tag project:
- * http://displaytag.sourceforge.net/xref-test/org/displaytag/filter/MockFilterSupport.html
- *
+ * http://displaytag.sourceforge.net/xref-
+ * test/org/displaytag/filter/MockFilterSupport.html
+ * 
  * Todo: look into using Spring's MockFilterChain:
- * http://www.springframework.org/docs/api/org/springframework/mock/web/MockFilterChain.html
+ * http://www.springframework.org
+ * /docs/api/org/springframework/mock/web/MockFilterChain.html
  */
 public class MockFilterChain implements FilterChain {
-    private final Log log = LogFactory.getLog(MockFilterChain.class);
-    private String forwardURL;
 
-    public void doFilter(ServletRequest request, ServletResponse response)
-    throws IOException, ServletException {
-        String uri = ((HttpServletRequest) request).getRequestURI();
-        String requestContext = ((HttpServletRequest) request).getContextPath();
+	/** The log. */
+	private final Log log = LogFactory.getLog(MockFilterChain.class);
 
-        if (StringUtils.isNotEmpty(requestContext) && uri.startsWith(requestContext)) {
-            uri = uri.substring(requestContext.length());
-        }
+	/** The forward url. */
+	private String forwardURL;
 
-        this.forwardURL = uri;
-        log.debug("Forwarding to: " + uri);
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.servlet.FilterChain#doFilter(javax.servlet.ServletRequest,
+	 * javax.servlet.ServletResponse)
+	 */
+	public void doFilter(final ServletRequest request,
+			final ServletResponse response) throws IOException,
+			ServletException {
+		String uri = ((HttpServletRequest) request).getRequestURI();
+		final String requestContext = ((HttpServletRequest) request)
+				.getContextPath();
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(uri);
-        dispatcher.forward(request, response);
-    }
+		if (StringUtils.isNotEmpty(requestContext)
+				&& uri.startsWith(requestContext)) {
+			uri = uri.substring(requestContext.length());
+		}
 
-    public String getForwardURL() {
-        return this.forwardURL;
-    }
+		this.forwardURL = uri;
+		this.log.debug("Forwarding to: " + uri);
+
+		final RequestDispatcher dispatcher = request.getRequestDispatcher(uri);
+		dispatcher.forward(request, response);
+	}
+
+	/**
+	 * Gets the forward url.
+	 * 
+	 * @return the forward url
+	 */
+	public String getForwardURL() {
+		return this.forwardURL;
+	}
 }

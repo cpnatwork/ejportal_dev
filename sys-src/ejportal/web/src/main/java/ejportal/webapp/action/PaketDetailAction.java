@@ -1,109 +1,186 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.webapp.action;
+
+import org.springframework.dao.DataIntegrityViolationException;
+
+import com.opensymphony.xwork2.Action;
 
 import ejportal.model.Paket;
 import ejportal.service.PaketManager;
-import org.springframework.dao.DataIntegrityViolationException;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tselmeg
- * Date: 03.08.2010
- * Time: 12:07:36
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: Tselmeg Date: 03.08.2010 Time: 12:07:36 To
+ * change this template use File | Settings | File Templates.
  */
 public class PaketDetailAction extends BaseAction {
-    private PaketManager paketManager;
-    private Paket paket;
-    private Long paketId;
 
-    public void setPaketManager(PaketManager paketManager) {
-        this.paketManager = paketManager;
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -868809777968504016L;
 
-    public Paket getPaket() {
-        return paket;
-    }
+	/** The paket manager. */
+	private PaketManager paketManager;
 
-    public void setPaket(Paket paket) {
-        this.paket = paket;
-    }
+	/** The paket. */
+	private Paket paket;
 
-    public long getPaketId() {
-        return paketId;
-    }
+	/** The paket id. */
+	private Long paketId;
 
-    public void setPaketId(Long paketId) {
-        this.paketId = paketId;
-    }
+	/**
+	 * Sets the paket manager.
+	 * 
+	 * @param paketManager
+	 *            the new paket manager
+	 */
+	public void setPaketManager(final PaketManager paketManager) {
+		this.paketManager = paketManager;
+	}
 
-    public String delete() {
-        try {
-            paketManager.remove(paketId);
-            saveMessage(getText("Paket wurde erfolgreich entfernt."));
-        }
-        catch (DataIntegrityViolationException dive) {
-            saveMessage("Dieses Paket wird noch verwendet und kann deshalb nicht entfernt werden.");
-            return ERROR;
-        }
+	/**
+	 * Gets the paket.
+	 * 
+	 * @return the paket
+	 */
+	public Paket getPaket() {
+		return this.paket;
+	}
 
-        return SUCCESS;
-    }
+	/**
+	 * Sets the paket.
+	 * 
+	 * @param paket
+	 *            the new paket
+	 */
+	public void setPaket(final Paket paket) {
+		this.paket = paket;
+	}
 
-    public String load(){
-        if (paketId != null) {
-            paket = paketManager.get(paketId);
-        } else {
-            return ERROR;
-        }
+	/**
+	 * Gets the paket id.
+	 * 
+	 * @return the paket id
+	 */
+	public long getPaketId() {
+		return this.paketId;
+	}
 
-        return SUCCESS;
+	/**
+	 * Sets the paket id.
+	 * 
+	 * @param paketId
+	 *            the new paket id
+	 */
+	public void setPaketId(final Long paketId) {
+		this.paketId = paketId;
+	}
 
-    }
+	/**
+	 * Delete.
+	 * 
+	 * @return the string
+	 */
+	public String delete() {
+		try {
+			this.paketManager.remove(this.paketId);
+			this.saveMessage(this.getText("Paket wurde erfolgreich entfernt."));
+		} catch (final DataIntegrityViolationException dive) {
+			this.saveMessage("Dieses Paket wird noch verwendet und kann deshalb nicht entfernt werden.");
+			return Action.ERROR;
+		}
 
-    public String edit() {
-        if (paketId != null) {
-            paket = paketManager.get(paketId);
-        } else {
-            paket = new Paket();
-        }
+		return Action.SUCCESS;
+	}
 
-        return "edit";
-    }
+	/**
+	 * Load.
+	 * 
+	 * @return the string
+	 */
+	public String load() {
+		if (this.paketId != null) {
+			this.paket = this.paketManager.get(this.paketId);
+		} else
+			return Action.ERROR;
 
-    public String save() throws Exception {
+		return Action.SUCCESS;
 
-        if (cancel != null) {
-            return CANCEL;
-        }
+	}
 
-        if (delete != null) {
-            return delete();
-        }
+	/**
+	 * Edits the.
+	 * 
+	 * @return the string
+	 */
+	public String edit() {
+		if (this.paketId != null) {
+			this.paket = this.paketManager.get(this.paketId);
+		} else {
+			this.paket = new Paket();
+		}
 
-        boolean isNew = (paket.getPaketId() == null);
+		return "edit";
+	}
 
-        //Prüfen, ob Paketname angegeben worden ist.
-        if (paket.getPaketName().compareTo("") == 0) {
-            saveMessage(getText("Geben Sie einen Paketnamen ein!"));
-            return "back";
-        }
-        if(paket.getPaketName().length() > 254){
-            saveMessage(getText("Geben Sie bitte einen kürzeren Namen ein!"));
-            return "back";
-        }
+	/**
+	 * Save.
+	 * 
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public String save() throws Exception {
 
-/*        if (isNew){ //create
-            paket = paketManager.save(paket);
-        }
-        else{ //update
-            paket = paketManager.save(paket);
-        }*/
+		if (this.cancel != null)
+			return BaseAction.CANCEL;
 
-        paket = paketManager.save(paket);
+		if (this.delete != null)
+			return this.delete();
 
-        String key = (isNew) ? "Paket wurde erfolgreich erstellt." : "Paket wurde erfolgreich aktualisiert.";
-        saveMessage(getText(key));
+		final boolean isNew = (this.paket.getPaketId() == null);
 
-        return SUCCESS;
-    }
+		// Prï¿½fen, ob Paketname angegeben worden ist.
+		if (this.paket.getPaketName().compareTo("") == 0) {
+			this.saveMessage(this.getText("Geben Sie einen Paketnamen ein!"));
+			return "back";
+		}
+		if (this.paket.getPaketName().length() > 254) {
+			this.saveMessage(this
+					.getText("Geben Sie bitte einen kï¿½rzeren Namen ein!"));
+			return "back";
+		}
+
+		/*
+		 * if (isNew){ //create paket = paketManager.save(paket); } else{
+		 * //update paket = paketManager.save(paket); }
+		 */
+
+		this.paket = this.paketManager.save(this.paket);
+
+		final String key = (isNew) ? "Paket wurde erfolgreich erstellt."
+				: "Paket wurde erfolgreich aktualisiert.";
+		this.saveMessage(this.getText(key));
+
+		return Action.SUCCESS;
+	}
 }

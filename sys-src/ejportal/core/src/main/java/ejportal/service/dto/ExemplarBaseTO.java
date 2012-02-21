@@ -1,150 +1,369 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.service.dto;
 
 import java.util.Date;
 
 /**
- * Created by IntelliJ IDEA.
- * User: mkoerner
- * Date: 04.08.2010
- * Time: 15:00:05
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: mkoerner Date: 04.08.2010 Time: 15:00:05 To
+ * change this template use File | Settings | File Templates.
  */
 public class ExemplarBaseTO {
 
-    private Long exemplarId;
+	/** The exemplar id. */
+	private Long exemplarId;
 
-    private String beteiligung;     /* Werte: Autor, Herausgeber, Mitglied */
-    private String form;            /* Werte: Online, Print, Print + Online, Online Kons-Anteil */
-    private String zugangsart;      /* Werte: Geschenk / Spende, Kauf, kein Abo., Konsortium, Mitgliedschaft */
-    private String status;          /* Werte: bearbeiten, beendet, kein Abo., laufend, zentral bestellt,   */
-    private String bestellnummer;
-    private String kundennummer;
-    private String abonummer;
-    private boolean privatabo;
-    private String exKommentar;
-    private String printexBayern;
-    private Date abbestZum;
-    private String abbestellung;
-    private Date umbestZum;
-    private String umbestellung;
+	/** The beteiligung. */
+	private String beteiligung; /* Werte: Autor, Herausgeber, Mitglied */
 
-    public Long getExemplarId() {
-        return exemplarId;
-    }
+	/** The form. */
+	private String form; /*
+						 * Werte: Online, Print, Print + Online, Online
+						 * Kons-Anteil
+						 */
 
-    public void setExemplarId(Long exemplarId) {
-        this.exemplarId = exemplarId;
-    }
+	/** The zugangsart. */
+	private String zugangsart; /*
+								 * Werte: Geschenk / Spende, Kauf, kein Abo.,
+								 * Konsortium, Mitgliedschaft
+								 */
 
-    public String getBeteiligung() {
-        return beteiligung;
-    }
+	/** The status. */
+	private String status; /*
+							 * Werte: bearbeiten, beendet, kein Abo., laufend,
+							 * zentral bestellt,
+							 */
 
-    public void setBeteiligung(String beteiligung) {
-        this.beteiligung = beteiligung;
-    }
+	/** The bestellnummer. */
+	private String bestellnummer;
 
-    public String getForm() {
-        return form;
-    }
+	/** The kundennummer. */
+	private String kundennummer;
 
-    public void setForm(String form) {
-        this.form = form;
-    }
+	/** The abonummer. */
+	private String abonummer;
 
-    public String getZugangsart() {
-        return zugangsart;
-    }
+	/** The privatabo. */
+	private boolean privatabo;
 
-    public void setZugangsart(String zugangsart) {
-        this.zugangsart = zugangsart;
-    }
+	/** The ex kommentar. */
+	private String exKommentar;
 
-    public String getStatus() {
-        return status;
-    }
+	/** The printex bayern. */
+	private String printexBayern;
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	/** The abbest zum. */
+	private Date abbestZum;
 
-    public String getBestellnummer() {
-        return bestellnummer;
-    }
+	/** The abbestellung. */
+	private String abbestellung;
 
-    public void setBestellnummer(String bestellnummer) {
-        this.bestellnummer = bestellnummer;
-    }
+	/** The umbest zum. */
+	private Date umbestZum;
 
-    public String getKundennummer() {
-        return kundennummer;
-    }
+	/** The umbestellung. */
+	private String umbestellung;
 
-    public void setKundennummer(String kundennummer) {
-        this.kundennummer = kundennummer;
-    }
+	/**
+	 * Gets the exemplar id.
+	 * 
+	 * @return the exemplar id
+	 */
+	public Long getExemplarId() {
+		return this.exemplarId;
+	}
 
-    public String getAbonummer() {
-        return abonummer;
-    }
+	/**
+	 * Sets the exemplar id.
+	 * 
+	 * @param exemplarId
+	 *            the new exemplar id
+	 */
+	public void setExemplarId(final Long exemplarId) {
+		this.exemplarId = exemplarId;
+	}
 
-    public void setAbonummer(String abonummer) {
-        this.abonummer = abonummer;
-    }
+	/**
+	 * Gets the beteiligung.
+	 * 
+	 * @return the beteiligung
+	 */
+	public String getBeteiligung() {
+		return this.beteiligung;
+	}
 
-    public boolean getPrivatabo() {
-        return privatabo;
-    }
+	/**
+	 * Sets the beteiligung.
+	 * 
+	 * @param beteiligung
+	 *            the new beteiligung
+	 */
+	public void setBeteiligung(final String beteiligung) {
+		this.beteiligung = beteiligung;
+	}
 
-    public void setPrivatabo(boolean privatabo) {
-        this.privatabo = privatabo;
-    }
+	/**
+	 * Gets the form.
+	 * 
+	 * @return the form
+	 */
+	public String getForm() {
+		return this.form;
+	}
 
-    public String getExKommentar() {
-        return exKommentar;
-    }
+	/**
+	 * Sets the form.
+	 * 
+	 * @param form
+	 *            the new form
+	 */
+	public void setForm(final String form) {
+		this.form = form;
+	}
 
-    public void setExKommentar(String exKommentar) {
-        this.exKommentar = exKommentar;
-    }
+	/**
+	 * Gets the zugangsart.
+	 * 
+	 * @return the zugangsart
+	 */
+	public String getZugangsart() {
+		return this.zugangsart;
+	}
 
-    public String getPrintexBayern() {
-        return printexBayern;
-    }
+	/**
+	 * Sets the zugangsart.
+	 * 
+	 * @param zugangsart
+	 *            the new zugangsart
+	 */
+	public void setZugangsart(final String zugangsart) {
+		this.zugangsart = zugangsart;
+	}
 
-    public void setPrintexBayern(String printexBayern) {
-        this.printexBayern = printexBayern;
-    }
+	/**
+	 * Gets the status.
+	 * 
+	 * @return the status
+	 */
+	public String getStatus() {
+		return this.status;
+	}
 
-    public Date getAbbestZum() {
-        return abbestZum;
-    }
+	/**
+	 * Sets the status.
+	 * 
+	 * @param status
+	 *            the new status
+	 */
+	public void setStatus(final String status) {
+		this.status = status;
+	}
 
-    public void setAbbestZum(Date abbestZum) {
-        this.abbestZum = abbestZum;
-    }
+	/**
+	 * Gets the bestellnummer.
+	 * 
+	 * @return the bestellnummer
+	 */
+	public String getBestellnummer() {
+		return this.bestellnummer;
+	}
 
-    public String getAbbestellung() {
-        return abbestellung;
-    }
+	/**
+	 * Sets the bestellnummer.
+	 * 
+	 * @param bestellnummer
+	 *            the new bestellnummer
+	 */
+	public void setBestellnummer(final String bestellnummer) {
+		this.bestellnummer = bestellnummer;
+	}
 
-    public void setAbbestellung(String abbestellung) {
-        this.abbestellung = abbestellung;
-    }
+	/**
+	 * Gets the kundennummer.
+	 * 
+	 * @return the kundennummer
+	 */
+	public String getKundennummer() {
+		return this.kundennummer;
+	}
 
-    public Date getUmbestZum() {
-        return umbestZum;
-    }
+	/**
+	 * Sets the kundennummer.
+	 * 
+	 * @param kundennummer
+	 *            the new kundennummer
+	 */
+	public void setKundennummer(final String kundennummer) {
+		this.kundennummer = kundennummer;
+	}
 
-    public void setUmbestZum(Date umbestZum) {
-        this.umbestZum = umbestZum;
-    }
+	/**
+	 * Gets the abonummer.
+	 * 
+	 * @return the abonummer
+	 */
+	public String getAbonummer() {
+		return this.abonummer;
+	}
 
-    public String getUmbestellung() {
-        return umbestellung;
-    }
+	/**
+	 * Sets the abonummer.
+	 * 
+	 * @param abonummer
+	 *            the new abonummer
+	 */
+	public void setAbonummer(final String abonummer) {
+		this.abonummer = abonummer;
+	}
 
-    public void setUmbestellung(String umbestellung) {
-        this.umbestellung = umbestellung;
-    }
+	/**
+	 * Gets the privatabo.
+	 * 
+	 * @return the privatabo
+	 */
+	public boolean getPrivatabo() {
+		return this.privatabo;
+	}
+
+	/**
+	 * Sets the privatabo.
+	 * 
+	 * @param privatabo
+	 *            the new privatabo
+	 */
+	public void setPrivatabo(final boolean privatabo) {
+		this.privatabo = privatabo;
+	}
+
+	/**
+	 * Gets the ex kommentar.
+	 * 
+	 * @return the ex kommentar
+	 */
+	public String getExKommentar() {
+		return this.exKommentar;
+	}
+
+	/**
+	 * Sets the ex kommentar.
+	 * 
+	 * @param exKommentar
+	 *            the new ex kommentar
+	 */
+	public void setExKommentar(final String exKommentar) {
+		this.exKommentar = exKommentar;
+	}
+
+	/**
+	 * Gets the printex bayern.
+	 * 
+	 * @return the printex bayern
+	 */
+	public String getPrintexBayern() {
+		return this.printexBayern;
+	}
+
+	/**
+	 * Sets the printex bayern.
+	 * 
+	 * @param printexBayern
+	 *            the new printex bayern
+	 */
+	public void setPrintexBayern(final String printexBayern) {
+		this.printexBayern = printexBayern;
+	}
+
+	/**
+	 * Gets the abbest zum.
+	 * 
+	 * @return the abbest zum
+	 */
+	public Date getAbbestZum() {
+		return this.abbestZum;
+	}
+
+	/**
+	 * Sets the abbest zum.
+	 * 
+	 * @param abbestZum
+	 *            the new abbest zum
+	 */
+	public void setAbbestZum(final Date abbestZum) {
+		this.abbestZum = abbestZum;
+	}
+
+	/**
+	 * Gets the abbestellung.
+	 * 
+	 * @return the abbestellung
+	 */
+	public String getAbbestellung() {
+		return this.abbestellung;
+	}
+
+	/**
+	 * Sets the abbestellung.
+	 * 
+	 * @param abbestellung
+	 *            the new abbestellung
+	 */
+	public void setAbbestellung(final String abbestellung) {
+		this.abbestellung = abbestellung;
+	}
+
+	/**
+	 * Gets the umbest zum.
+	 * 
+	 * @return the umbest zum
+	 */
+	public Date getUmbestZum() {
+		return this.umbestZum;
+	}
+
+	/**
+	 * Sets the umbest zum.
+	 * 
+	 * @param umbestZum
+	 *            the new umbest zum
+	 */
+	public void setUmbestZum(final Date umbestZum) {
+		this.umbestZum = umbestZum;
+	}
+
+	/**
+	 * Gets the umbestellung.
+	 * 
+	 * @return the umbestellung
+	 */
+	public String getUmbestellung() {
+		return this.umbestellung;
+	}
+
+	/**
+	 * Sets the umbestellung.
+	 * 
+	 * @param umbestellung
+	 *            the new umbestellung
+	 */
+	public void setUmbestellung(final String umbestellung) {
+		this.umbestellung = umbestellung;
+	}
 }

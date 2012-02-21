@@ -1,130 +1,298 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.appfuse.model.BaseObject;
 
-import javax.persistence.*;
-
 /**
- * Created by IntelliJ IDEA.
- * User: mkoerner
- * Date: 09.08.2010
- * Time: 15:35:49
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: mkoerner Date: 09.08.2010 Time: 15:35:49 To
+ * change this template use File | Settings | File Templates.
  */
 
 @Entity
 public class Besteller extends BaseObject {
 
-    private Long bestellerId;
-    private Sigel sigel;
-    private String anrede;
-    private String bestellerName;
-    private String funktion;
-    private String projekt;
-    private float einzahlungErwuenscht;
-    private float einzahlungFestgelegt;
+	/** The besteller id. */
+	private Long bestellerId;
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getBestellerId() {
-        return bestellerId;
-    }
+	/** The sigel. */
+	private Sigel sigel;
 
-    public void setBestellerId(Long bestellerId) {
-        this.bestellerId = bestellerId;
-    }
+	/** The anrede. */
+	private String anrede;
 
-    @ManyToOne
-    public Sigel getSigel() {
-        return sigel;
-    }
+	/** The besteller name. */
+	private String bestellerName;
 
-    public void setSigel(Sigel sigel) {
-        this.sigel = sigel;
-    }
+	/** The funktion. */
+	private String funktion;
 
-    public String getAnrede() {
-        return anrede;
-    }
+	/** The projekt. */
+	private String projekt;
 
-    public void setAnrede(String anrede) {
-        this.anrede = anrede;
-    }
+	/** The einzahlung erwuenscht. */
+	private float einzahlungErwuenscht;
 
-    public String getBestellerName() {
-        return bestellerName;
-    }
+	/** The einzahlung festgelegt. */
+	private float einzahlungFestgelegt;
 
-    public void setBestellerName(String bestellerName) {
-        this.bestellerName = bestellerName;
-    }
+	/**
+	 * Gets the besteller id.
+	 * 
+	 * @return the besteller id
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public Long getBestellerId() {
+		return this.bestellerId;
+	}
 
-    public String getFunktion() {
-        return funktion;
-    }
+	/**
+	 * Sets the besteller id.
+	 * 
+	 * @param bestellerId
+	 *            the new besteller id
+	 */
+	public void setBestellerId(final Long bestellerId) {
+		this.bestellerId = bestellerId;
+	}
 
-    public void setFunktion(String funktion) {
-        this.funktion = funktion;
-    }
+	/**
+	 * Gets the sigel.
+	 * 
+	 * @return the sigel
+	 */
+	@ManyToOne
+	public Sigel getSigel() {
+		return this.sigel;
+	}
 
-    public String getProjekt() {
-        return projekt;
-    }
+	/**
+	 * Sets the sigel.
+	 * 
+	 * @param sigel
+	 *            the new sigel
+	 */
+	public void setSigel(final Sigel sigel) {
+		this.sigel = sigel;
+	}
 
-    public void setProjekt(String projekt) {
-        this.projekt = projekt;
-    }
+	/**
+	 * Gets the anrede.
+	 * 
+	 * @return the anrede
+	 */
+	public String getAnrede() {
+		return this.anrede;
+	}
 
-    public float getEinzahlungErwuenscht() {
-        return einzahlungErwuenscht;
-    }
+	/**
+	 * Sets the anrede.
+	 * 
+	 * @param anrede
+	 *            the new anrede
+	 */
+	public void setAnrede(final String anrede) {
+		this.anrede = anrede;
+	}
 
-    public void setEinzahlungErwuenscht(float einzahlungErwuenscht) {
-        this.einzahlungErwuenscht = einzahlungErwuenscht;
-    }
+	/**
+	 * Gets the besteller name.
+	 * 
+	 * @return the besteller name
+	 */
+	public String getBestellerName() {
+		return this.bestellerName;
+	}
 
-    public float getEinzahlungFestgelegt() {
-        return einzahlungFestgelegt;
-    }
+	/**
+	 * Sets the besteller name.
+	 * 
+	 * @param bestellerName
+	 *            the new besteller name
+	 */
+	public void setBestellerName(final String bestellerName) {
+		this.bestellerName = bestellerName;
+	}
 
-    public void setEinzahlungFestgelegt(float einzahlungFestgelegt) {
-        this.einzahlungFestgelegt = einzahlungFestgelegt;
-    }
+	/**
+	 * Gets the funktion.
+	 * 
+	 * @return the funktion
+	 */
+	public String getFunktion() {
+		return this.funktion;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	/**
+	 * Sets the funktion.
+	 * 
+	 * @param funktion
+	 *            the new funktion
+	 */
+	public void setFunktion(final String funktion) {
+		this.funktion = funktion;
+	}
 
-        Besteller besteller = (Besteller) o;
+	/**
+	 * Gets the projekt.
+	 * 
+	 * @return the projekt
+	 */
+	public String getProjekt() {
+		return this.projekt;
+	}
 
-        if (Float.compare(besteller.einzahlungErwuenscht, einzahlungErwuenscht) != 0) return false;
-        if (Float.compare(besteller.einzahlungFestgelegt, einzahlungFestgelegt) != 0) return false;
-        if (anrede != null ? !anrede.equals(besteller.anrede) : besteller.anrede != null) return false;
-        if (bestellerId != null ? !bestellerId.equals(besteller.bestellerId) : besteller.bestellerId != null)
-            return false;
-        if (bestellerName != null ? !bestellerName.equals(besteller.bestellerName) : besteller.bestellerName != null)
-            return false;
-        if (funktion != null ? !funktion.equals(besteller.funktion) : besteller.funktion != null) return false;
-        if (projekt != null ? !projekt.equals(besteller.projekt) : besteller.projekt != null) return false;
-        if (sigel != null ? !sigel.equals(besteller.sigel) : besteller.sigel != null) return false;
+	/**
+	 * Sets the projekt.
+	 * 
+	 * @param projekt
+	 *            the new projekt
+	 */
+	public void setProjekt(final String projekt) {
+		this.projekt = projekt;
+	}
 
-        return true;
-    }
+	/**
+	 * Gets the einzahlung erwuenscht.
+	 * 
+	 * @return the einzahlung erwuenscht
+	 */
+	public float getEinzahlungErwuenscht() {
+		return this.einzahlungErwuenscht;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = bestellerId != null ? bestellerId.hashCode() : 0;
-        result = 31 * result + (sigel != null ? sigel.hashCode() : 0);
-        result = 31 * result + (anrede != null ? anrede.hashCode() : 0);
-        result = 31 * result + (bestellerName != null ? bestellerName.hashCode() : 0);
-        result = 31 * result + (funktion != null ? funktion.hashCode() : 0);
-        result = 31 * result + (projekt != null ? projekt.hashCode() : 0);
-        result = 31 * result + (einzahlungErwuenscht != +0.0f ? Float.floatToIntBits(einzahlungErwuenscht) : 0);
-        result = 31 * result + (einzahlungFestgelegt != +0.0f ? Float.floatToIntBits(einzahlungFestgelegt) : 0);
-        return result;
-    }
+	/**
+	 * Sets the einzahlung erwuenscht.
+	 * 
+	 * @param einzahlungErwuenscht
+	 *            the new einzahlung erwuenscht
+	 */
+	public void setEinzahlungErwuenscht(final float einzahlungErwuenscht) {
+		this.einzahlungErwuenscht = einzahlungErwuenscht;
+	}
 
-    public String toString() {
-        return anrede +" "+ bestellerName;
-    }
+	/**
+	 * Gets the einzahlung festgelegt.
+	 * 
+	 * @return the einzahlung festgelegt
+	 */
+	public float getEinzahlungFestgelegt() {
+		return this.einzahlungFestgelegt;
+	}
+
+	/**
+	 * Sets the einzahlung festgelegt.
+	 * 
+	 * @param einzahlungFestgelegt
+	 *            the new einzahlung festgelegt
+	 */
+	public void setEinzahlungFestgelegt(final float einzahlungFestgelegt) {
+		this.einzahlungFestgelegt = einzahlungFestgelegt;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o)
+			return true;
+		if ((o == null) || (this.getClass() != o.getClass()))
+			return false;
+
+		final Besteller besteller = (Besteller) o;
+
+		if (Float.compare(besteller.einzahlungErwuenscht,
+				this.einzahlungErwuenscht) != 0)
+			return false;
+		if (Float.compare(besteller.einzahlungFestgelegt,
+				this.einzahlungFestgelegt) != 0)
+			return false;
+		if (this.anrede != null ? !this.anrede.equals(besteller.anrede)
+				: besteller.anrede != null)
+			return false;
+		if (this.bestellerId != null ? !this.bestellerId
+				.equals(besteller.bestellerId) : besteller.bestellerId != null)
+			return false;
+		if (this.bestellerName != null ? !this.bestellerName
+				.equals(besteller.bestellerName)
+				: besteller.bestellerName != null)
+			return false;
+		if (this.funktion != null ? !this.funktion.equals(besteller.funktion)
+				: besteller.funktion != null)
+			return false;
+		if (this.projekt != null ? !this.projekt.equals(besteller.projekt)
+				: besteller.projekt != null)
+			return false;
+		if (this.sigel != null ? !this.sigel.equals(besteller.sigel)
+				: besteller.sigel != null)
+			return false;
+
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int result = this.bestellerId != null ? this.bestellerId.hashCode() : 0;
+		result = (31 * result)
+				+ (this.sigel != null ? this.sigel.hashCode() : 0);
+		result = (31 * result)
+				+ (this.anrede != null ? this.anrede.hashCode() : 0);
+		result = (31 * result)
+				+ (this.bestellerName != null ? this.bestellerName.hashCode()
+						: 0);
+		result = (31 * result)
+				+ (this.funktion != null ? this.funktion.hashCode() : 0);
+		result = (31 * result)
+				+ (this.projekt != null ? this.projekt.hashCode() : 0);
+		result = (31 * result)
+				+ (this.einzahlungErwuenscht != +0.0f ? Float
+						.floatToIntBits(this.einzahlungErwuenscht) : 0);
+		result = (31 * result)
+				+ (this.einzahlungFestgelegt != +0.0f ? Float
+						.floatToIntBits(this.einzahlungFestgelegt) : 0);
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#toString()
+	 */
+	@Override
+	public String toString() {
+		return this.anrede + " " + this.bestellerName;
+	}
 }

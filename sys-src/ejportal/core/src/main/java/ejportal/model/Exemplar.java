@@ -1,5 +1,24 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.model;
-
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,244 +28,557 @@ package ejportal.model;
  * To change this template use File | Settings | File Templates.
  */
 
-import org.appfuse.model.BaseObject;
-import javax.persistence.*;
-import java.lang.Long;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import org.appfuse.model.BaseObject;
+
+/**
+ * The Class Exemplar.
+ */
 @Entity
-public class Exemplar extends BaseObject  {
+public class Exemplar extends BaseObject {
 
-    private Long exemplarId;
+	/** The exemplar id. */
+	private Long exemplarId;
 
-    private Sigel besteller;
-    private Sigel eigentuemer;
-    private Sigel zustaendigeBib;
-    private Journal journal;
-    private Institution lieferant;
+	/** The besteller. */
+	private Sigel besteller;
 
-    private String beteiligung;     /* Werte: Autor, Herausgeber, Mitglied */
-    private String form;            /* Werte: Online, Print, Print + Online, Online Kons-Anteil */
-    private String zugangsart;      /* Werte: Geschenk / Spende, Kauf, kein Abo., Konsortium, Mitgliedschaft */
-    private String status;          /* Werte: bearbeiten, beendet, kein Abo., laufend, zentral bestellt,   */
-    private String bestellnummer;
-    private String kundennummer;
-    private String abonummer;
-    private boolean privatabo;
-    private String exKommentar;
-    private String printexBayern;
-    private Date abbestZum;
-    private String abbestellung;    /*abbestellt, Abbestellungswunsch*/
-    private Date umbestZum;
-    private String umbestellung;
+	/** The eigentuemer. */
+	private Sigel eigentuemer;
 
+	/** The zustaendige bib. */
+	private Sigel zustaendigeBib;
 
-    public String toString(){
-        return "";
-    }
+	/** The journal. */
+	private Journal journal;
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getExemplarId() {
-        return exemplarId;
-    }
+	/** The lieferant. */
+	private Institution lieferant;
 
-    public void setExemplarId(Long exemplarId) {
-        this.exemplarId = exemplarId;
-    }
+	/** The beteiligung. */
+	private String beteiligung; /* Werte: Autor, Herausgeber, Mitglied */
 
-    @ManyToOne
-    public Sigel getBesteller() {
-        return besteller;
-    }
+	/** The form. */
+	private String form; /*
+						 * Werte: Online, Print, Print + Online, Online
+						 * Kons-Anteil
+						 */
 
-    public void setBesteller(Sigel besteller) {
-        this.besteller = besteller;
-    }
+	/** The zugangsart. */
+	private String zugangsart; /*
+								 * Werte: Geschenk / Spende, Kauf, kein Abo.,
+								 * Konsortium, Mitgliedschaft
+								 */
 
-    @ManyToOne
-    public Sigel getEigentuemer() {
-        return eigentuemer;
-    }
+	/** The status. */
+	private String status; /*
+							 * Werte: bearbeiten, beendet, kein Abo., laufend,
+							 * zentral bestellt,
+							 */
 
-    public void setEigentuemer(Sigel eigentuemer) {
-        this.eigentuemer = eigentuemer;
-    }
+	/** The bestellnummer. */
+	private String bestellnummer;
 
-    @ManyToOne
-    public Sigel getZustaendigeBib() {
-        return zustaendigeBib;
-    }
+	/** The kundennummer. */
+	private String kundennummer;
 
-    public void setZustaendigeBib(Sigel zustaendigeBib) {
-        this.zustaendigeBib = zustaendigeBib;
-    }
+	/** The abonummer. */
+	private String abonummer;
 
-    @ManyToOne
-    public Journal getJournal() {
-        return journal;
-    }
+	/** The privatabo. */
+	private boolean privatabo;
 
-    public void setJournal(Journal journal) {
-        this.journal = journal;
-    }
+	/** The ex kommentar. */
+	private String exKommentar;
 
-    @ManyToOne
-    public Institution getLieferant() {
-        return lieferant;
-    }
+	/** The printex bayern. */
+	private String printexBayern;
 
-    
-    public void setLieferant(Institution lieferant) {
-        this.lieferant = lieferant;
-    }
+	/** The abbest zum. */
+	private Date abbestZum;
 
-    public String getBeteiligung() {
-        return beteiligung;
-    }
+	/** The abbestellung. */
+	private String abbestellung; /* abbestellt, Abbestellungswunsch */
 
-    public void setBeteiligung(String beteiligung) {
-        this.beteiligung = beteiligung;
-    }
+	/** The umbest zum. */
+	private Date umbestZum;
 
-    public String getForm() {
-        return form;
-    }
+	/** The umbestellung. */
+	private String umbestellung;
 
-    public void setForm(String form) {
-        this.form = form;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#toString()
+	 */
+	@Override
+	public String toString() {
+		return "";
+	}
 
-    public String getZugangsart() {
-        return zugangsart;
-    }
+	/**
+	 * Gets the exemplar id.
+	 * 
+	 * @return the exemplar id
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public Long getExemplarId() {
+		return this.exemplarId;
+	}
 
-    public void setZugangsart(String zugangsart) {
-        this.zugangsart = zugangsart;
-    }
+	/**
+	 * Sets the exemplar id.
+	 * 
+	 * @param exemplarId
+	 *            the new exemplar id
+	 */
+	public void setExemplarId(final Long exemplarId) {
+		this.exemplarId = exemplarId;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	/**
+	 * Gets the besteller.
+	 * 
+	 * @return the besteller
+	 */
+	@ManyToOne
+	public Sigel getBesteller() {
+		return this.besteller;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	/**
+	 * Sets the besteller.
+	 * 
+	 * @param besteller
+	 *            the new besteller
+	 */
+	public void setBesteller(final Sigel besteller) {
+		this.besteller = besteller;
+	}
 
-    public String getBestellnummer() {
-        return bestellnummer;
-    }
+	/**
+	 * Gets the eigentuemer.
+	 * 
+	 * @return the eigentuemer
+	 */
+	@ManyToOne
+	public Sigel getEigentuemer() {
+		return this.eigentuemer;
+	}
 
-    public void setBestellnummer(String bestellnummer) {
-        this.bestellnummer = bestellnummer;
-    }
+	/**
+	 * Sets the eigentuemer.
+	 * 
+	 * @param eigentuemer
+	 *            the new eigentuemer
+	 */
+	public void setEigentuemer(final Sigel eigentuemer) {
+		this.eigentuemer = eigentuemer;
+	}
 
-    public String getKundennummer() {
-        return kundennummer;
-    }
+	/**
+	 * Gets the zustaendige bib.
+	 * 
+	 * @return the zustaendige bib
+	 */
+	@ManyToOne
+	public Sigel getZustaendigeBib() {
+		return this.zustaendigeBib;
+	}
 
-    public void setKundennummer(String kundennummer) {
-        this.kundennummer = kundennummer;
-    }
+	/**
+	 * Sets the zustaendige bib.
+	 * 
+	 * @param zustaendigeBib
+	 *            the new zustaendige bib
+	 */
+	public void setZustaendigeBib(final Sigel zustaendigeBib) {
+		this.zustaendigeBib = zustaendigeBib;
+	}
 
-    public String getAbonummer() {
-        return abonummer;
-    }
+	/**
+	 * Gets the journal.
+	 * 
+	 * @return the journal
+	 */
+	@ManyToOne
+	public Journal getJournal() {
+		return this.journal;
+	}
 
-    public void setAbonummer(String abonummer) {
-        this.abonummer = abonummer;
-    }
+	/**
+	 * Sets the journal.
+	 * 
+	 * @param journal
+	 *            the new journal
+	 */
+	public void setJournal(final Journal journal) {
+		this.journal = journal;
+	}
 
-    public boolean getPrivatabo() {
-        return privatabo;
-    }
+	/**
+	 * Gets the lieferant.
+	 * 
+	 * @return the lieferant
+	 */
+	@ManyToOne
+	public Institution getLieferant() {
+		return this.lieferant;
+	}
 
-    public void setPrivatabo(boolean privatabo) {
-        this.privatabo = privatabo;
-    }
+	/**
+	 * Sets the lieferant.
+	 * 
+	 * @param lieferant
+	 *            the new lieferant
+	 */
+	public void setLieferant(final Institution lieferant) {
+		this.lieferant = lieferant;
+	}
 
-    @Column(length = 2000)
-    public String getExKommentar() {
-        return exKommentar;
-    }
+	/**
+	 * Gets the beteiligung.
+	 * 
+	 * @return the beteiligung
+	 */
+	public String getBeteiligung() {
+		return this.beteiligung;
+	}
 
-    public void setExKommentar(String exKommentar) {
-        this.exKommentar = exKommentar;
-    }
+	/**
+	 * Sets the beteiligung.
+	 * 
+	 * @param beteiligung
+	 *            the new beteiligung
+	 */
+	public void setBeteiligung(final String beteiligung) {
+		this.beteiligung = beteiligung;
+	}
 
-    public String getPrintexBayern() {
-        return printexBayern;
-    }
+	/**
+	 * Gets the form.
+	 * 
+	 * @return the form
+	 */
+	public String getForm() {
+		return this.form;
+	}
 
-    public void setPrintexBayern(String printexBayern) {
-        this.printexBayern = printexBayern;
-    }
+	/**
+	 * Sets the form.
+	 * 
+	 * @param form
+	 *            the new form
+	 */
+	public void setForm(final String form) {
+		this.form = form;
+	}
 
-    public Date getAbbestZum() {
-        return abbestZum;
-    }
+	/**
+	 * Gets the zugangsart.
+	 * 
+	 * @return the zugangsart
+	 */
+	public String getZugangsart() {
+		return this.zugangsart;
+	}
 
-    public void setAbbestZum(Date abbestZum) {
-        this.abbestZum = abbestZum;
-    }
+	/**
+	 * Sets the zugangsart.
+	 * 
+	 * @param zugangsart
+	 *            the new zugangsart
+	 */
+	public void setZugangsart(final String zugangsart) {
+		this.zugangsart = zugangsart;
+	}
 
-    public String getAbbestellung() {
-        return abbestellung;
-    }
+	/**
+	 * Gets the status.
+	 * 
+	 * @return the status
+	 */
+	public String getStatus() {
+		return this.status;
+	}
 
-    public void setAbbestellung(String abbestellung) {
-        this.abbestellung = abbestellung;
-    }
+	/**
+	 * Sets the status.
+	 * 
+	 * @param status
+	 *            the new status
+	 */
+	public void setStatus(final String status) {
+		this.status = status;
+	}
 
-    public Date getUmbestZum() {
-        return umbestZum;
-    }
+	/**
+	 * Gets the bestellnummer.
+	 * 
+	 * @return the bestellnummer
+	 */
+	public String getBestellnummer() {
+		return this.bestellnummer;
+	}
 
-    public void setUmbestZum(Date umbestZum) {
-        this.umbestZum = umbestZum;
-    }
+	/**
+	 * Sets the bestellnummer.
+	 * 
+	 * @param bestellnummer
+	 *            the new bestellnummer
+	 */
+	public void setBestellnummer(final String bestellnummer) {
+		this.bestellnummer = bestellnummer;
+	}
 
-    public String getUmbestellung() {
-        return umbestellung;
-    }
+	/**
+	 * Gets the kundennummer.
+	 * 
+	 * @return the kundennummer
+	 */
+	public String getKundennummer() {
+		return this.kundennummer;
+	}
 
-    public void setUmbestellung(String umbestellung) {
-        this.umbestellung = umbestellung;
-    }
+	/**
+	 * Sets the kundennummer.
+	 * 
+	 * @param kundennummer
+	 *            the new kundennummer
+	 */
+	public void setKundennummer(final String kundennummer) {
+		this.kundennummer = kundennummer;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Exemplar)) return false;
+	/**
+	 * Gets the abonummer.
+	 * 
+	 * @return the abonummer
+	 */
+	public String getAbonummer() {
+		return this.abonummer;
+	}
 
-        Exemplar exemplar = (Exemplar) o;
+	/**
+	 * Sets the abonummer.
+	 * 
+	 * @param abonummer
+	 *            the new abonummer
+	 */
+	public void setAbonummer(final String abonummer) {
+		this.abonummer = abonummer;
+	}
 
-        if (exemplarId != exemplar.exemplarId) return false;
+	/**
+	 * Gets the privatabo.
+	 * 
+	 * @return the privatabo
+	 */
+	public boolean getPrivatabo() {
+		return this.privatabo;
+	}
 
-        return true;
-    }
+	/**
+	 * Sets the privatabo.
+	 * 
+	 * @param privatabo
+	 *            the new privatabo
+	 */
+	public void setPrivatabo(final boolean privatabo) {
+		this.privatabo = privatabo;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = exemplarId != null ? exemplarId.hashCode() : 0;
-        result = 31 * result + (besteller != null ? besteller.hashCode() : 0);
-        result = 31 * result + (eigentuemer != null ? eigentuemer.hashCode() : 0);
-        result = 31 * result + (zustaendigeBib != null ? zustaendigeBib.hashCode() : 0);
-        result = 31 * result + (journal != null ? journal.hashCode() : 0);
-        result = 31 * result + (lieferant != null ? lieferant.hashCode() : 0);
-        result = 31 * result + (beteiligung != null ? beteiligung.hashCode() : 0);
-        result = 31 * result + (form != null ? form.hashCode() : 0);
-        result = 31 * result + (zugangsart != null ? zugangsart.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (bestellnummer != null ? bestellnummer.hashCode() : 0);
-        result = 31 * result + (kundennummer != null ? kundennummer.hashCode() : 0);
-        result = 31 * result + (abonummer != null ? abonummer.hashCode() : 0);
-        result = 31 * result + (privatabo ? 1 : 0);
-        result = 31 * result + (exKommentar != null ? exKommentar.hashCode() : 0);
-        result = 31 * result + (printexBayern != null ? printexBayern.hashCode() : 0);
-        result = 31 * result + (abbestZum != null ? abbestZum.hashCode() : 0);
-        result = 31 * result + (abbestellung != null ? abbestellung.hashCode() : 0);
-        result = 31 * result + (umbestZum != null ? umbestZum.hashCode() : 0);
-        result = 31 * result + (umbestellung != null ? umbestellung.hashCode() : 0);
-        return result;
-    }
+	/**
+	 * Gets the ex kommentar.
+	 * 
+	 * @return the ex kommentar
+	 */
+	@Column(length = 2000)
+	public String getExKommentar() {
+		return this.exKommentar;
+	}
+
+	/**
+	 * Sets the ex kommentar.
+	 * 
+	 * @param exKommentar
+	 *            the new ex kommentar
+	 */
+	public void setExKommentar(final String exKommentar) {
+		this.exKommentar = exKommentar;
+	}
+
+	/**
+	 * Gets the printex bayern.
+	 * 
+	 * @return the printex bayern
+	 */
+	public String getPrintexBayern() {
+		return this.printexBayern;
+	}
+
+	/**
+	 * Sets the printex bayern.
+	 * 
+	 * @param printexBayern
+	 *            the new printex bayern
+	 */
+	public void setPrintexBayern(final String printexBayern) {
+		this.printexBayern = printexBayern;
+	}
+
+	/**
+	 * Gets the abbest zum.
+	 * 
+	 * @return the abbest zum
+	 */
+	public Date getAbbestZum() {
+		return this.abbestZum;
+	}
+
+	/**
+	 * Sets the abbest zum.
+	 * 
+	 * @param abbestZum
+	 *            the new abbest zum
+	 */
+	public void setAbbestZum(final Date abbestZum) {
+		this.abbestZum = abbestZum;
+	}
+
+	/**
+	 * Gets the abbestellung.
+	 * 
+	 * @return the abbestellung
+	 */
+	public String getAbbestellung() {
+		return this.abbestellung;
+	}
+
+	/**
+	 * Sets the abbestellung.
+	 * 
+	 * @param abbestellung
+	 *            the new abbestellung
+	 */
+	public void setAbbestellung(final String abbestellung) {
+		this.abbestellung = abbestellung;
+	}
+
+	/**
+	 * Gets the umbest zum.
+	 * 
+	 * @return the umbest zum
+	 */
+	public Date getUmbestZum() {
+		return this.umbestZum;
+	}
+
+	/**
+	 * Sets the umbest zum.
+	 * 
+	 * @param umbestZum
+	 *            the new umbest zum
+	 */
+	public void setUmbestZum(final Date umbestZum) {
+		this.umbestZum = umbestZum;
+	}
+
+	/**
+	 * Gets the umbestellung.
+	 * 
+	 * @return the umbestellung
+	 */
+	public String getUmbestellung() {
+		return this.umbestellung;
+	}
+
+	/**
+	 * Sets the umbestellung.
+	 * 
+	 * @param umbestellung
+	 *            the new umbestellung
+	 */
+	public void setUmbestellung(final String umbestellung) {
+		this.umbestellung = umbestellung;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Exemplar))
+			return false;
+
+		final Exemplar exemplar = (Exemplar) o;
+
+		if (this.exemplarId != exemplar.exemplarId)
+			return false;
+
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int result = this.exemplarId != null ? this.exemplarId.hashCode() : 0;
+		result = (31 * result)
+				+ (this.besteller != null ? this.besteller.hashCode() : 0);
+		result = (31 * result)
+				+ (this.eigentuemer != null ? this.eigentuemer.hashCode() : 0);
+		result = (31 * result)
+				+ (this.zustaendigeBib != null ? this.zustaendigeBib.hashCode()
+						: 0);
+		result = (31 * result)
+				+ (this.journal != null ? this.journal.hashCode() : 0);
+		result = (31 * result)
+				+ (this.lieferant != null ? this.lieferant.hashCode() : 0);
+		result = (31 * result)
+				+ (this.beteiligung != null ? this.beteiligung.hashCode() : 0);
+		result = (31 * result) + (this.form != null ? this.form.hashCode() : 0);
+		result = (31 * result)
+				+ (this.zugangsart != null ? this.zugangsart.hashCode() : 0);
+		result = (31 * result)
+				+ (this.status != null ? this.status.hashCode() : 0);
+		result = (31 * result)
+				+ (this.bestellnummer != null ? this.bestellnummer.hashCode()
+						: 0);
+		result = (31 * result)
+				+ (this.kundennummer != null ? this.kundennummer.hashCode() : 0);
+		result = (31 * result)
+				+ (this.abonummer != null ? this.abonummer.hashCode() : 0);
+		result = (31 * result) + (this.privatabo ? 1 : 0);
+		result = (31 * result)
+				+ (this.exKommentar != null ? this.exKommentar.hashCode() : 0);
+		result = (31 * result)
+				+ (this.printexBayern != null ? this.printexBayern.hashCode()
+						: 0);
+		result = (31 * result)
+				+ (this.abbestZum != null ? this.abbestZum.hashCode() : 0);
+		result = (31 * result)
+				+ (this.abbestellung != null ? this.abbestellung.hashCode() : 0);
+		result = (31 * result)
+				+ (this.umbestZum != null ? this.umbestZum.hashCode() : 0);
+		result = (31 * result)
+				+ (this.umbestellung != null ? this.umbestellung.hashCode() : 0);
+		return result;
+	}
 }

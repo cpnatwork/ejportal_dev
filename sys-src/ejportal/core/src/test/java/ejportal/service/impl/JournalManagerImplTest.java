@@ -1,3 +1,23 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.service.impl;
 
 /**
@@ -11,105 +31,161 @@ package ejportal.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import ejportal.dao.*;
-import ejportal.model.Journal;
 import org.appfuse.service.impl.BaseManagerMockTestCase;
-
 import org.jmock.Expectations;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
+import ejportal.dao.BibliotheksmitarbeiterDao;
+import ejportal.dao.ExemplarDao;
+import ejportal.dao.FachDao;
+import ejportal.dao.InstitutionDao;
+import ejportal.dao.JournalDao;
+import ejportal.dao.KonsortiumDao;
+import ejportal.dao.PaketDao;
+import ejportal.model.Journal;
+
+/**
+ * The Class JournalManagerImplTest.
+ */
 public class JournalManagerImplTest extends BaseManagerMockTestCase {
-    private JournalManagerImpl manager = null;
-    private JournalDao journalDao = null;
-    private InstitutionDao institutionDao;
-    private KonsortiumDao konsortiumDao;
-    private PaketDao paketDao;
-    private FachDao fachDao;
-    private BibliotheksmitarbeiterDao bibliotheksmitarbeiterDao;
-    private ExemplarDao exemplarDao;
 
-    @Before
-    public void setUp() {
-        journalDao = context.mock(JournalDao.class);
-        institutionDao = context.mock(InstitutionDao.class);
-        konsortiumDao = context.mock(KonsortiumDao.class);
-        paketDao = context.mock(PaketDao.class);
-        fachDao = context.mock(FachDao.class);
-        bibliotheksmitarbeiterDao = context.mock(BibliotheksmitarbeiterDao.class);
-        exemplarDao = context.mock(ExemplarDao.class);
-        manager = new JournalManagerImpl(journalDao, institutionDao, konsortiumDao, paketDao, fachDao, exemplarDao, bibliotheksmitarbeiterDao);
-    }
+	/** The manager. */
+	private JournalManagerImpl manager = null;
 
-    @After
-    public void tearDown() {
-        manager = null;
-    }
+	/** The journal dao. */
+	private JournalDao journalDao = null;
 
-    @Test
-    public void testGetJournal() {
-        log.debug("testing get...");
+	/** The institution dao. */
+	private InstitutionDao institutionDao;
 
-        final Long id = 7L;
-        final Journal journal = new Journal();
+	/** The konsortium dao. */
+	private KonsortiumDao konsortiumDao;
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(journalDao).get(with(equal(id)));
-            will(returnValue(journal));
-        }});
+	/** The paket dao. */
+	private PaketDao paketDao;
 
-        Journal result = manager.get(id);
-        assertSame(journal, result);
-    }
+	/** The fach dao. */
+	private FachDao fachDao;
 
-    @Test
-    public void testGetJournals() {
-        log.debug("testing getAll...");
+	/** The bibliotheksmitarbeiter dao. */
+	private BibliotheksmitarbeiterDao bibliotheksmitarbeiterDao;
 
-        final List journals = new ArrayList();
+	/** The exemplar dao. */
+	private ExemplarDao exemplarDao;
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(journalDao).getAll();
-            will(returnValue(journals));
-        }});
+	/**
+	 * Sets the up.
+	 */
+	@Before
+	public void setUp() {
+		this.journalDao = this.context.mock(JournalDao.class);
+		this.institutionDao = this.context.mock(InstitutionDao.class);
+		this.konsortiumDao = this.context.mock(KonsortiumDao.class);
+		this.paketDao = this.context.mock(PaketDao.class);
+		this.fachDao = this.context.mock(FachDao.class);
+		this.bibliotheksmitarbeiterDao = this.context
+				.mock(BibliotheksmitarbeiterDao.class);
+		this.exemplarDao = this.context.mock(ExemplarDao.class);
+		this.manager = new JournalManagerImpl(this.journalDao,
+				this.institutionDao, this.konsortiumDao, this.paketDao,
+				this.fachDao, this.exemplarDao, this.bibliotheksmitarbeiterDao);
+	}
 
-        List result = manager.getAll();
+	/**
+	 * Tear down.
+	 */
+	@After
+	public void tearDown() {
+		this.manager = null;
+	}
 
-        assertSame(journals, result);
-    }
+	/**
+	 * Test get journal.
+	 */
+	@Test
+	public void testGetJournal() {
+		this.log.debug("testing get...");
 
-    @Test
-    public void testSaveJournal() {
-        log.debug("testing save...");
+		final Long id = 7L;
+		final Journal journal = new Journal();
 
-        final Journal journal = new Journal();
-        // enter all required fields
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(JournalManagerImplTest.this.journalDao).get(
+						this.with(Expectations.equal(id)));
+				this.will(Expectations.returnValue(journal));
+			}
+		});
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(journalDao).save(with(same(journal)));
-        }});
+		final Journal result = this.manager.get(id);
+		Assert.assertSame(journal, result);
+	}
 
-        manager.save(journal);
-    }
+	/**
+	 * Test get journals.
+	 */
+	@Test
+	public void testGetJournals() {
+		this.log.debug("testing getAll...");
 
-    @Test
-    public void testRemoveJournal() {
-        log.debug("testing remove...");
+		final List journals = new ArrayList();
 
-        final Long id = -11L;
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(JournalManagerImplTest.this.journalDao).getAll();
+				this.will(Expectations.returnValue(journals));
+			}
+		});
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(journalDao).remove(with(equal(id)));
-        }});
+		final List result = this.manager.getAll();
 
-        manager.remove(id);
-    }
-    
+		Assert.assertSame(journals, result);
+	}
+
+	/**
+	 * Test save journal.
+	 */
+	@Test
+	public void testSaveJournal() {
+		this.log.debug("testing save...");
+
+		final Journal journal = new Journal();
+		// enter all required fields
+
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(JournalManagerImplTest.this.journalDao).save(
+						this.with(Expectations.same(journal)));
+			}
+		});
+
+		this.manager.save(journal);
+	}
+
+	/**
+	 * Test remove journal.
+	 */
+	@Test
+	public void testRemoveJournal() {
+		this.log.debug("testing remove...");
+
+		final Long id = -11L;
+
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(JournalManagerImplTest.this.journalDao).remove(
+						this.with(Expectations.equal(id)));
+			}
+		});
+
+		this.manager.remove(id);
+	}
+
 }
-

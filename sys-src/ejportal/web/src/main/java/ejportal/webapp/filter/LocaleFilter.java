@@ -1,3 +1,23 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.webapp.filter;
 
 import java.io.IOException;
@@ -20,62 +40,72 @@ import org.springframework.web.filter.OncePerRequestFilter;
  */
 public class LocaleFilter extends OncePerRequestFilter {
 
-    /**
-     * This method looks for a "locale" request parameter. If it finds one, it sets it as the preferred locale
-     * and also configures it to work with JSTL.
-     * 
-     * @param request the current request
-     * @param response the current response
-     * @param chain the chain
-     * @throws IOException when something goes wrong
-     * @throws ServletException when a communication failure happens
-     */
-    @SuppressWarnings("unchecked")
-    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                 FilterChain chain)
-            throws IOException, ServletException {
+	/**
+	 * This method looks for a "locale" request parameter. If it finds one, it
+	 * sets it as the preferred locale and also configures it to work with JSTL.
+	 * 
+	 * @param request
+	 *            the current request
+	 * @param response
+	 *            the current response
+	 * @param chain
+	 *            the chain
+	 * @throws IOException
+	 *             when something goes wrong
+	 * @throws ServletException
+	 *             when a communication failure happens
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public void doFilterInternal(HttpServletRequest request,
+			final HttpServletResponse response, final FilterChain chain)
+			throws IOException, ServletException {
 
-        String locale = request.getParameter("locale");
-        Locale preferredLocale = null;
+		final String locale = request.getParameter("locale");
+		Locale preferredLocale = null;
 
-        if (locale != null) {
-            int indexOfUnderscore = locale.indexOf('_');
-            if (indexOfUnderscore != -1) {
-                String language = locale.substring(0, indexOfUnderscore);
-                String country = locale.substring(indexOfUnderscore + 1);
-                preferredLocale = new Locale(language, country);
-            } else {
-                preferredLocale = new Locale(locale);
-            }
-        }
+		if (locale != null) {
+			final int indexOfUnderscore = locale.indexOf('_');
+			if (indexOfUnderscore != -1) {
+				final String language = locale.substring(0, indexOfUnderscore);
+				final String country = locale.substring(indexOfUnderscore + 1);
+				preferredLocale = new Locale(language, country);
+			} else {
+				preferredLocale = new Locale(locale);
+			}
+		}
 
-        HttpSession session = request.getSession(false);
+		final HttpSession session = request.getSession(false);
 
-        if (session != null) {
-            if (preferredLocale == null) {
-                preferredLocale = (Locale) session.getAttribute(Constants.PREFERRED_LOCALE_KEY);
-            } else {
-                session.setAttribute(Constants.PREFERRED_LOCALE_KEY, preferredLocale);
-                Config.set(session, Config.FMT_LOCALE, preferredLocale);
-            }
+		if (session != null) {
+			if (preferredLocale == null) {
+				preferredLocale = (Locale) session
+						.getAttribute(Constants.PREFERRED_LOCALE_KEY);
+			} else {
+				session.setAttribute(Constants.PREFERRED_LOCALE_KEY,
+						preferredLocale);
+				Config.set(session, Config.FMT_LOCALE, preferredLocale);
+			}
 
-            if (preferredLocale != null && !(request instanceof LocaleRequestWrapper)) {
-                request = new LocaleRequestWrapper(request, preferredLocale);
-                LocaleContextHolder.setLocale(preferredLocale);
-            }
-        }
+			if ((preferredLocale != null)
+					&& !(request instanceof LocaleRequestWrapper)) {
+				request = new LocaleRequestWrapper(request, preferredLocale);
+				LocaleContextHolder.setLocale(preferredLocale);
+			}
+		}
 
-        String theme = request.getParameter("theme");
-        //if (theme != null && request.isUserInRole(Constants.ADMIN_ROLE)) {
-        //TOD hartkodiert
-        if (theme != null && request.isUserInRole("ROLE_SYSTEMADMIN")) {    
-            Map<String, Object> config = (Map) getServletContext().getAttribute(Constants.CONFIG);
-            config.put(Constants.CSS_THEME, theme);
-        }
+		final String theme = request.getParameter("theme");
+		// if (theme != null && request.isUserInRole(Constants.ADMIN_ROLE)) {
+		// TOD hartkodiert
+		if ((theme != null) && request.isUserInRole("ROLE_SYSTEMADMIN")) {
+			final Map<String, Object> config = (Map) this.getServletContext()
+					.getAttribute(Constants.CONFIG);
+			config.put(Constants.CSS_THEME, theme);
+		}
 
-        chain.doFilter(request, response);
+		chain.doFilter(request, response);
 
-        // Reset thread-bound LocaleContext.
-        LocaleContextHolder.setLocaleContext(null);
-    }
+		// Reset thread-bound LocaleContext.
+		LocaleContextHolder.setLocaleContext(null);
+	}
 }

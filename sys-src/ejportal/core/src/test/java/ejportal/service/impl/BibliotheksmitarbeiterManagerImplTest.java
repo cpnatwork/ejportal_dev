@@ -1,100 +1,159 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.service.impl;
-
-import ejportal.dao.BibliotheksmitarbeiterDao;
-import ejportal.model.Bibliotheksmitarbeiter;
-import org.appfuse.service.impl.BaseManagerMockTestCase;
-import org.jmock.Expectations;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertSame;
+import org.appfuse.service.impl.BaseManagerMockTestCase;
+import org.jmock.Expectations;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import ejportal.dao.BibliotheksmitarbeiterDao;
+import ejportal.model.Bibliotheksmitarbeiter;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Nina
- * Date: 05.08.2010
- * Time: 14:58:46
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: Nina Date: 05.08.2010 Time: 14:58:46 To
+ * change this template use File | Settings | File Templates.
  */
-public class BibliotheksmitarbeiterManagerImplTest extends BaseManagerMockTestCase{
-        private BibliotheksmitarbeiterManagerImpl manager = null;
-    private BibliotheksmitarbeiterDao bibliotheksmitarbeiterDao = null;
+public class BibliotheksmitarbeiterManagerImplTest extends
+		BaseManagerMockTestCase {
 
-    @Before
-    public void setUp() {
-        bibliotheksmitarbeiterDao = context.mock(BibliotheksmitarbeiterDao.class);
-        manager = new BibliotheksmitarbeiterManagerImpl(bibliotheksmitarbeiterDao);
-    }
+	/** The manager. */
+	private BibliotheksmitarbeiterManagerImpl manager = null;
 
-    @After
-    public void tearDown() {
-        manager = null;
-    }
+	/** The bibliotheksmitarbeiter dao. */
+	private BibliotheksmitarbeiterDao bibliotheksmitarbeiterDao = null;
 
-    @Test
-    public void testGetBibliotheksmitarbeiter() {
-        log.debug("testing get...");
+	/**
+	 * Sets the up.
+	 */
+	@Before
+	public void setUp() {
+		this.bibliotheksmitarbeiterDao = this.context
+				.mock(BibliotheksmitarbeiterDao.class);
+		this.manager = new BibliotheksmitarbeiterManagerImpl(
+				this.bibliotheksmitarbeiterDao);
+	}
 
-        final Long id = 7L;
-        final Bibliotheksmitarbeiter bibliotheksmitarbeiter = new Bibliotheksmitarbeiter();
+	/**
+	 * Tear down.
+	 */
+	@After
+	public void tearDown() {
+		this.manager = null;
+	}
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(bibliotheksmitarbeiterDao).get(with(equal(id)));
-            will(returnValue(bibliotheksmitarbeiter));
-        }});
+	/**
+	 * Test get bibliotheksmitarbeiter.
+	 */
+	@Test
+	public void testGetBibliotheksmitarbeiter() {
+		this.log.debug("testing get...");
 
-        Bibliotheksmitarbeiter result = manager.get(id);
-        assertSame(bibliotheksmitarbeiter, result);
-    }
+		final Long id = 7L;
+		final Bibliotheksmitarbeiter bibliotheksmitarbeiter = new Bibliotheksmitarbeiter();
 
-    @Test
-    public void testGetBibliotheksmitarbeiters() {
-        log.debug("testing getAll...");
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(
+						BibliotheksmitarbeiterManagerImplTest.this.bibliotheksmitarbeiterDao)
+						.get(this.with(Expectations.equal(id)));
+				this.will(Expectations.returnValue(bibliotheksmitarbeiter));
+			}
+		});
 
-        final List bibliotheksmitarbeiters = new ArrayList();
+		final Bibliotheksmitarbeiter result = this.manager.get(id);
+		Assert.assertSame(bibliotheksmitarbeiter, result);
+	}
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(bibliotheksmitarbeiterDao).getAll();
-            will(returnValue(bibliotheksmitarbeiters));
-        }});
+	/**
+	 * Test get bibliotheksmitarbeiters.
+	 */
+	@Test
+	public void testGetBibliotheksmitarbeiters() {
+		this.log.debug("testing getAll...");
 
-        List result = manager.getAll();
+		final List bibliotheksmitarbeiters = new ArrayList();
 
-        assertSame(bibliotheksmitarbeiters, result);
-    }
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(
+						BibliotheksmitarbeiterManagerImplTest.this.bibliotheksmitarbeiterDao)
+						.getAll();
+				this.will(Expectations.returnValue(bibliotheksmitarbeiters));
+			}
+		});
 
-    @Test
-    public void testSaveBibliotheksmitarbeiter() {
-        log.debug("testing save...");
+		final List result = this.manager.getAll();
 
-        final Bibliotheksmitarbeiter bibliotheksmitarbeiter = new Bibliotheksmitarbeiter();
-        // enter all required fields
+		Assert.assertSame(bibliotheksmitarbeiters, result);
+	}
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(bibliotheksmitarbeiterDao).save(with(same(bibliotheksmitarbeiter)));
-        }});
+	/**
+	 * Test save bibliotheksmitarbeiter.
+	 */
+	@Test
+	public void testSaveBibliotheksmitarbeiter() {
+		this.log.debug("testing save...");
 
-        manager.save(bibliotheksmitarbeiter);
-    }
+		final Bibliotheksmitarbeiter bibliotheksmitarbeiter = new Bibliotheksmitarbeiter();
+		// enter all required fields
 
-    @Test
-    public void testRemoveBibliotheksmitarbeiter() {
-        log.debug("testing remove...");
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(
+						BibliotheksmitarbeiterManagerImplTest.this.bibliotheksmitarbeiterDao)
+						.save(this.with(Expectations
+								.same(bibliotheksmitarbeiter)));
+			}
+		});
 
-        final Long id = -11L;
+		this.manager.save(bibliotheksmitarbeiter);
+	}
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(bibliotheksmitarbeiterDao).remove(with(equal(id)));
-        }});
+	/**
+	 * Test remove bibliotheksmitarbeiter.
+	 */
+	@Test
+	public void testRemoveBibliotheksmitarbeiter() {
+		this.log.debug("testing remove...");
 
-        manager.remove(id);
-    }
+		final Long id = -11L;
+
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(
+						BibliotheksmitarbeiterManagerImplTest.this.bibliotheksmitarbeiterDao)
+						.remove(this.with(Expectations.equal(id)));
+			}
+		});
+
+		this.manager.remove(id);
+	}
 }

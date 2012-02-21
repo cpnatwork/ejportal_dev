@@ -1,199 +1,375 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.webapp.action;
+
+import java.util.Map;
+
+import org.springframework.dao.DataIntegrityViolationException;
+
+import com.opensymphony.xwork2.Action;
 
 import ejportal.model.Exemplar;
 import ejportal.service.ExemplarManager;
 import ejportal.service.dto.ExemplarBaseTO;
-import org.springframework.dao.DataIntegrityViolationException;
-
-import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
- * User: mkoerner
- * Date: 04.08.2010
- * Time: 14:56:26
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: mkoerner Date: 04.08.2010 Time: 14:56:26 To
+ * change this template use File | Settings | File Templates.
  */
-public class ExemplarDetailAction extends JournalBaseAction{
-    private ExemplarManager exemplarManager;
-    private Exemplar exemplar;
-    private ExemplarBaseTO exemplarBaseTO;
-    private Long exemplarId;
+public class ExemplarDetailAction extends JournalBaseAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1694151608896535163L;
 
+	/** The exemplar manager. */
+	private ExemplarManager exemplarManager;
 
-    private SelectData selectData = new SelectData();
+	/** The exemplar. */
+	private Exemplar exemplar;
 
-    //Dropdown Lists
+	/** The exemplar base to. */
+	private ExemplarBaseTO exemplarBaseTO;
 
-    public Map<String, String> getListBeteiligung() {
-        return selectData.getExemplarBeteiligung();
-    }
-    public Map<String, String> getListForm() {
-        return selectData.getExemplarForm();
-    }
-    public Map<String, String> getListZugangsart() {
-        return selectData.getExemplarZugangsart();
-    }
-    public Map<String, String> getListStatus() {
-        return selectData.getExemplarStatus();
-    }
+	/** The exemplar id. */
+	private Long exemplarId;
 
-    public Map<String, String> getListAbbestellung(){
-        return selectData.getExemplarAbbestellung();
-    }
+	/** The select data. */
+	private final SelectData selectData = new SelectData();
 
-    public Map<String, String> getListUmbestellung(){
-        return selectData.getExemplarUmbestellung();
-    }
+	// Dropdown Lists
 
-    public void setExemplarManager(ExemplarManager exemplarManager) {
-        this.exemplarManager = exemplarManager;
-    }
+	/**
+	 * Gets the list beteiligung.
+	 * 
+	 * @return the list beteiligung
+	 */
+	public Map<String, String> getListBeteiligung() {
+		return this.selectData.getExemplarBeteiligung();
+	}
 
-    public ExemplarBaseTO getExemplarBaseTO() {
-        return exemplarBaseTO;
-    }
+	/**
+	 * Gets the list form.
+	 * 
+	 * @return the list form
+	 */
+	public Map<String, String> getListForm() {
+		return this.selectData.getExemplarForm();
+	}
 
-    public void setExemplarBaseTO(ExemplarBaseTO exemplarBaseTO) {
-        this.exemplarBaseTO = exemplarBaseTO;
-    }
+	/**
+	 * Gets the list zugangsart.
+	 * 
+	 * @return the list zugangsart
+	 */
+	public Map<String, String> getListZugangsart() {
+		return this.selectData.getExemplarZugangsart();
+	}
 
-    public void setExemplarId(Long exemplarId) {
-        this.exemplarId = exemplarId;
-    }
+	/**
+	 * Gets the list status.
+	 * 
+	 * @return the list status
+	 */
+	public Map<String, String> getListStatus() {
+		return this.selectData.getExemplarStatus();
+	}
 
-    public Long getExemplarId() {
-        return exemplarId;
-    }
+	/**
+	 * Gets the list abbestellung.
+	 * 
+	 * @return the list abbestellung
+	 */
+	public Map<String, String> getListAbbestellung() {
+		return this.selectData.getExemplarAbbestellung();
+	}
 
-    public Exemplar getExemplar() {
-        return exemplar;
-    }
+	/**
+	 * Gets the list umbestellung.
+	 * 
+	 * @return the list umbestellung
+	 */
+	public Map<String, String> getListUmbestellung() {
+		return this.selectData.getExemplarUmbestellung();
+	}
 
+	/**
+	 * Sets the exemplar manager.
+	 * 
+	 * @param exemplarManager
+	 *            the new exemplar manager
+	 */
+	public void setExemplarManager(final ExemplarManager exemplarManager) {
+		this.exemplarManager = exemplarManager;
+	}
 
+	/**
+	 * Gets the exemplar base to.
+	 * 
+	 * @return the exemplar base to
+	 */
+	public ExemplarBaseTO getExemplarBaseTO() {
+		return this.exemplarBaseTO;
+	}
 
-    public String delete() {
-       try {
-            exemplarManager.removeSafe(exemplarId);
-            saveMessage("Das Exemplar wurde entfernt.");
-       }
-       catch (DataIntegrityViolationException dive){
-            saveMessage("Dieses Exemplar wird noch verwendet und kann deshalb nicht entfernt werden.");
-            return ERROR;
-        }
-        return SUCCESS;
-    }
+	/**
+	 * Sets the exemplar base to.
+	 * 
+	 * @param exemplarBaseTO
+	 *            the new exemplar base to
+	 */
+	public void setExemplarBaseTO(final ExemplarBaseTO exemplarBaseTO) {
+		this.exemplarBaseTO = exemplarBaseTO;
+	}
 
-    public String load(){
-        if (exemplarId != null) {
-            exemplar = exemplarManager.get(exemplarId);
-        } else {
-            return ERROR;
-        }
+	/**
+	 * Sets the exemplar id.
+	 * 
+	 * @param exemplarId
+	 *            the new exemplar id
+	 */
+	public void setExemplarId(final Long exemplarId) {
+		this.exemplarId = exemplarId;
+	}
 
-        return SUCCESS;
-    }
+	/**
+	 * Gets the exemplar id.
+	 * 
+	 * @return the exemplar id
+	 */
+	public Long getExemplarId() {
+		return this.exemplarId;
+	}
 
-    public String edit() {
-        if (exemplarId != null) {
-            exemplarBaseTO = exemplarManager.getExemplarBaseTO(exemplarId);
-        } else {
-            exemplarBaseTO = new ExemplarBaseTO();
-        }
+	/**
+	 * Gets the exemplar.
+	 * 
+	 * @return the exemplar
+	 */
+	public Exemplar getExemplar() {
+		return this.exemplar;
+	}
 
-        return "edit";
-    }
+	/**
+	 * Delete.
+	 * 
+	 * @return the string
+	 */
+	public String delete() {
+		try {
+			this.exemplarManager.removeSafe(this.exemplarId);
+			this.saveMessage("Das Exemplar wurde entfernt.");
+		} catch (final DataIntegrityViolationException dive) {
+			this.saveMessage("Dieses Exemplar wird noch verwendet und kann deshalb nicht entfernt werden.");
+			return Action.ERROR;
+		}
+		return Action.SUCCESS;
+	}
 
-    public String save() throws Exception {
-        if (cancel != null) {
-            return CANCEL;
-        }
+	/**
+	 * Load.
+	 * 
+	 * @return the string
+	 */
+	public String load() {
+		if (this.exemplarId != null) {
+			this.exemplar = this.exemplarManager.get(this.exemplarId);
+		} else
+			return Action.ERROR;
 
-        if (delete != null) {
-            return delete();
-        }
+		return Action.SUCCESS;
+	}
 
-        boolean isNew = (exemplarBaseTO.getExemplarId() == null);
+	/**
+	 * Edits the.
+	 * 
+	 * @return the string
+	 */
+	public String edit() {
+		if (this.exemplarId != null) {
+			this.exemplarBaseTO = this.exemplarManager
+					.getExemplarBaseTO(this.exemplarId);
+		} else {
+			this.exemplarBaseTO = new ExemplarBaseTO();
+		}
 
-        // Pruefen, ob Bestellnummer angegeben worden ist.
-        if (exemplarBaseTO.getBestellnummer().compareTo("") == 0) {
-            saveMessage(getText("Bitte geben Sie eine Bestellnummer ein!"));
-            return "back";
-        }
-        if(exemplarBaseTO.getBestellnummer().length() > 254){
-            saveMessage(getText("Geben Sie bitte eine kürzere Bestellnummer ein!"));
-            return "back";
-        }
+		return "edit";
+	}
 
-        if (isNew){ // Create
-            exemplar = exemplarManager.create(exemplarBaseTO, journalId);
-        }
-        else{ // Update
-            exemplar = exemplarManager.saveBaseTO(exemplarBaseTO);
-        }
-        String key = (isNew) ? "Das Exemplar wurde erstellt." : "Das Exemplar wurde aktualisiert.";
-        saveMessage(key);
+	/**
+	 * Save.
+	 * 
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public String save() throws Exception {
+		if (this.cancel != null)
+			return BaseAction.CANCEL;
 
-        //ExemplarID setzen
-        this.exemplarId=exemplar.getExemplarId();
+		if (this.delete != null)
+			return this.delete();
 
-    return SUCCESS;
-    }
+		final boolean isNew = (this.exemplarBaseTO.getExemplarId() == null);
 
-    //Besteller ändern
-    private Long bestellerId;
+		// Pruefen, ob Bestellnummer angegeben worden ist.
+		if (this.exemplarBaseTO.getBestellnummer().compareTo("") == 0) {
+			this.saveMessage(this
+					.getText("Bitte geben Sie eine Bestellnummer ein!"));
+			return "back";
+		}
+		if (this.exemplarBaseTO.getBestellnummer().length() > 254) {
+			this.saveMessage(this
+					.getText("Geben Sie bitte eine kï¿½rzere Bestellnummer ein!"));
+			return "back";
+		}
 
-    public void setBestellerId(Long bestellerId) {
-        this.bestellerId = bestellerId;
-    }
+		if (isNew) { // Create
+			this.exemplar = this.exemplarManager.create(this.exemplarBaseTO,
+					this.journalId);
+		} else { // Update
+			this.exemplar = this.exemplarManager
+					.saveBaseTO(this.exemplarBaseTO);
+		}
+		final String key = (isNew) ? "Das Exemplar wurde erstellt."
+				: "Das Exemplar wurde aktualisiert.";
+		this.saveMessage(key);
 
-    public String changeBesteller(){
-        exemplarManager.connectExemplarBesteller(this.exemplarId, this.bestellerId);
-        load();
-        return SUCCESS;
-    }
+		// ExemplarID setzen
+		this.exemplarId = this.exemplar.getExemplarId();
 
-    //Eigentümer ändern
-    private Long eigentuemerId;
+		return Action.SUCCESS;
+	}
 
-    public void setEigentuemerId(Long eigentuemerId) {
-        this.eigentuemerId = eigentuemerId;
-    }
+	// Besteller ï¿½ndern
+	/** The besteller id. */
+	private Long bestellerId;
 
-    public String changeEigentuemer(){
-        exemplarManager.connectExemplarEigentuemer(this.exemplarId, this.eigentuemerId);
-        load();
-        return SUCCESS;
-    }
-    
-    //Lieferanten ändern
-    private Long lieferantId;
+	/**
+	 * Sets the besteller id.
+	 * 
+	 * @param bestellerId
+	 *            the new besteller id
+	 */
+	public void setBestellerId(final Long bestellerId) {
+		this.bestellerId = bestellerId;
+	}
 
-    public void setLieferantId(Long lieferantId) {
-        this.lieferantId = lieferantId;
-    }
+	/**
+	 * Change besteller.
+	 * 
+	 * @return the string
+	 */
+	public String changeBesteller() {
+		this.exemplarManager.connectExemplarBesteller(this.exemplarId,
+				this.bestellerId);
+		this.load();
+		return Action.SUCCESS;
+	}
 
-    public String changeLieferant(){
-        exemplarManager.connectExemplarLieferant(this.exemplarId, this.lieferantId);
-        load();
-        return SUCCESS;
-    }
+	// Eigentï¿½mer ï¿½ndern
+	/** The eigentuemer id. */
+	private Long eigentuemerId;
 
-    //Lieferanten ändern
-    private Long zustaendigeBibId;
+	/**
+	 * Sets the eigentuemer id.
+	 * 
+	 * @param eigentuemerId
+	 *            the new eigentuemer id
+	 */
+	public void setEigentuemerId(final Long eigentuemerId) {
+		this.eigentuemerId = eigentuemerId;
+	}
 
-    public Long getZustaendigeBibId() {
-        return zustaendigeBibId;
-    }
+	/**
+	 * Change eigentuemer.
+	 * 
+	 * @return the string
+	 */
+	public String changeEigentuemer() {
+		this.exemplarManager.connectExemplarEigentuemer(this.exemplarId,
+				this.eigentuemerId);
+		this.load();
+		return Action.SUCCESS;
+	}
 
-    public void setZustaendigeBibId(Long zustaendigeBibId) {
-        this.zustaendigeBibId = zustaendigeBibId;
-    }
+	// Lieferanten ï¿½ndern
+	/** The lieferant id. */
+	private Long lieferantId;
 
-    public String changeZustaendigeBib(){
-        exemplarManager.connectExemplarZustaendigeBib(this.exemplarId, this.zustaendigeBibId);
-        load();
-        return SUCCESS;
-    }
+	/**
+	 * Sets the lieferant id.
+	 * 
+	 * @param lieferantId
+	 *            the new lieferant id
+	 */
+	public void setLieferantId(final Long lieferantId) {
+		this.lieferantId = lieferantId;
+	}
+
+	/**
+	 * Change lieferant.
+	 * 
+	 * @return the string
+	 */
+	public String changeLieferant() {
+		this.exemplarManager.connectExemplarLieferant(this.exemplarId,
+				this.lieferantId);
+		this.load();
+		return Action.SUCCESS;
+	}
+
+	// Lieferanten ï¿½ndern
+	/** The zustaendige bib id. */
+	private Long zustaendigeBibId;
+
+	/**
+	 * Gets the zustaendige bib id.
+	 * 
+	 * @return the zustaendige bib id
+	 */
+	public Long getZustaendigeBibId() {
+		return this.zustaendigeBibId;
+	}
+
+	/**
+	 * Sets the zustaendige bib id.
+	 * 
+	 * @param zustaendigeBibId
+	 *            the new zustaendige bib id
+	 */
+	public void setZustaendigeBibId(final Long zustaendigeBibId) {
+		this.zustaendigeBibId = zustaendigeBibId;
+	}
+
+	/**
+	 * Change zustaendige bib.
+	 * 
+	 * @return the string
+	 */
+	public String changeZustaendigeBib() {
+		this.exemplarManager.connectExemplarZustaendigeBib(this.exemplarId,
+				this.zustaendigeBibId);
+		this.load();
+		return Action.SUCCESS;
+	}
 }

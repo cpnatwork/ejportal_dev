@@ -1,60 +1,95 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.dao;
 
+import java.util.List;
+
 import org.appfuse.dao.BaseDaoTestCase;
-import ejportal.model.Bibliotheksmitarbeiter;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.annotation.ExpectedException;
 
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import ejportal.model.Bibliotheksmitarbeiter;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Nina
- * Date: 05.08.2010
- * Time: 14:58:15
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: Nina Date: 05.08.2010 Time: 14:58:15 To
+ * change this template use File | Settings | File Templates.
  */
-public class BibliotheksmitarbeiterDaoTest extends BaseDaoTestCase{
-    @Autowired
-    private BibliotheksmitarbeiterDao bibliotheksmitarbeiterDao;
+public class BibliotheksmitarbeiterDaoTest extends BaseDaoTestCase {
 
-    @Test
-    public void testFindByName() throws Exception{
-         List<Bibliotheksmitarbeiter> bibliotheksmitarbeiter = bibliotheksmitarbeiterDao.findByName("Bio Bib");
+	/** The bibliotheksmitarbeiter dao. */
+	@Autowired
+	private BibliotheksmitarbeiterDao bibliotheksmitarbeiterDao;
 
-        assertNotNull(bibliotheksmitarbeiter.get(0).getName());
-        assertNotNull(bibliotheksmitarbeiter.get(0).getAbteilungsHauptstelle());
-        assertNotNull(bibliotheksmitarbeiter.get(0).getEmailanschrift());
+	/**
+	 * Test find by name.
+	 * 
+	 * @throws Exception
+	 *             the exception
+	 */
+	@Test
+	public void testFindByName() throws Exception {
+		final List<Bibliotheksmitarbeiter> bibliotheksmitarbeiter = this.bibliotheksmitarbeiterDao
+				.findByName("Bio Bib");
 
-        assertTrue(bibliotheksmitarbeiter.size() > 0);
-    }
+		Assert.assertNotNull(bibliotheksmitarbeiter.get(0).getName());
+		Assert.assertNotNull(bibliotheksmitarbeiter.get(0)
+				.getAbteilungsHauptstelle());
+		Assert.assertNotNull(bibliotheksmitarbeiter.get(0).getEmailanschrift());
 
-    @Test
-    @ExpectedException(DataAccessException.class)
-    public void testAddAndRemoveBibliotheksmitarbeiter() throws Exception {
-        Bibliotheksmitarbeiter bibliotheksmitarbeiter = new Bibliotheksmitarbeiter();
-        bibliotheksmitarbeiter.setName("Test-Bibliotheksmitarbeiter 2");
+		Assert.assertTrue(bibliotheksmitarbeiter.size() > 0);
+	}
 
-        bibliotheksmitarbeiter = bibliotheksmitarbeiterDao.save(bibliotheksmitarbeiter);
-        flush();
+	/**
+	 * Test add and remove bibliotheksmitarbeiter.
+	 * 
+	 * @throws Exception
+	 *             the exception
+	 */
+	@Test
+	@ExpectedException(DataAccessException.class)
+	public void testAddAndRemoveBibliotheksmitarbeiter() throws Exception {
+		Bibliotheksmitarbeiter bibliotheksmitarbeiter = new Bibliotheksmitarbeiter();
+		bibliotheksmitarbeiter.setName("Test-Bibliotheksmitarbeiter 2");
 
-        bibliotheksmitarbeiter = bibliotheksmitarbeiterDao.get(bibliotheksmitarbeiter.getBibId());
+		bibliotheksmitarbeiter = this.bibliotheksmitarbeiterDao
+				.save(bibliotheksmitarbeiter);
+		this.flush();
 
-        assertEquals("Test-Bibliotheksmitarbeiter 2", bibliotheksmitarbeiter.getName());
-        assertNotNull(bibliotheksmitarbeiter.getBibId());
+		bibliotheksmitarbeiter = this.bibliotheksmitarbeiterDao
+				.get(bibliotheksmitarbeiter.getBibId());
 
-        log.debug("removing bibliotheksmitarbeiter...");
+		Assert.assertEquals("Test-Bibliotheksmitarbeiter 2",
+				bibliotheksmitarbeiter.getName());
+		Assert.assertNotNull(bibliotheksmitarbeiter.getBibId());
 
-        bibliotheksmitarbeiterDao.remove(bibliotheksmitarbeiter.getBibId());
-        flush();
+		this.log.debug("removing bibliotheksmitarbeiter...");
 
-        // should throw DataAccessException
-        bibliotheksmitarbeiterDao.get(bibliotheksmitarbeiter.getBibId());
-    }
+		this.bibliotheksmitarbeiterDao
+				.remove(bibliotheksmitarbeiter.getBibId());
+		this.flush();
+
+		// should throw DataAccessException
+		this.bibliotheksmitarbeiterDao.get(bibliotheksmitarbeiter.getBibId());
+	}
 }

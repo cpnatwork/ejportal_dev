@@ -1,100 +1,151 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.service.impl;
-
-import ejportal.dao.PaketDao;
-import ejportal.model.Paket;
-import org.appfuse.service.impl.BaseManagerMockTestCase;
-import org.jmock.Expectations;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.appfuse.service.impl.BaseManagerMockTestCase;
+import org.jmock.Expectations;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import ejportal.dao.PaketDao;
+import ejportal.model.Paket;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tselmeg
- * Date: 04.08.2010
- * Time: 10:06:04
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: Tselmeg Date: 04.08.2010 Time: 10:06:04 To
+ * change this template use File | Settings | File Templates.
  */
 public class PaketManagerImplTest extends BaseManagerMockTestCase {
-    private PaketManagerImpl manager = null;
-    private PaketDao paketDao = null;
-    @Before
-    public void setUp() {
-        paketDao = context.mock(PaketDao.class);
-        manager = new PaketManagerImpl(paketDao);
-    }
 
-    @After
-    public void tearDown() {
-        manager = null;
-    }
+	/** The manager. */
+	private PaketManagerImpl manager = null;
 
-    @Test
-    public void testGetPaket() {
-        log.debug("testing get...");
+	/** The paket dao. */
+	private PaketDao paketDao = null;
 
-        final Long id = 7L;
-        final Paket paket = new Paket();
+	/**
+	 * Sets the up.
+	 */
+	@Before
+	public void setUp() {
+		this.paketDao = this.context.mock(PaketDao.class);
+		this.manager = new PaketManagerImpl(this.paketDao);
+	}
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(paketDao).get(with(equal(id)));
-            will(returnValue(paket));
-        }});
+	/**
+	 * Tear down.
+	 */
+	@After
+	public void tearDown() {
+		this.manager = null;
+	}
 
-        Paket result = manager.get(id);
-        assertSame(paket, result);
-    }
+	/**
+	 * Test get paket.
+	 */
+	@Test
+	public void testGetPaket() {
+		this.log.debug("testing get...");
 
-    @Test
-    public void testGetPakete() {
-        log.debug("testing getAll...");
+		final Long id = 7L;
+		final Paket paket = new Paket();
 
-        final List pakete = new ArrayList();
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(PaketManagerImplTest.this.paketDao).get(
+						this.with(Expectations.equal(id)));
+				this.will(Expectations.returnValue(paket));
+			}
+		});
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(paketDao).getAll();
-            will(returnValue(pakete));
-        }});
+		final Paket result = this.manager.get(id);
+		Assert.assertSame(paket, result);
+	}
 
-        List result = manager.getAll();
+	/**
+	 * Test get pakete.
+	 */
+	@Test
+	public void testGetPakete() {
+		this.log.debug("testing getAll...");
 
-        assertSame(pakete, result);
-    }
+		final List pakete = new ArrayList();
 
-    @Test
-    public void testSavePaket() {
-        log.debug("testing save...");
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(PaketManagerImplTest.this.paketDao).getAll();
+				this.will(Expectations.returnValue(pakete));
+			}
+		});
 
-        final Paket paket = new Paket();
-        // enter all required fields
+		final List result = this.manager.getAll();
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(paketDao).save(with(same(paket)));
-        }});
+		Assert.assertSame(pakete, result);
+	}
 
-        manager.save(paket);
-    }
+	/**
+	 * Test save paket.
+	 */
+	@Test
+	public void testSavePaket() {
+		this.log.debug("testing save...");
 
-    @Test
-    public void testRemovePaket() {
-        log.debug("testing remove...");
+		final Paket paket = new Paket();
+		// enter all required fields
 
-        final Long id = -11L;
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(PaketManagerImplTest.this.paketDao).save(
+						this.with(Expectations.same(paket)));
+			}
+		});
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(paketDao).remove(with(equal(id)));
-        }});
+		this.manager.save(paket);
+	}
 
-        manager.remove(id);
-    }
+	/**
+	 * Test remove paket.
+	 */
+	@Test
+	public void testRemovePaket() {
+		this.log.debug("testing remove...");
+
+		final Long id = -11L;
+
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(PaketManagerImplTest.this.paketDao).remove(
+						this.with(Expectations.equal(id)));
+			}
+		});
+
+		this.manager.remove(id);
+	}
 
 }

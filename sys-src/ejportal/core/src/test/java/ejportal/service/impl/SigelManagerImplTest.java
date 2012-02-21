@@ -1,100 +1,150 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.service.impl;
-
-import ejportal.dao.SigelDao;
-import ejportal.model.Sigel;
-import org.appfuse.service.impl.BaseManagerMockTestCase;
-import org.jmock.Expectations;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertSame;
+import org.appfuse.service.impl.BaseManagerMockTestCase;
+import org.jmock.Expectations;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import ejportal.dao.SigelDao;
+import ejportal.model.Sigel;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Tselmeg
- * Date: 05.08.2010
- * Time: 15:05:10
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: Tselmeg Date: 05.08.2010 Time: 15:05:10 To
+ * change this template use File | Settings | File Templates.
  */
-public class SigelManagerImplTest  extends BaseManagerMockTestCase {
-    private SigelManagerImpl manager = null;
-    private SigelDao sigelDao = null;
+public class SigelManagerImplTest extends BaseManagerMockTestCase {
 
-    @Before
-    public void setUp() {
-        sigelDao = context.mock(SigelDao.class);
-        manager = new SigelManagerImpl(sigelDao);
-    }
+	/** The manager. */
+	private SigelManagerImpl manager = null;
 
-    @After
-    public void tearDown() {
-        manager = null;
-    }
+	/** The sigel dao. */
+	private SigelDao sigelDao = null;
 
-    @Test
-    public void testGetSigel() {
-        log.debug("testing get...");
+	/**
+	 * Sets the up.
+	 */
+	@Before
+	public void setUp() {
+		this.sigelDao = this.context.mock(SigelDao.class);
+		this.manager = new SigelManagerImpl(this.sigelDao);
+	}
 
-        final Long id = 7L;
-        final Sigel sigel = new Sigel();
+	/**
+	 * Tear down.
+	 */
+	@After
+	public void tearDown() {
+		this.manager = null;
+	}
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(sigelDao).get(with(equal(id)));
-            will(returnValue(sigel));
-        }});
+	/**
+	 * Test get sigel.
+	 */
+	@Test
+	public void testGetSigel() {
+		this.log.debug("testing get...");
 
-        Sigel result = manager.get(id);
-        assertSame(sigel, result);
-    }
+		final Long id = 7L;
+		final Sigel sigel = new Sigel();
 
-    @Test
-    public void testGetSigels() {
-        log.debug("testing getAll...");
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(SigelManagerImplTest.this.sigelDao).get(
+						this.with(Expectations.equal(id)));
+				this.will(Expectations.returnValue(sigel));
+			}
+		});
 
-        final List sigels = new ArrayList();
+		final Sigel result = this.manager.get(id);
+		Assert.assertSame(sigel, result);
+	}
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(sigelDao).getAll();
-            will(returnValue(sigels));
-        }});
+	/**
+	 * Test get sigels.
+	 */
+	@Test
+	public void testGetSigels() {
+		this.log.debug("testing getAll...");
 
-        List result = manager.getAll();
+		final List sigels = new ArrayList();
 
-        assertSame(sigels, result);
-    }
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(SigelManagerImplTest.this.sigelDao).getAll();
+				this.will(Expectations.returnValue(sigels));
+			}
+		});
 
-    @Test
-    public void testSaveSigel() {
-        log.debug("testing save...");
+		final List result = this.manager.getAll();
 
-        final Sigel sigel = new Sigel();
-        // enter all required fields
+		Assert.assertSame(sigels, result);
+	}
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(sigelDao).save(with(same(sigel)));
-        }});
+	/**
+	 * Test save sigel.
+	 */
+	@Test
+	public void testSaveSigel() {
+		this.log.debug("testing save...");
 
-        manager.save(sigel);
-    }
+		final Sigel sigel = new Sigel();
+		// enter all required fields
 
-    @Test
-    public void testRemoveSigel() {
-        log.debug("testing remove...");
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(SigelManagerImplTest.this.sigelDao).save(
+						this.with(Expectations.same(sigel)));
+			}
+		});
 
-        final Long id = -11L;
+		this.manager.save(sigel);
+	}
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(sigelDao).remove(with(equal(id)));
-        }});
+	/**
+	 * Test remove sigel.
+	 */
+	@Test
+	public void testRemoveSigel() {
+		this.log.debug("testing remove...");
 
-        manager.remove(id);
-    }
+		final Long id = -11L;
+
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(SigelManagerImplTest.this.sigelDao).remove(
+						this.with(Expectations.equal(id)));
+			}
+		});
+
+		this.manager.remove(id);
+	}
 }

@@ -1,111 +1,237 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.appfuse.model.BaseObject;
 
-import javax.persistence.*;
-
-
 /**
- * Created by IntelliJ IDEA.
- * User: Nina
- * Date: 09.08.2010
- * Time: 15:33:54
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: Nina Date: 09.08.2010 Time: 15:33:54 To
+ * change this template use File | Settings | File Templates.
  */
 
 @Entity
 public class Nutzung extends BaseObject {
-    private Journal journal;
 
-    private Long nutzungId;
-    private Integer zugriffe;
-    private Integer zeitraum;
-    private Integer nutzungsjahr;
-    private Float rechnungsbetrag;
+	/** The journal. */
+	private Journal journal;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getNutzungId() {
-        return nutzungId;
-    }
+	/** The nutzung id. */
+	private Long nutzungId;
 
-    public void setNutzungId(Long nutzungId) {
-        this.nutzungId = nutzungId;
-    }
+	/** The zugriffe. */
+	private Integer zugriffe;
 
-    @ManyToOne
-    public Journal getJournal() {
-        return journal;
-    }
+	/** The zeitraum. */
+	private Integer zeitraum;
 
-    public void setJournal(Journal journal) {
-        this.journal = journal;
-    }
+	/** The nutzungsjahr. */
+	private Integer nutzungsjahr;
 
-    public Integer getZugriffe() {
-        return zugriffe;
-    }
+	/** The rechnungsbetrag. */
+	private Float rechnungsbetrag;
 
-    public void setZugriffe(Integer zugriffe) {
-        this.zugriffe = zugriffe;
-    }
+	/**
+	 * Gets the nutzung id.
+	 * 
+	 * @return the nutzung id
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public Long getNutzungId() {
+		return this.nutzungId;
+	}
 
-    public Integer getZeitraum() {
-        return zeitraum;
-    }
+	/**
+	 * Sets the nutzung id.
+	 * 
+	 * @param nutzungId
+	 *            the new nutzung id
+	 */
+	public void setNutzungId(final Long nutzungId) {
+		this.nutzungId = nutzungId;
+	}
 
-    public void setZeitraum(Integer zeitraum) {
-        this.zeitraum = zeitraum;
-    }
+	/**
+	 * Gets the journal.
+	 * 
+	 * @return the journal
+	 */
+	@ManyToOne
+	public Journal getJournal() {
+		return this.journal;
+	}
 
-    public Integer getNutzungsjahr() {
-        return nutzungsjahr;
-    }
+	/**
+	 * Sets the journal.
+	 * 
+	 * @param journal
+	 *            the new journal
+	 */
+	public void setJournal(final Journal journal) {
+		this.journal = journal;
+	}
 
-    public void setNutzungsjahr(Integer nutzungsjahr) {
-        this.nutzungsjahr = nutzungsjahr;
-    }
+	/**
+	 * Gets the zugriffe.
+	 * 
+	 * @return the zugriffe
+	 */
+	public Integer getZugriffe() {
+		return this.zugriffe;
+	}
 
-    public Float getRechnungsbetrag() {
-        return rechnungsbetrag;
-    }
+	/**
+	 * Sets the zugriffe.
+	 * 
+	 * @param zugriffe
+	 *            the new zugriffe
+	 */
+	public void setZugriffe(final Integer zugriffe) {
+		this.zugriffe = zugriffe;
+	}
 
-    public void setRechnungsbetrag(Float rechnungsbetrag) {
-        this.rechnungsbetrag = rechnungsbetrag;
-    }
+	/**
+	 * Gets the zeitraum.
+	 * 
+	 * @return the zeitraum
+	 */
+	public Integer getZeitraum() {
+		return this.zeitraum;
+	}
 
-    @Override
-    public String toString() {
-        return "Nutzung{" +
-                "nutzungId=" + nutzungId +
-                '}';
-    }
+	/**
+	 * Sets the zeitraum.
+	 * 
+	 * @param zeitraum
+	 *            the new zeitraum
+	 */
+	public void setZeitraum(final Integer zeitraum) {
+		this.zeitraum = zeitraum;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	/**
+	 * Gets the nutzungsjahr.
+	 * 
+	 * @return the nutzungsjahr
+	 */
+	public Integer getNutzungsjahr() {
+		return this.nutzungsjahr;
+	}
 
-        Nutzung nutzung = (Nutzung) o;
+	/**
+	 * Sets the nutzungsjahr.
+	 * 
+	 * @param nutzungsjahr
+	 *            the new nutzungsjahr
+	 */
+	public void setNutzungsjahr(final Integer nutzungsjahr) {
+		this.nutzungsjahr = nutzungsjahr;
+	}
 
-        if (nutzungId != null ? !nutzungId.equals(nutzung.nutzungId) : nutzung.nutzungId != null) return false;
-        if (nutzungsjahr != null ? !nutzungsjahr.equals(nutzung.nutzungsjahr) : nutzung.nutzungsjahr != null)
-            return false;
-        if (rechnungsbetrag != null ? !rechnungsbetrag.equals(nutzung.rechnungsbetrag) : nutzung.rechnungsbetrag != null)
-            return false;
-        if (zeitraum != null ? !zeitraum.equals(nutzung.zeitraum) : nutzung.zeitraum != null) return false;
-        if (zugriffe != null ? !zugriffe.equals(nutzung.zugriffe) : nutzung.zugriffe != null) return false;
+	/**
+	 * Gets the rechnungsbetrag.
+	 * 
+	 * @return the rechnungsbetrag
+	 */
+	public Float getRechnungsbetrag() {
+		return this.rechnungsbetrag;
+	}
 
-        return true;
-    }
+	/**
+	 * Sets the rechnungsbetrag.
+	 * 
+	 * @param rechnungsbetrag
+	 *            the new rechnungsbetrag
+	 */
+	public void setRechnungsbetrag(final Float rechnungsbetrag) {
+		this.rechnungsbetrag = rechnungsbetrag;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = nutzungId != null ? nutzungId.hashCode() : 0;
-        result = 31 * result + (zugriffe != null ? zugriffe.hashCode() : 0);
-        result = 31 * result + (zeitraum != null ? zeitraum.hashCode() : 0);
-        result = 31 * result + (nutzungsjahr != null ? nutzungsjahr.hashCode() : 0);
-        result = 31 * result + (rechnungsbetrag != null ? rechnungsbetrag.hashCode() : 0);
-        return result;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Nutzung{" + "nutzungId=" + this.nutzungId + '}';
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o)
+			return true;
+		if ((o == null) || (this.getClass() != o.getClass()))
+			return false;
+
+		final Nutzung nutzung = (Nutzung) o;
+
+		if (this.nutzungId != null ? !this.nutzungId.equals(nutzung.nutzungId)
+				: nutzung.nutzungId != null)
+			return false;
+		if (this.nutzungsjahr != null ? !this.nutzungsjahr
+				.equals(nutzung.nutzungsjahr) : nutzung.nutzungsjahr != null)
+			return false;
+		if (this.rechnungsbetrag != null ? !this.rechnungsbetrag
+				.equals(nutzung.rechnungsbetrag)
+				: nutzung.rechnungsbetrag != null)
+			return false;
+		if (this.zeitraum != null ? !this.zeitraum.equals(nutzung.zeitraum)
+				: nutzung.zeitraum != null)
+			return false;
+		if (this.zugriffe != null ? !this.zugriffe.equals(nutzung.zugriffe)
+				: nutzung.zugriffe != null)
+			return false;
+
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.appfuse.model.BaseObject#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		int result = this.nutzungId != null ? this.nutzungId.hashCode() : 0;
+		result = (31 * result)
+				+ (this.zugriffe != null ? this.zugriffe.hashCode() : 0);
+		result = (31 * result)
+				+ (this.zeitraum != null ? this.zeitraum.hashCode() : 0);
+		result = (31 * result)
+				+ (this.nutzungsjahr != null ? this.nutzungsjahr.hashCode() : 0);
+		result = (31 * result)
+				+ (this.rechnungsbetrag != null ? this.rechnungsbetrag
+						.hashCode() : 0);
+		return result;
+	}
 }

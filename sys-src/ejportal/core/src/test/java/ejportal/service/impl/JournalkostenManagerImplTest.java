@@ -1,72 +1,116 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.service.impl;
+
+import org.appfuse.service.impl.BaseManagerMockTestCase;
+import org.jmock.Expectations;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import ejportal.dao.JournalDao;
 import ejportal.dao.JournalkostenDao;
 import ejportal.dao.WechselkursDao;
 import ejportal.model.Journalkosten;
-import org.appfuse.service.impl.BaseManagerMockTestCase;
-import org.jmock.Expectations;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.assertSame;
 
 /**
- * Created by IntelliJ IDEA.
- * User: ag35ogub
- * Date: 12.08.2010
- * Time: 12:04:00
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: ag35ogub Date: 12.08.2010 Time: 12:04:00 To
+ * change this template use File | Settings | File Templates.
  */
 public class JournalkostenManagerImplTest extends BaseManagerMockTestCase {
 
-    private JournalkostenManagerImpl manager = null;
-    private JournalkostenDao journalkostenDao = null;
-    private JournalDao journalDao = null;
-    private WechselkursDao wechselkursDao = null;
+	/** The manager. */
+	private JournalkostenManagerImpl manager = null;
 
-    @Before
-    public void setUp(){
-        journalkostenDao = context.mock(JournalkostenDao.class);
-        journalDao = context.mock(JournalDao.class);
-        wechselkursDao = context.mock(WechselkursDao.class);
-        manager = new JournalkostenManagerImpl(journalkostenDao, wechselkursDao, journalDao);
-    }
+	/** The journalkosten dao. */
+	private JournalkostenDao journalkostenDao = null;
 
-    @After
-    public void tearDown(){
-        manager = null;
-    }
+	/** The journal dao. */
+	private JournalDao journalDao = null;
 
-    @Test
-    public void testGetProjektkosten() {
-        log.debug("testing get...");
+	/** The wechselkurs dao. */
+	private WechselkursDao wechselkursDao = null;
 
-        final Long id = 7L;
-        final Journalkosten journalkosten = new Journalkosten();
+	/**
+	 * Sets the up.
+	 */
+	@Before
+	public void setUp() {
+		this.journalkostenDao = this.context.mock(JournalkostenDao.class);
+		this.journalDao = this.context.mock(JournalDao.class);
+		this.wechselkursDao = this.context.mock(WechselkursDao.class);
+		this.manager = new JournalkostenManagerImpl(this.journalkostenDao,
+				this.wechselkursDao, this.journalDao);
+	}
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(journalkostenDao).get(with(equal(id)));
-            will(returnValue(journalkosten));
-        }});
+	/**
+	 * Tear down.
+	 */
+	@After
+	public void tearDown() {
+		this.manager = null;
+	}
 
-        Journalkosten result = manager.get(id);
-        assertSame(journalkosten, result);
-    }
+	/**
+	 * Test get projektkosten.
+	 */
+	@Test
+	public void testGetProjektkosten() {
+		this.log.debug("testing get...");
 
-    @Test
-    public void testRemoveProjektkosten() {
-        log.debug("testing remove...");
+		final Long id = 7L;
+		final Journalkosten journalkosten = new Journalkosten();
 
-        final Long id= 1L;
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(JournalkostenManagerImplTest.this.journalkostenDao)
+						.get(this.with(Expectations.equal(id)));
+				this.will(Expectations.returnValue(journalkosten));
+			}
+		});
 
-        // set expected behavior on dao
-        context.checking(new Expectations() {{
-            one(journalkostenDao).remove(with(equal(id)));
-        }});
+		final Journalkosten result = this.manager.get(id);
+		Assert.assertSame(journalkosten, result);
+	}
 
-        manager.remove(id);
-    }
+	/**
+	 * Test remove projektkosten.
+	 */
+	@Test
+	public void testRemoveProjektkosten() {
+		this.log.debug("testing remove...");
+
+		final Long id = 1L;
+
+		// set expected behavior on dao
+		this.context.checking(new Expectations() {
+			{
+				this.one(JournalkostenManagerImplTest.this.journalkostenDao)
+						.remove(this.with(Expectations.equal(id)));
+			}
+		});
+
+		this.manager.remove(id);
+	}
 
 }

@@ -1,129 +1,242 @@
+/**************************************************************************
+ * ejPortal
+ * ==============================================
+ * Copyright (C) 2010-2012 by 
+ *   - Christoph P. Neumann (http://www.chr15t0ph.de)
+ *   - Florian Irmert
+ *   - and the SWAT 2010 team
+ **************************************************************************
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ **************************************************************************
+ * $Id$
+ *************************************************************************/
 package ejportal.webapp.action;
+
+import com.opensymphony.xwork2.Action;
 
 import ejportal.model.Interesse;
 import ejportal.service.InteresseManager;
 import ejportal.service.dto.InteresseBaseTO;
 
 /**
- * Created by IntelliJ IDEA.
- * User: mkoerner
- * Date: 10.08.2010
- * Time: 11:09:43
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: mkoerner Date: 10.08.2010 Time: 11:09:43 To
+ * change this template use File | Settings | File Templates.
  */
-public class InteresseAction extends JournalBaseAction{
-    private InteresseManager interesseManager;
-    private Interesse interesse;
-    private InteresseBaseTO interesseBaseTO;
+public class InteresseAction extends JournalBaseAction {
 
-    // IDs für URL
-    private Long interesseId;
-    private Long bestellerId;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8959433480487130490L;
 
-    public Long getInteresseId() {
-        return interesseId;
-    }
+	/** The interesse manager. */
+	private InteresseManager interesseManager;
 
-    public void setInteresseId(Long interesseId) {
-        this.interesseId = interesseId;
-    }
+	/** The interesse. */
+	private Interesse interesse;
 
-    public Long getBestellerId() {
-        return bestellerId;
-    }
+	/** The interesse base to. */
+	private InteresseBaseTO interesseBaseTO;
 
-    public void setBestellerId(Long bestellerId) {
-        this.bestellerId = bestellerId;
-    }
+	// IDs für URL
+	/** The interesse id. */
+	private Long interesseId;
 
-    // CRUD
-    public String delete() {
-        interesseManager.remove(interesseId);
-        saveMessage("Das Interesse wurde erfolgreich entfernt.");
+	/** The besteller id. */
+	private Long bestellerId;
 
-        return SUCCESS;
-    }
+	/**
+	 * Gets the interesse id.
+	 * 
+	 * @return the interesse id
+	 */
+	public Long getInteresseId() {
+		return this.interesseId;
+	}
 
-    public String load() {
-        if (interesseId != null) {
-            interesse = interesseManager.get(interesseId);
-        } else {
-            return ERROR;
-        }
+	/**
+	 * Sets the interesse id.
+	 * 
+	 * @param interesseId
+	 *            the new interesse id
+	 */
+	public void setInteresseId(final Long interesseId) {
+		this.interesseId = interesseId;
+	}
 
-        return SUCCESS;
-    }
+	/**
+	 * Gets the besteller id.
+	 * 
+	 * @return the besteller id
+	 */
+	public Long getBestellerId() {
+		return this.bestellerId;
+	}
 
-    public String edit() {
-        if (interesseId != null) {
-            interesse = interesseManager.get(interesseId);
-            interesseBaseTO = interesseManager.getInteresseBaseTO(interesseId);
-            if (interesse.getBesteller() != null) {
-                bestellerId = interesse.getBesteller().getBestellerId();
-            }
-        } else {
-            interesseBaseTO = new InteresseBaseTO();
-        }
-        return "edit";
-    }
+	/**
+	 * Sets the besteller id.
+	 * 
+	 * @param bestellerId
+	 *            the new besteller id
+	 */
+	public void setBestellerId(final Long bestellerId) {
+		this.bestellerId = bestellerId;
+	}
 
-    public String save() throws Exception {
-        if (cancel != null) {
-            return CANCEL;
-        }
+	// CRUD
+	/**
+	 * Delete.
+	 * 
+	 * @return the string
+	 */
+	public String delete() {
+		this.interesseManager.remove(this.interesseId);
+		this.saveMessage("Das Interesse wurde erfolgreich entfernt.");
 
-        if (delete != null) {
-            return delete();
-        }
+		return Action.SUCCESS;
+	}
 
-        boolean isNew = (interesseBaseTO.getInteresseId() == null);
+	/**
+	 * Load.
+	 * 
+	 * @return the string
+	 */
+	public String load() {
+		if (this.interesseId != null) {
+			this.interesse = this.interesseManager.get(this.interesseId);
+		} else
+			return Action.ERROR;
 
-        //Validierung Name
-        if (interesseBaseTO.getInteresse().equals("")) {
-            saveMessage(getText("Bitte geben Sie eine Bezeichnung ein."));
-            return "back";
-        }
+		return Action.SUCCESS;
+	}
 
-        if (isNew){
-            interesse = interesseManager.create(interesseBaseTO, journalId);
-            interesseId = interesse.getInteresseId();
-        }
-        else{
-            interesse = interesseManager.saveBaseTO(interesseBaseTO);
-            interesseId = interesse.getInteresseId();
-        }
+	/**
+	 * Edits the.
+	 * 
+	 * @return the string
+	 */
+	public String edit() {
+		if (this.interesseId != null) {
+			this.interesse = this.interesseManager.get(this.interesseId);
+			this.interesseBaseTO = this.interesseManager
+					.getInteresseBaseTO(this.interesseId);
+			if (this.interesse.getBesteller() != null) {
+				this.bestellerId = this.interesse.getBesteller()
+						.getBestellerId();
+			}
+		} else {
+			this.interesseBaseTO = new InteresseBaseTO();
+		}
+		return "edit";
+	}
 
-        String key = (isNew) ? "Interesse wurde erfolgreich erstellt." : "Interesse wurde erfolgreich aktualisiert.";
-        saveMessage(key);
+	/**
+	 * Save.
+	 * 
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public String save() throws Exception {
+		if (this.cancel != null)
+			return BaseAction.CANCEL;
 
-        return SUCCESS;
-    }
+		if (this.delete != null)
+			return this.delete();
 
-    // Ralations
-    public String changeBesteller(){
-        interesseManager.connectInteresseBesteller(this.interesseId, this.bestellerId);
-        load();
-        return SUCCESS;
-    }
+		final boolean isNew = (this.interesseBaseTO.getInteresseId() == null);
 
-    // Getter und Setter
-    public void setInteresseManager(InteresseManager interesseManager) {
-        this.interesseManager = interesseManager;
-    }
+		// Validierung Name
+		if (this.interesseBaseTO.getInteresse().equals("")) {
+			this.saveMessage(this
+					.getText("Bitte geben Sie eine Bezeichnung ein."));
+			return "back";
+		}
 
-    public Interesse getInteresse() {
-        return interesse;
-    }
+		if (isNew) {
+			this.interesse = this.interesseManager.create(this.interesseBaseTO,
+					this.journalId);
+			this.interesseId = this.interesse.getInteresseId();
+		} else {
+			this.interesse = this.interesseManager
+					.saveBaseTO(this.interesseBaseTO);
+			this.interesseId = this.interesse.getInteresseId();
+		}
 
-    public void setInteresse(Interesse interesse) {
-        this.interesse = interesse;
-    }
+		final String key = (isNew) ? "Interesse wurde erfolgreich erstellt."
+				: "Interesse wurde erfolgreich aktualisiert.";
+		this.saveMessage(key);
 
-    public InteresseBaseTO getInteresseBaseTO() {
-        return interesseBaseTO;
-    }
+		return Action.SUCCESS;
+	}
 
-    public void setInteresseBaseTO(InteresseBaseTO interesseBaseTO) {
-        this.interesseBaseTO = interesseBaseTO;
-    }
+	// Ralations
+	/**
+	 * Change besteller.
+	 * 
+	 * @return the string
+	 */
+	public String changeBesteller() {
+		this.interesseManager.connectInteresseBesteller(this.interesseId,
+				this.bestellerId);
+		this.load();
+		return Action.SUCCESS;
+	}
+
+	// Getter und Setter
+	/**
+	 * Sets the interesse manager.
+	 * 
+	 * @param interesseManager
+	 *            the new interesse manager
+	 */
+	public void setInteresseManager(final InteresseManager interesseManager) {
+		this.interesseManager = interesseManager;
+	}
+
+	/**
+	 * Gets the interesse.
+	 * 
+	 * @return the interesse
+	 */
+	public Interesse getInteresse() {
+		return this.interesse;
+	}
+
+	/**
+	 * Sets the interesse.
+	 * 
+	 * @param interesse
+	 *            the new interesse
+	 */
+	public void setInteresse(final Interesse interesse) {
+		this.interesse = interesse;
+	}
+
+	/**
+	 * Gets the interesse base to.
+	 * 
+	 * @return the interesse base to
+	 */
+	public InteresseBaseTO getInteresseBaseTO() {
+		return this.interesseBaseTO;
+	}
+
+	/**
+	 * Sets the interesse base to.
+	 * 
+	 * @param interesseBaseTO
+	 *            the new interesse base to
+	 */
+	public void setInteresseBaseTO(final InteresseBaseTO interesseBaseTO) {
+		this.interesseBaseTO = interesseBaseTO;
+	}
 }
