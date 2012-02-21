@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       default-lazy-init="true">
+
+    <!-- Activates scanning of @Autowired -->
+    <context:annotation-config/>
+
+    <!-- Activates scanning of @Repository and @Service -->
+    <context:component-scan base-package="ejportal"/>
+
+    <!-- Add new DAOs here -->
+
+    <!-- Add new Managers here -->
+    <bean id="journalManager" class="ejportal.service.impl.JournalManagerImpl">
+        <constructor-arg index="0" ref="journalDao"/>
+        <constructor-arg index="1" ref="institutionDao"/>
+        <constructor-arg index="2" ref="konsortiumDao"/>
+        <constructor-arg index="3" ref="paketDao"/>
+        <constructor-arg index="4" ref="fachDao"/>
+        <constructor-arg index="5" ref="exemplarDao"/>
+        <constructor-arg index="6" ref="bibliotheksmitarbeiterDao"/>
+    </bean>
+    <bean id="journalTitelService" class="ejportal.service.impl.JournalTitelServiceImpl">
+        <constructor-arg ref="journalDao"/>
+    </bean>
+    <bean id="institutionManager" class="ejportal.service.impl.InstitutionManagerImpl">
+        <constructor-arg ref="institutionDao"/>
+    </bean>
+    <bean id="sigelManager" class="ejportal.service.impl.SigelManagerImpl">
+        <constructor-arg ref="sigelDao"/>
+    </bean>
+    <bean id="bibliotheksmitarbeiterManager" class="ejportal.service.impl.BibliotheksmitarbeiterManagerImpl">
+        <constructor-arg ref="bibliotheksmitarbeiterDao"/>
+    </bean>
+    <bean id="wechselkursManager" class="ejportal.service.impl.WechselkursManagerImpl">
+        <constructor-arg ref="wechselkursDao"/>
+    </bean>
+    <bean id="paketManager" class="ejportal.service.impl.PaketManagerImpl">
+        <constructor-arg ref="paketDao"/>
+    </bean>
+    <bean id="konsortiumManager" class="ejportal.service.impl.KonsortiumManagerImpl">
+        <constructor-arg ref="konsortiumDao"/>
+    </bean>
+    <bean id="fachManager" class="ejportal.service.impl.FachManagerImpl">
+        <constructor-arg ref="fachDao"/>
+    </bean>
+    <bean id="lizenzdetailManager" class="ejportal.service.impl.LizenzdetailManagerImpl">
+        <constructor-arg index="0" ref="lizenzdetailDao"/>
+        <constructor-arg index="1" ref="institutionDao"/>
+    </bean>
+    <bean id="journalkostenManager" class="ejportal.service.impl.JournalkostenManagerImpl">
+        <constructor-arg index="0" ref="journalkostenDao"/>
+        <constructor-arg index="1" ref="wechselkursDao"/>
+        <constructor-arg index="2" ref="journalDao"/>
+    </bean>
+    <bean id="nutzungManager" class="ejportal.service.impl.NutzungManagerImpl">
+        <constructor-arg index="0" ref="nutzungDao"/>
+        <constructor-arg index="1" ref="journalDao"/>
+    </bean>
+    <bean id="exemplarManager" class="ejportal.service.impl.ExemplarManagerImpl">
+        <constructor-arg index="0" ref="exemplarDao"/>
+        <constructor-arg index="1" ref="institutionDao"/>
+        <constructor-arg index="2" ref="sigelDao"/>
+        <constructor-arg index="3" ref="journalDao"/>
+    </bean>
+    <bean id="bestellerManager" class="ejportal.service.impl.BestellerManagerImpl">
+        <constructor-arg index="0" ref="bestellerDao"/>
+        <constructor-arg index="1" ref="interesseDao"/>
+        <constructor-arg index="2" ref="sigelDao"/>
+    </bean>
+    <bean id="interesseManager" class="ejportal.service.impl.InteresseManagerImpl">
+        <constructor-arg index="0" ref="interesseDao"/>
+        <constructor-arg index="1" ref="bestellerDao"/>
+        <constructor-arg index="2" ref="journalDao"/>
+    </bean>
+    <bean id="ezbDatenManager" class="ejportal.service.impl.EzbDatenManagerImpl">
+        <constructor-arg index="0" ref="ezbDatenDao"/>
+        <constructor-arg index="1" ref="journalDao"/>
+    </bean>
+    <bean id="rechnungManager" class="ejportal.service.impl.RechnungManagerImpl">
+        <constructor-arg index="0" ref="rechnungDao"/>
+        <constructor-arg index="1" ref="exemplarDao"/>
+        <constructor-arg index="2" ref="journalDao"/>
+    </bean>
+</beans>

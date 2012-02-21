@@ -1,0 +1,1263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <!-- Constants -->
+    <constant name="struts.devMode" value="false"/>
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <constant name="struts.action.extension" value="html"/>
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.custom.i18n.resources" value="ApplicationResources,errors"/>
+    <constant name="struts.multipart.maxSize" value="2097152"/>
+    <constant name="struts.ui.theme" value="css_xhtml"/>
+    <constant name="struts.codebehind.pathPrefix" value="/WEB-INF/pages/"/>
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+    <constant name="struts.convention.action.disableScanning" value="true"/>
+
+    <!-- Configuration for the default package. -->
+    <package name="default" extends="struts-default">
+        <interceptors>
+            <!-- Interceptor to handle allowing only admins to certain actions -->
+            <interceptor name="adminOnly" class="adminInterceptor"/>
+            <!-- Exception Interceptors -->
+            <interceptor name="params" class="com.opensymphony.xwork2.interceptor.ParametersInterceptor"/>
+            <!-- Copied from struts-default.xml and changed validation exclude methods -->
+            <interceptor-stack name="defaultStack">
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="profiling"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="params">
+                    <param name="excludeParams">dojo\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">cancel,execute,delete,edit,list</param>
+                </interceptor-ref>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+            </interceptor-stack>
+            <interceptor-stack name="fileUploadStack">
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+            <interceptor-stack name="adminCheck">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="adminOnly"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <global-results>
+            <result name="mainMenu" type="redirectAction">mainMenu</result>
+            <result name="dataAccessFailure">/WEB-INF/pages/dataAccessFailure.jsp</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="org.springframework.dao.DataAccessException" result="dataAccessFailure"/>
+        </global-exception-mappings>
+
+        <action name="mainMenu">
+            <result name="success">/WEB-INF/pages/mainMenu.jsp</result>
+        </action>
+
+        <action name="signup" class="signupAction">
+            <result name="cancel" type="redirect">/</result>
+            <result name="input">/WEB-INF/pages/signup.jsp</result>
+            <result name="success" type="chain">saveSignup</result>
+        </action>
+
+        <action name="saveSignup" class="signupAction" method="save">
+            <result name="input">/WEB-INF/pages/signup.jsp</result>
+            <result name="success" type="redirectAction">/mainMenu</result>
+        </action>
+
+        <action name="editUser" class="userAction" method="edit">
+            <interceptor-ref name="adminCheck"/>
+            <result name="success">/WEB-INF/pages/userForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/userList.jsp</result>
+        </action>
+
+        <action name="editProfile" class="userAction" method="edit">
+            <result name="success">/WEB-INF/pages/userForm.jsp</result>
+            <result name="error">/WEB-INF/pages/mainMenu.jsp</result>
+        </action>
+
+        <action name="saveUser" class="userAction" method="save">
+            <result name="cancel" type="redirectAction">admin/users</result>
+            <result name="input">/WEB-INF/pages/userForm.jsp</result>
+            <result name="success" type="redirectAction">admin/users</result>
+        </action>
+
+        <action name="uploadFile" class="ejportal.webapp.action.FileUploadAction">
+            <interceptor-ref name="fileUploadStack"/>
+            <result name="input">/WEB-INF/pages/uploadForm.jsp</result>
+            <result name="success">/WEB-INF/pages/uploadDisplay.jsp</result>
+            <result name="cancel" type="redirectAction">mainMenu</result>
+        </action>
+
+        <action name="passwordHint" class="passwordHintAction">
+            <result name="input">/</result>
+            <result name="success">/</result>
+        </action>
+        
+        <!-- Add additional actions here -->
+
+        <action name="underConstruction" class="ejportal.webapp.action.UnderConstructionAction" method="load">
+            <result>/WEB-INF/pages/underConstruction.jsp</result>
+        </action>
+
+
+
+        <!--Journal Suche-->
+        <action name="searchJournals" class="ejportal.webapp.action.JournalListAction" >
+            <result>/WEB-INF/pages/journalSearch.jsp</result>
+        </action>
+
+        <action name="listJournals" class="ejportal.webapp.action.JournalListAction" method="listAll">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+            
+            <result>/WEB-INF/pages/journalList.jsp</result>
+        </action>
+
+
+        <!--Journal Anzeige-->
+        <action name="showJournalDetail" class="ejportal.webapp.action.JournalDetailAction" method="load">
+            <result>/WEB-INF/pages/journalDetail.jsp</result>
+        </action>
+
+        <action name="showVerlagForJournal" class="ejportal.webapp.action.JournalDetailAction" method="load">
+            <result>/WEB-INF/pages/journalVerlag.jsp</result>
+        </action>
+
+        <action name="showProviderForJournal" class="ejportal.webapp.action.JournalDetailAction" method="load">
+            <result>/WEB-INF/pages/journalProvider.jsp</result>
+        </action>
+
+        <action name="showFachForJournal" class="ejportal.webapp.action.JournalDetailAction" method="load">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/journalFach.jsp</result>
+        </action>
+
+        <action name="showExemplarForJournal" class="ejportal.webapp.action.JournalDetailAction" method="load">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/journalExemplarList.jsp</result>
+        </action>
+
+        <action name="showBibliotheksmitarbeiterForJournal" class="ejportal.webapp.action.JournalDetailAction" method="load">
+            <result>/WEB-INF/pages/journalBibliotheksmitarbeiter.jsp</result>
+        </action>
+
+         <action name="showEzbDatenForJournal" class="ejportal.webapp.action.EzbDatenDetailAction" method="loadWithJournalId">
+            <result>/WEB-INF/pages/journalEzbDaten.jsp</result>
+        </action>
+
+
+        <!-- Ansicht der Bearbeitungstermine-->
+        <action name="listBearbeitungsdatum" class="ejportal.webapp.action.JournalListAction" method="listBearbeitungsdatum">            
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/journalBearbeitungsdatum.jsp</result>
+        </action>
+
+        <action name="listBearbeitungsdatumAll" class="ejportal.webapp.action.JournalListAction" method="listBearbeitungsdatumAll">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/journalBearbeitungsdatum.jsp</result>
+        </action>
+
+
+    <!--Exemplar-->
+
+        <!--Exemplar Anzeige-->
+        <action name="showExemplarDetail" class="ejportal.webapp.action.ExemplarDetailAction" method="load">
+            <result>/WEB-INF/pages/journalExemplarDetail.jsp</result>
+        </action>
+
+        <action name="showEigentuemerForExemplar" class="ejportal.webapp.action.ExemplarDetailAction" method="load">
+            <result>/WEB-INF/pages/journalExemplarEigentuemer.jsp</result>
+        </action>
+
+        <action name="showBestellerForExemplar" class="ejportal.webapp.action.ExemplarDetailAction" method="load">
+            <result>/WEB-INF/pages/journalExemplarBesteller.jsp</result>
+        </action>
+
+        <action name="showLieferantForExemplar" class="ejportal.webapp.action.ExemplarDetailAction" method="load">
+            <result>/WEB-INF/pages/journalExemplarLieferant.jsp</result>
+        </action>
+
+        <action name="showZustaendigeBibForExemplar" class="ejportal.webapp.action.ExemplarDetailAction" method="load">
+            <result>/WEB-INF/pages/journalExemplarZustaendigeBib.jsp</result>
+        </action>
+
+   </package>
+
+
+
+
+   <!-- Hier beginnt der Admin Bereich -->
+
+
+
+
+    <!-- Actions in this package will be prefixed with /admin/ -->
+    <package name="admin" extends="default" namespace="/admin">
+        <action name="activeUsers" class="com.opensymphony.xwork2.ActionSupport">
+            <result name="success">/WEB-INF/pages/admin/activeUsers.jsp</result>
+        </action>
+        
+        <action name="reload" class="ejportal.webapp.action.ReloadAction">
+            <interceptor-ref name="adminCheck"/>
+            <!-- this should never be used, it's here to prevent warnings -->
+            <result name="success">/WEB-INF/pages/mainMenu.jsp</result>
+        </action>
+
+        <action name="users" class="userAction" method="list">
+            <interceptor-ref name="adminCheck"/>
+            <result name="success">/WEB-INF/pages/admin/userList.jsp</result>
+        </action>
+
+
+
+
+    <!-- JOURNAL -->
+
+    <!-- Neuzuweisungen / Journalattribute aendern-->
+
+    <!-- Paket (fuer Journal aendern) -->
+        <action name="searchPaket" class="ejportal.webapp.action.JournalDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/journalPaketSearch.jsp</result>
+        </action>
+        <action name="listPaket" class="ejportal.webapp.action.PaketListAction" method="search">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/admin/journalPaketList.jsp</result>
+        </action>
+        <action name="changePaket" class="ejportal.webapp.action.JournalDetailAction" method="changePaket">
+            <result>/WEB-INF/pages/journalDetail.jsp</result>
+        </action>
+
+    <!-- Konsortium (fuer Journal aendern) -->
+        <action name="searchKonsortium" class="ejportal.webapp.action.JournalDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/journalKonsortiumSearch.jsp</result>
+        </action>
+        <action name="listKonsortium" class="ejportal.webapp.action.KonsortiumListAction" method="search">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/admin/journalKonsortiumList.jsp</result>
+        </action>
+        <action name="changeKonsortium" class="ejportal.webapp.action.JournalDetailAction" method="changeKonsortium">
+            <result>/WEB-INF/pages/journalDetail.jsp</result>
+        </action>
+
+    <!-- Verlag (fuer Journal) aendern) -->
+        <action name="searchVerlag" class="ejportal.webapp.action.JournalDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/journalVerlagSearch.jsp</result>
+        </action>
+        <action name="listVerlage" class="ejportal.webapp.action.InstitutionListAction" method="search">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/admin/journalVerlagList.jsp</result>
+        </action>
+        <action name="changeVerlag" class="ejportal.webapp.action.JournalDetailAction" method="changeVerlag">
+            <result>/WEB-INF/pages/journalVerlag.jsp</result>
+        </action>
+
+   <!-- Provider (fuer Journal aendern) -->
+        <action name="searchProvider" class="ejportal.webapp.action.JournalDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/journalProviderSearch.jsp</result>
+        </action>
+        <action name="listProvider" class="ejportal.webapp.action.InstitutionListAction" method="search">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/admin/journalProviderList.jsp</result>
+        </action>
+        <action name="changeProvider" class="ejportal.webapp.action.JournalDetailAction" method="changeProvider">
+            <result>/WEB-INF/pages/journalProvider.jsp</result>
+        </action>
+
+   <!-- Fach (fuer Journal aendern) -->
+        <action name="listFaecher" class="ejportal.webapp.action.FachListAction" method="listAll">
+            <result>/WEB-INF/pages/admin/journalFachList.jsp</result>
+        </action>
+        <action name="changeFach" class="ejportal.webapp.action.JournalDetailAction" method="changeFach">
+            <result>/WEB-INF/pages/journalFach.jsp</result>
+        </action>
+        <action name="dropFach" class="ejportal.webapp.action.JournalDetailAction" method="dropFach">
+            <result>/WEB-INF/pages/journalFach.jsp</result>
+        </action>
+
+
+
+    <!-- EXEMPLAR -->
+    <!--Exemplar bearbeiten-->
+
+
+        <!--Exemplar bearbeiten-->
+        <action name="editExemplar" class="ejportal.webapp.action.ExemplarDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/journalExemplarDetailForm.jsp</result>
+            <result name="success">/WEB-INF/pages/journalExemplarDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/journalExemplarDetail.jsp</result>
+            <result name="delete" type="redirectAction">showExemplarForJournal</result>
+            <result name="error" type="redirectAction">showExemplarDetail</result>
+            <result name="input">/WEB-INF/pages/admin/journalExemplarDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/journalExemplarDetailForm.jsp</result>
+        </action>
+
+
+    <!--Neuzuweisungen zu Exemplar / Exemplarattribute bearbeiten-->
+
+        <!-- Eigentümer (für Exemplar ändern) -->
+
+        <action name="searchEigentuemer" class="ejportal.webapp.action.ExemplarDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/journalExemplarEigentuemerSearch.jsp</result>
+        </action>
+        <action name="listEigentuemer" class="ejportal.webapp.action.SigelListAction">
+            <result>/WEB-INF/pages/admin/journalExemplarEigentuemerList.jsp</result>
+        </action>
+        <action name="changeEigentuemer" class="ejportal.webapp.action.ExemplarDetailAction" method="changeEigentuemer">
+            <result>/WEB-INF/pages/journalExemplarDetail.jsp</result>
+        <!--    <result name="success" type="redirectAction">
+                <param name="actionName">showExemplarDetail</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+                <param name="exemplarId">${exemplarId}</param>
+            </result>-->
+        </action>
+
+        <!-- Besteller (für Exemplar ändern) -->
+        <action name="searchBesteller" class="ejportal.webapp.action.ExemplarDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/journalExemplarBestellerSearch.jsp</result>
+        </action>
+        <action name="listBesteller" class="ejportal.webapp.action.SigelListAction" method="listAll">
+            <result>/WEB-INF/pages/admin/journalExemplarBestellerList.jsp</result>
+        </action>
+        <action name="changeBesteller" class="ejportal.webapp.action.ExemplarDetailAction" method="changeBesteller">
+            <result>/WEB-INF/pages/journalExemplarDetail.jsp</result>
+        </action>
+
+        <!-- Lieferant (für Exemplar ändern) -->
+        <action name="searchLieferant" class="ejportal.webapp.action.ExemplarDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/journalExemplarLieferantSearch.jsp</result>
+        </action>
+        <action name="listLieferant" class="ejportal.webapp.action.InstitutionListAction">
+            <result>/WEB-INF/pages/admin/journalExemplarLieferantList.jsp</result>
+        </action>
+        <action name="changeLieferant" class="ejportal.webapp.action.ExemplarDetailAction" method="changeLieferant">
+            <result>/WEB-INF/pages/journalExemplarDetail.jsp</result>
+        </action>
+
+        <!-- Zuständige Bibliothek (für Exemplar ändern) -->
+        <action name="searchZustaendigeBib" class="ejportal.webapp.action.ExemplarDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/journalExemplarZustaendigeBibSearch.jsp</result>
+        </action>
+        <action name="listZustaendigeBib" class="ejportal.webapp.action.SigelListAction">
+            <result>/WEB-INF/pages/admin/journalExemplarZustaendigeBibList.jsp</result>
+        </action>
+        <action name="changeZustaendigeBib" class="ejportal.webapp.action.ExemplarDetailAction" method="changeZustaendigeBib">
+            <result>/WEB-INF/pages/journalExemplarDetail.jsp</result>
+     <!--       <result name="success" type="redirectAction">
+                <param name="actionName">showExemplarDetail</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+                <param name="exemplarId">${exemplarId}</param>
+            </result>-->
+        </action>
+
+
+    <!-- Exemplar Ende -->
+
+    <!-- Bibliotheksmitarbeiter (für Journal ändern) -->
+
+        <action name="searchBibliotheksmitarbeiter" class="ejportal.webapp.action.BibliotheksmitarbeiterListAction">
+            <result>/WEB-INF/pages/admin/journalBibliotheksmitarbeiterSearch.jsp</result>
+        </action>
+        <action name="listBibliotheksmitarbeiter" class="ejportal.webapp.action.BibliotheksmitarbeiterListAction" method="search">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/admin/journalBibliotheksmitarbeiterList.jsp</result>
+        </action>
+        <action name="changeBibliotheksmitarbeiter" class="ejportal.webapp.action.JournalDetailAction" method="changeBibliotheksmitarbeiter">
+            <result>/WEB-INF/pages/journalBibliotheksmitarbeiter.jsp</result>
+        </action>
+
+    <!-- EZBDaten (fuer Journal aendern) -->
+        <action name="searchEzbDaten" class="ejportal.webapp.action.EzbDatenListAction" >
+            <result>/WEB-INF/pages/admin/journalEzbDatenSearch.jsp</result>
+        </action>
+        <action name="listEzbDaten" class="ejportal.webapp.action.EzbDatenListAction" method="search">
+             <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+            <result>/WEB-INF/pages/admin/journalEzbDatenList.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/journalEzbDatenSearch.jsp</result>
+        </action>
+        <action name="changeEzbDaten" class="ejportal.webapp.action.EzbDatenDetailAction" method="changeEzbDaten">
+            <result>/WEB-INF/pages/journalEzbDaten.jsp</result>
+        </action>
+
+
+
+
+    <!--STAMMDATEN-->
+
+        <!--masterdataMenu-->
+        <action name="masterdataMenu">
+            <result name="success">/WEB-INF/pages/admin/masterdataMenu.jsp</result>
+        </action>
+
+        <!-- Journal anlegen -->
+
+        <action name="showJournalCreateForm" class="ejportal.webapp.action.JournalDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/journalCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/journalCreateForm.jsp</result>
+        </action>
+
+        <action name="createJournal" class="ejportal.webapp.action.JournalDetailAction" method="save">
+            <result name="success">/WEB-INF/pages/journalDetail.jsp</result>
+            <result name="error">/WEB-INF/pages/admin/journalCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/journalCreateForm.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/journalCreateForm.jsp</result>
+        </action>
+
+        <action name="editJournal" class="ejportal.webapp.action.JournalDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/journalDetailForm.jsp</result>
+            <result name="success">/WEB-INF/pages/journalDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/journalDetail.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/journalDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/journalDetailForm.jsp</result>
+        </action>
+
+         <!--Journal löschen-->
+        <action name="deleteJournal" class="ejportal.webapp.action.JournalDetailAction" method="delete">
+            <result name="success">/WEB-INF/pages/mainMenu.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">showJournalDetail</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+        </action>
+
+        <!-- Journal aus EZB importieren -->
+        <action name="importEzbDatenSearch" class="ejportal.webapp.action.EzbDatenListAction" >
+            <result>/WEB-INF/pages/admin/ezbDatenSearch.jsp</result>
+        </action>
+        <action name="importEzbDatenList" class="ejportal.webapp.action.EzbDatenListAction" method="search">
+             <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+            <result>/WEB-INF/pages/admin/ezbDatenList.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/ezbDatenSearch.jsp</result>
+        </action>
+        <action name="importEzbDaten" class="ejportal.webapp.action.EzbDatenDetailAction" method="importEzbDaten">
+            <result type="redirectAction">
+                <param name="actionName">editJournal</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+        </action>
+
+        <!-- Institution -->
+
+        <!--Institution Suche-->
+        <action name="searchInstitutions" class="ejportal.webapp.action.InstitutionListAction">
+            <result>/WEB-INF/pages/admin/institutionSearch.jsp</result>
+        </action>
+
+        <action name="listInstitutions" class="ejportal.webapp.action.InstitutionListAction" method="listAll">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/admin/institutionList.jsp</result>
+        </action>
+
+        <!--Institution Anzeige-->
+        <action name="showInstitutionDetail" class="ejportal.webapp.action.InstitutionDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/institutionDetail.jsp</result>
+        </action>
+      
+
+
+        <!--Institution Anlegen-->
+        <action name="showInstitutionCreateForm" class="ejportal.webapp.action.InstitutionDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/institutionCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/institutionCreateForm.jsp</result>
+        </action>
+
+        <action name="createInstitution" class="ejportal.webapp.action.InstitutionDetailAction" method="save">
+            <result name="success">/WEB-INF/pages/admin/institutionDetail.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/institutionCreateForm.jsp</result>
+        </action>
+
+        <!--Institution Löschen-->
+        <action name="deleteInstitution" class="ejportal.webapp.action.InstitutionDetailAction" method="delete">
+            <result name="success">/WEB-INF/pages/admin/masterdataMenu.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">showInstitutionDetail</param>
+                <param name="parse">true</param>
+                <param name="id">${id}</param>
+            </result>
+        </action>
+
+        <!--Institution bearbeiten-->
+        <action name="editInstitution" class="ejportal.webapp.action.InstitutionDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/institutionDetailForm.jsp</result>
+            <result name="success">/WEB-INF/pages/admin/institutionDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/institutionDetail.jsp</result>
+            <result name="delete" type="redirectAction">listInstitutions</result>
+            <result name="error" type="redirectAction">listInstitutions</result>
+            <result name="input">/WEB-INF/pages/admin/institutionDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/institutionDetailForm.jsp</result>
+        </action>
+
+        <!-- Lizenzdetail editieren -->
+        <action name="editLizenzdetail" class="ejportal.webapp.action.LizenzdetailDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/institutionLizenzdetailDetailForm.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">showInstitutionDetail</param>
+                <param name="parse">true</param>
+                <param name="id">${institutionId}</param>
+            </result>
+            <result name="error">/WEB-INF/pages/admin/institutionLizenzdetailDetailForm.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/institutionLizenzdetailDetailForm.jsp</result>
+            <result name="input" >/WEB-INF/pages/admin/institutionLizenzdetailDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/institutionLizenzdetailCreateForm.jsp</result>
+        </action>
+
+        <!-- Lizenzdetail anlegen -->
+        <action name="createLizenzdetail" class="ejportal.webapp.action.LizenzdetailDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/institutionLizenzdetailCreateForm.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">showInstitutionDetail</param>
+                <param name="parse">true</param>
+                <param name="id">${institutionId}</param>
+            </result>
+            <result name="error">/WEB-INF/pages/admin/institutionLizenzdetailCreateForm.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/institutionLizenzdetailCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/institutionLizenzdetailCreateForm.jsp</result>
+            <result name="back" type="redirectAction">
+                <param name="actionName">createLizenzdetail</param>
+                <param name="parse">true</param>
+                <param name="institutionId">${institutionId}</param>
+            </result>
+        </action>
+
+        <!-- Lizenzdetail loeschen -->
+        <action name="deleteLizenzdetail" class="ejportal.webapp.action.LizenzdetailDetailAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">showInstitutionDetail</param>
+                <param name="parse">true</param>
+                <param name="id">${institutionId}</param>
+            </result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">showInstitutionDetail</param>
+                <param name="parse">true</param>
+                <param name="id">${institutionId}</param>
+            </result>
+        </action>
+
+        <!-- Konsortium -->
+
+         <!--Konsortium Suche-->
+         <action name="searchKonsortien" class="ejportal.webapp.action.KonsortiumListAction">
+             <result>/WEB-INF/pages/admin/konsortiumSearch.jsp</result>
+         </action>
+
+         <action name="listKonsortien" class="ejportal.webapp.action.KonsortiumListAction" method="listAll">
+             <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+             <result>/WEB-INF/pages/admin/konsortiumList.jsp</result>
+         </action>
+
+         <!--Konsortium Anzeige-->
+         <action name="showKonsortiumDetail" class="ejportal.webapp.action.KonsortiumDetailAction" method="load">
+             <result>/WEB-INF/pages/admin/konsortiumDetail.jsp</result>
+         </action>
+
+
+        <!--Konsortium Anlegen-->
+        <action name="showKonsortiumCreateForm" class="ejportal.webapp.action.KonsortiumDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/konsortiumCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/konsortiumCreateForm.jsp</result>
+        </action>
+
+        <action name="createKonsortium" class="ejportal.webapp.action.KonsortiumDetailAction" method="save">
+            <result name="success">/WEB-INF/pages/admin/konsortiumDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/konsortiumDetail.jsp</result>
+            <result name="error" type="redirectAction">listKonsortien</result>
+            <result name="back">/WEB-INF/pages/admin/konsortiumCreateForm.jsp</result>
+        </action>
+
+        <!--Konsortium Löschen-->
+        <action name="deleteKonsortium" class="ejportal.webapp.action.KonsortiumDetailAction" method="delete">
+            <result name="success">/WEB-INF/pages/admin/masterdataMenu.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">showKonsortiumDetail</param>
+                <param name="parse">true</param>
+                <param name="konsortiumId">${konsortiumId}</param>
+            </result>
+        </action>
+
+        <!--Konsortium bearbeiten-->
+        <action name="editKonsortium" class="ejportal.webapp.action.KonsortiumDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/konsortiumDetailForm.jsp</result>
+            <result name="success">/WEB-INF/pages/admin/konsortiumDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/konsortiumDetail.jsp</result>
+            <result name="error" type="redirectAction">listKonsortien</result>
+            <result name="input">/WEB-INF/pages/admin/konsortiumDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/konsortiumDetailForm.jsp</result>
+        </action>
+
+
+        <!--Exemplar Anlegen-->
+        <action name="showExemplarCreateForm" class="ejportal.webapp.action.ExemplarDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/journalExemplarCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/journalExemplarCreateForm.jsp</result>
+        </action>
+
+        <action name="createExemplar" class="ejportal.webapp.action.ExemplarDetailAction" method="save">
+            <result name="success">/WEB-INF/pages/journalExemplarDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/journalExemplarDetail.jsp</result>
+            <result name="delete" type="redirectAction">showExemplarForJournal</result>
+            <result name="error" type="redirectAction">showExemplarDetail</result>
+            <result name="back">/WEB-INF/pages/admin/journalExemplarCreateForm.jsp</result>
+        </action>
+
+        <!--Exemplar Löschen-->
+        <action name="deleteExemplar" class="ejportal.webapp.action.ExemplarDetailAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">showExemplarForJournal</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">showExemplarDetail</param>
+                <param name="parse">true</param>
+                <param name="exemplarId">${exemplarId}</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+        </action>
+
+
+        <!--Paket-->
+
+        <!--Paket Suche-->
+        <action name="searchPakete" class="ejportal.webapp.action.PaketListAction">
+            <result>/WEB-INF/pages/admin/paketSearch.jsp</result>
+        </action>
+        <action name="listPakete" class="ejportal.webapp.action.PaketListAction" method="listAll">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/admin/paketList.jsp</result>
+        </action>
+
+        <!--Paket Anzeige-->
+        <action name="showPaketDetail" class="ejportal.webapp.action.PaketDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/paketDetail.jsp</result>
+        </action>
+
+        <!--Paket Anlegen-->
+        <action name="showPaketCreateForm" class="ejportal.webapp.action.PaketDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/paketCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/paketCreateForm.jsp</result>
+        </action>
+
+        <action name="createPaket" class="ejportal.webapp.action.PaketDetailAction" method="save">
+            <result name="success">/WEB-INF/pages/admin/paketDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/paketDetail.jsp</result>
+            <result name="error" type="redirectAction">listPakete</result>
+            <result name="input">/WEB-INF/pages/admin/paketDetail.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/paketCreateForm.jsp</result>
+        </action>
+
+        <!--Paket Löschen-->
+        <action name="deletePaket" class="ejportal.webapp.action.PaketDetailAction" method="delete">
+            <result name="success">/WEB-INF/pages/admin/masterdataMenu.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">showPaketDetail</param>
+                <param name="parse">true</param>
+                <param name="paketId">${paketId}</param>
+            </result>
+        </action>
+
+        <!--Paket bearbeiten-->
+        <action name="editPaket" class="ejportal.webapp.action.PaketDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/paketDetailForm.jsp</result>
+            <result name="success">/WEB-INF/pages/admin/paketDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/paketDetail.jsp</result>
+            <result name="error" type="redirectAction">listPakete</result>
+            <result name="input">/WEB-INF/pages/admin/paketDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/paketDetailForm.jsp</result>
+        </action>
+
+        <!--Sigel-->
+
+        <!--Sigel Suche-->
+        <action name="searchSigels" class="ejportal.webapp.action.SigelListAction">
+            <result>/WEB-INF/pages/admin/sigelSearch.jsp</result>
+        </action>
+        <action name="listSigels" class="ejportal.webapp.action.SigelListAction" method="listAll">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/admin/sigelList.jsp</result>
+        </action>
+
+        <!--Sigel Anzeige-->
+        <action name="showSigelDetail" class="ejportal.webapp.action.SigelDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/sigelDetail.jsp</result>
+        </action>            
+
+        <!--Sigel Anlegen-->
+        <action name="showSigelCreateForm" class="ejportal.webapp.action.SigelDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/sigelCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/sigelCreateForm.jsp</result>
+        </action>
+
+        <action name="createSigel" class="ejportal.webapp.action.SigelDetailAction" method="save">
+            <result name="success">/WEB-INF/pages/admin/sigelDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/sigelDetail.jsp.jsp</result>
+            <result name="error" type="redirectAction">listSigels</result>
+            <result name="back">/WEB-INF/pages/admin/sigelCreateForm.jsp</result>
+        </action>
+
+        <!--Sigel Löschen-->
+        <action name="deleteSigel" class="ejportal.webapp.action.SigelDetailAction" method="delete">
+            <result name="success">/WEB-INF/pages/admin/masterdataMenu.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">showSigelDetail</param>
+                <param name="parse">true</param>
+                <param name="sigelId">${sigelId}</param>
+            </result>
+        </action>
+
+        <!--Sigel bearbeiten-->
+        <action name="editSigel" class="ejportal.webapp.action.SigelDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/sigelDetailForm.jsp</result>
+            <result name="success">/WEB-INF/pages/admin/sigelDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/sigelDetail.jsp</result>
+            <result name="error" type="redirectAction">listSigels</result>
+            <result name="input">/WEB-INF/pages/admin/sigelDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/sigelDetailForm.jsp</result>
+        </action>
+
+       <!--Bibliotheksmitarbeiter-->
+        <!--Bibliotheksmitarbeiter Suche-->
+        <action name="searchBibliotheksmitarbeiterForEdit" class="ejportal.webapp.action.BibliotheksmitarbeiterListAction">
+            <result>/WEB-INF/pages/admin/bibliotheksmitarbeiterSearch.jsp</result>
+        </action>
+        <action name="listBibliotheksmitarbeiterForEdit" class="ejportal.webapp.action.BibliotheksmitarbeiterListAction" method="listAll">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/admin/bibliotheksmitarbeiterList.jsp</result>
+        </action>
+
+        <!--Bibliotheksmitarbeiter Anzeige-->
+        <action name="showBibliotheksmitarbeiterDetail" class="ejportal.webapp.action.BibliotheksmitarbeiterDetailAction" method="load">
+            <result>/WEB-INF/pages/admin/bibliotheksmitarbeiterDetail.jsp</result>
+        </action>       
+
+        <!--Bibliotheksmitarbeiter Anlegen-->
+        <action name="showBibliotheksmitarbeiterCreateForm" class="ejportal.webapp.action.BibliotheksmitarbeiterDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/bibliotheksmitarbeiterCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/bibliotheksmitarbeiterCreateForm.jsp</result>
+        </action>
+
+        <action name="createBibliotheksmitarbeiter" class="ejportal.webapp.action.BibliotheksmitarbeiterDetailAction" method="save">
+            <result name="success">/WEB-INF/pages/admin/bibliotheksmitarbeiterDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/masterdataMenu.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/bibliotheksmitarbeiterCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/bibliotheksmitarbeiterCreateForm.jsp</result>
+            <result name="error" type="redirectAction">/WEB-INF/pages/admin/masterdataMenu.jsp</result>
+        </action>
+
+        <!--Bibliotheksmitarbeiter Löschen-->
+        <action name="deleteBibliotheksmitarbeiter" class="ejportal.webapp.action.BibliotheksmitarbeiterDetailAction" method="delete">
+            <result name="success">/WEB-INF/pages/admin/masterdataMenu.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">showBibliotheksmitarbeiterDetail</param>
+                <param name="parse">true</param>
+                <param name="bibId">${bibId}</param>
+            </result>
+        </action>
+
+        <!--Bibliotheksmitarbeiter Bearbeiten-->
+        <action name="editBibliotheksmitarbeiter" class="ejportal.webapp.action.BibliotheksmitarbeiterDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/bibliotheksmitarbeiterDetailForm.jsp</result>
+            <result name="success">/WEB-INF/pages/admin/bibliotheksmitarbeiterDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/bibliotheksmitarbeiterDetail.jsp</result>
+            <result name="back">/WEB-INF/pages/admin/bibliotheksmitarbeiterDetailForm.jsp</result>
+            <result name="error" type="redirectAction">listBibliotheksmitarbeiterForEdit</result>
+            <result name="input">/WEB-INF/pages/admin/bibliotheksmitarbeiterDetailForm.jsp</result>
+        </action>
+
+        <!--Fächersuche-->
+        <action name="searchFaecher" class="ejportal.webapp.action.FachListAction">
+             <result>/WEB-INF/pages/admin/fachSearch.jsp</result>
+         </action>
+         <action name="listFachs" class="ejportal.webapp.action.FachListAction" method="listAll">
+             <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+             <result>/WEB-INF/pages/admin/fachList.jsp</result>
+         </action>
+
+         <!--Fachanzeige-->
+         <action name="showFachDetail" class="ejportal.webapp.action.FachDetailAction" method="load">
+             <result>/WEB-INF/pages/admin/fachDetail.jsp</result>
+         </action>
+
+        <!--Fach Anlegen-->
+        <action name="showFachCreateForm" class="ejportal.webapp.action.FachDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/fachCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/fachCreateForm.jsp</result>
+        </action>
+
+        <action name="createFach" class="ejportal.webapp.action.FachDetailAction" method="save">
+            <result name="success">/WEB-INF/pages/admin/fachDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/fachDetail.jsp</result>
+            <result name="error" type="redirectAction">listFachs</result>
+            <result name="back">/WEB-INF/pages/admin/fachCreateForm.jsp</result>
+        </action>
+
+        <!--Fach bearbeiten-->
+        <action name="editFach" class="ejportal.webapp.action.FachDetailAction" method="edit">
+            <result name="edit">/WEB-INF/pages/admin/fachDetailForm.jsp</result>
+            <result name="success">/WEB-INF/pages/admin/fachDetail.jsp</result>
+            <result name="cancel">/WEB-INF/pages/admin/fachDetail.jsp</result>
+            <result name="error" type="redirectAction">listFachs</result>
+            <result name="input">/WEB-INF/pages/admin/fachDetailForm.jsp</result>
+             <result name="back">/WEB-INF/pages/admin/fachDetailForm.jsp</result>
+        </action>
+
+        <!--Fach Löschen-->
+        <action name="deleteFach" class="ejportal.webapp.action.FachDetailAction" method="delete">
+            <result name="success">/WEB-INF/pages/admin/masterdataMenu.jsp</result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">showFachDetail</param>
+                <param name="parse">true</param>
+                <param name="fachId">${fachId}</param>
+            </result>
+        </action>
+
+
+
+
+
+    </package>
+
+    <!-- in this package will be prefixed with /project/ -->
+    <package name="project" extends="default" namespace="/project">
+
+
+        <!--Cockpit-->
+        <action name="showProjectCockpit" class="ejportal.webapp.action.ProjectCockpitAction" method="listAll">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result name="success">/WEB-INF/pages/project/projectCockpit.jsp</result>
+        </action>
+
+        <!--Interesse-->
+        <action name="editInteresse" class="ejportal.webapp.action.InteresseAction" method="edit">
+            <result name="edit">/WEB-INF/pages/project/interesseDetailForm.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+            <result name="cancel">/WEB-INF/pages/project/projectCockpit.jsp</result>
+            <result name="error" type="redirectAction">showProjectCockpit</result>
+            <result name="input">/WEB-INF/pages/project/interesseDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/project/interesseDetailForm.jsp</result>
+        </action>
+
+        <action name="searchProjectBesteller" class="ejportal.webapp.action.BestellerAction">
+            <result>/WEB-INF/pages/project/bestellerSearch.jsp</result>
+        </action>
+        <action name="listProjectBesteller" class="ejportal.webapp.action.BestellerAction" method="search">
+            <result>/WEB-INF/pages/project/bestellerList.jsp</result>
+        </action>
+
+        <action name="changeProjectBesteller" class="ejportal.webapp.action.InteresseAction" method="changeBesteller">
+            <result name="success" type="redirectAction">
+                <param name="actionName">editInteresse</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+                <param name="interesseId">${interesseId}</param>
+            </result>
+        </action>
+
+        <action name="showInteresseCreateForm" class="ejportal.webapp.action.InteresseAction" method="edit">
+            <result name="edit">/WEB-INF/pages/project/interesseCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/project/interesseCreateForm.jsp</result>
+        </action>
+
+        <action name="createInteresse" class="ejportal.webapp.action.InteresseAction" method="save">
+            <result name="success" type="redirectAction">
+                <param name="actionName">searchProjectBestellerCreate</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+                <param name="interesseId">${interesseId}</param>
+            </result>
+            <result name="cancel" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+            <result name="error" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+            <result name="back">/WEB-INF/pages/project/interesseCreateForm.jsp</result>
+        </action>
+
+        <action name="searchProjectBestellerCreate" class="ejportal.webapp.action.BestellerAction">
+            <result>/WEB-INF/pages/project/bestellerSearchCreate.jsp</result>
+        </action>
+        <action name="listProjectBestellerCreate" class="ejportal.webapp.action.BestellerAction" method="search">
+            <result>/WEB-INF/pages/project/bestellerListCreate.jsp</result>
+        </action>
+
+        <action name="changeProjectBestellerCreate" class="ejportal.webapp.action.InteresseAction" method="changeBesteller">
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+                <param name="interesseId">${interesseId}</param>
+            </result>
+        </action>
+
+        <!-- Interesse löschen -->
+        <action name="deleteInteresse" class="ejportal.webapp.action.InteresseAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+        </action>
+
+
+        <!--Besteller-->
+
+
+        <action name="editProjectBesteller" class="ejportal.webapp.action.BestellerAction" method="edit">
+            <result name="edit">/WEB-INF/pages/project/bestellerDetailForm.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">editInteresse</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+                <param name="interesseId">${interesseId}</param>
+                <param name="bestellerId">${bestellerId}</param>
+            </result>
+            <result name="cancel">/WEB-INF/pages/project/projectCockpit.jsp</result>
+            <result name="error" type="redirectAction">editInteresse</result>
+            <result name="input">/WEB-INF/pages/project/bestellerDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/project/bestellerDetailForm.jsp</result>
+        </action>
+
+        <action name="searchProjectBestellerSigel" class="ejportal.webapp.action.BestellerAction">
+            <result>/WEB-INF/pages/project/bestellerSigelSearch.jsp</result>
+        </action>
+        <action name="listProjectBestellerSigel" class="ejportal.webapp.action.SigelListAction" method="search">
+            <result>/WEB-INF/pages/project/bestellerSigelList.jsp</result>
+        </action>
+
+        <action name="changeProjectBestellerSigel" class="ejportal.webapp.action.BestellerAction" method="changeSigel">
+            <result name="success" type="redirectAction">
+                <param name="actionName">editProjectBesteller</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+                <param name="interesseId">${interesseId}</param>
+                <param name="bestellerId">${bestellerId}</param>
+            </result>
+        </action>
+
+        <action name="showProjectBestellerCreateForm" class="ejportal.webapp.action.BestellerAction" method="edit">
+            <result name="edit">/WEB-INF/pages/project/bestellerCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/project/bestellerCreateForm.jsp</result>
+        </action>
+
+        <action name="createProjectBesteller" class="ejportal.webapp.action.BestellerAction" method="save">
+            <result name="success" type="redirectAction">
+                <param name="actionName">searchProjectBestellerSigelCreate</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+                <param name="interesseId">${interesseId}</param>
+                <param name="bestellerId">${bestellerId}</param>
+            </result>
+            <result name="cancel">/WEB-INF/pages/project/bestellerSearch.jsp</result>
+            <result name="error" type="redirectAction">searchProjectBesteller</result>
+            <result name="input">/WEB-INF/pages/project/bestellerCreateForm.jsp</result>
+            <result name="back">/WEB-INF/pages/project/bestellerCreateForm.jsp</result>
+
+        </action>
+
+        <action name="searchProjectBestellerSigelCreate" class="ejportal.webapp.action.BestellerAction">
+            <result>/WEB-INF/pages/project/bestellerSigelSearchCreate.jsp</result>
+        </action>
+        <action name="listProjectBestellerSigelCreate" class="ejportal.webapp.action.SigelListAction" method="search">
+            <result>/WEB-INF/pages/project/bestellerSigelListCreate.jsp</result>
+        </action>
+
+        <action name="changeProjectBestellerSigelCreate" class="ejportal.webapp.action.BestellerAction" method="changeSigel">
+            <result name="success" type="redirectAction">
+                <param name="actionName">changeProjectBesteller</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+                <param name="interesseId">${interesseId}</param>
+                <param name="bestellerId">${bestellerId}</param>
+            </result>
+        </action>
+
+        <!-- Besteller löschen -->
+
+        <action name="editProjectBestellerDelete" class="ejportal.webapp.action.BestellerAction" method="edit">
+            <result name="edit">/WEB-INF/pages/project/bestellerDetailFormDelete.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+            <result name="cancel">/WEB-INF/pages/project/projectCockpit.jsp</result>
+            <result name="error" type="redirectAction">editInteresse</result>
+            <result name="input">/WEB-INF/pages/project/bestellerDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/project/projectCockpit.jsp</result>
+        </action>
+
+        <action name="searchProjectBestellerDelete" class="ejportal.webapp.action.BestellerAction">
+            <result>/WEB-INF/pages/project/bestellerSearchDelete.jsp</result>
+        </action>
+        <action name="listProjectBestellerDelete" class="ejportal.webapp.action.BestellerAction" method="search">
+            <result>/WEB-INF/pages/project/bestellerListDelete.jsp</result>
+        </action>
+        
+        <action name="deleteBesteller" class="ejportal.webapp.action.BestellerAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>                
+            </result>
+             <result name="error" type="redirectAction">
+                <param name="actionName">editProjectBestellerDelete</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+                <param name="bestellerId">${bestellerId}</param>
+            </result>
+        </action>
+
+        <action name="searchProjectBestellerSigelDelete" class="ejportal.webapp.action.BestellerAction">
+            <result>/WEB-INF/pages/project/bestellerSigelSearchDelete.jsp</result>
+        </action>
+        <action name="listProjectBestellerSigelDelete" class="ejportal.webapp.action.SigelListAction" method="search">
+            <result>/WEB-INF/pages/project/bestellerSigelListDelete.jsp</result>
+        </action>
+
+        <action name="changeProjectBestellerSigelDelete" class="ejportal.webapp.action.BestellerAction" method="changeSigel">
+            <result name="success" type="redirectAction">
+                <param name="actionName">editProjectBestellerDelete</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+                <param name="interesseId">${interesseId}</param>
+                <param name="bestellerId">${bestellerId}</param>
+            </result>
+        </action>
+
+        <!--Nutzung-->
+<!--        &lt;!&ndash;Nutzungsuche&ndash;&gt;
+        <action name="listNutzungen" class="ejportal.webapp.action.NutzungAction" method="listAll">
+            <result>/WEB-INF/pages/project/projectCockpit.jsp</result>
+        </action>
+
+        &lt;!&ndash;Nutzungsanzeige&ndash;&gt;
+        <action name="showNutzungDetail" class="ejportal.webapp.action.NutzungAction" method="load">
+            <result>/WEB-INF/pages/project/projectCockpit.jsp</result>
+        </action>-->
+
+        <!--Nutzung Anlegen-->
+        <action name="showNutzungCreateForm" class="ejportal.webapp.action.NutzungAction">
+            <result name="success">/WEB-INF/pages/project/nutzungCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/project/nutzungCreateForm.jsp</result>
+        </action>
+
+        <action name="createNutzung" class="ejportal.webapp.action.NutzungAction" method="save">
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+            <result name="cancel">/WEB-INF/pages/project/projectCockpit.jsp</result>
+            <result name="error" type="redirectAction">listNutzungen</result>
+            <result name="back">/WEB-INF/pages/project/nutzungCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/project/nutzungCreateForm.jsp</result>
+        </action>
+
+        <!--Nutzung bearbeiten-->
+        <action name="editNutzung" class="ejportal.webapp.action.NutzungAction" method="edit">
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+            <result name="cancel">/WEB-INF/pages/project/projectCockpit.jsp</result>
+            <result name="error" type="redirectAction">listNutzungen</result>
+            <result name="input">/WEB-INF/pages/project/nutzungDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/project/nutzungDetailForm.jsp</result>
+        </action>
+
+        <!--Nutzung Löschen-->
+        <action name="deleteNutzung" class="ejportal.webapp.action.ProjectCockpitAction" method="deleteNutzung">
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+        </action>
+                <!-- Journalkosten -->
+        <action name="editJournalkosten" class="ejportal.webapp.action.JournalkostenAction" method="edit">
+            <result name="edit">/WEB-INF/pages/project/journalkostenDetailForm.jsp</result>
+            <result name="input">/WEB-INF/pages/project/journalkostenDetailForm.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+        </action>
+
+
+        <!--Rechnung-->
+        <!-- Rechnung bearbeiten -->
+        <action name="editRechnung" class="ejportal.webapp.action.RechnungAction" method="edit">
+            <result name="edit">/WEB-INF/pages/project/rechnungDetailForm.jsp</result>
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+            <result name="cancel">/WEB-INF/pages/project/projectCockpit.jsp</result>
+            <result name="error" type="redirectAction">showProjectCockpit</result>
+            <result name="input">/WEB-INF/pages/project/rechnungDetailForm.jsp</result>
+            <result name="back">/WEB-INF/pages/project/rechnungDetailForm.jsp</result>
+        </action>
+
+        <!--Rechnung anlegen: Exemplar fuer zu erstellende Rechnung auswaehlen-->
+        <action name="showExemplarForRechnung" class="ejportal.webapp.action.RechnungAction" method="loadExemplare">
+            <!-- Verhinderung des struts2 bugs
+                Keine Exception mehr wenn man die Listen nach einer anderen Spalte sortiert-->
+            <interceptor-ref name="params">
+                <param name="excludeParams">d-\d+?-[sop]</param>
+            </interceptor-ref>
+
+            <result>/WEB-INF/pages/project/rechnungExemplarList.jsp</result>
+        </action>
+
+        <!-- Rechnung anlegen -->
+        <action name="showRechnungCreateForm" class="ejportal.webapp.action.RechnungAction" method="edit">
+            <result name="edit">/WEB-INF/pages/project/rechnungCreateForm.jsp</result>
+            <result name="input">/WEB-INF/pages/project/rechnungCreateForm.jsp</result>
+        </action>
+
+        <action name="createRechnung" class="ejportal.webapp.action.RechnungAction" method="save">
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+            <result name="input">/WEB-INF/pages/project/rechnungCreateForm.jsp</result>
+            <result name="back">/WEB-INF/pages/project/rechnungCreateForm.jsp</result>
+        </action>
+
+        <!-- Rechnung loeschen -->
+        <action name="deleteRechnung" class="ejportal.webapp.action.RechnungAction" method="delete">
+            <result name="success" type="redirectAction">
+                <param name="actionName">showProjectCockpit</param>
+                <param name="parse">true</param>
+                <param name="journalId">${journalId}</param>
+            </result>
+        </action>
+
+
+    </package>
+
+</struts>

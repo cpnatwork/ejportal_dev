@@ -1,0 +1,1159 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<dataset>
+    <table name="app_user">
+        <column>id</column>
+        <column>username</column>
+        <column>password</column>
+        <column>first_name</column>
+        <column>last_name</column>
+        <column>address</column>
+        <column>city</column>
+        <column>country</column>
+        <column>email</column>
+        <column>phone_number</column>
+        <column>postal_code</column>
+        <column>province</column>
+        <column>website</column>
+        <column>password_hint</column>
+        <column>version</column>
+        <column>account_enabled</column>
+        <column>account_expired</column>
+        <column>account_locked</column>
+        <column>credentials_expired</column>
+        <row>
+            <value description="id">-1</value>
+            <value description="username">admin</value>
+            <value description="password">d033e22ae348aeb5660fc2140aec35850c4da997</value>
+            <value description="first_name">Monika</value>
+            <value description="last_name">Borraccia</value>
+            <value description="address"></value>
+            <value description="city">Denver</value>
+            <value description="country">US</value>
+            <value description="email">Monika.Koehler@wiso.uni-erlangen.de</value>
+            <value description="phone_number"></value>
+            <value description="postal_code">80210</value>
+            <value description="province">CO</value>
+            <value description="website">http://tomcat.apache.org</value>
+            <value description="password_hint"><![CDATA[A male kitty.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+        </row>
+        <row>
+            <value description="id">-2</value>
+            <value description="username">power</value>
+            <value description="password">d033e22ae348aeb5660fc2140aec35850c4da997</value>
+            <value description="first_name">Heidrun</value>
+            <value description="last_name">Escherich</value>
+            <value description="address"></value>
+            <value description="city">Denver</value>
+            <value description="country">US</value>
+            <value description="email">Heidrun.Escherich@bib.uni-erlangen.de</value>
+            <value description="phone_number"></value>
+            <value description="postal_code">80210</value>
+            <value description="province">CO</value>
+            <value description="website">http://raibledesigns.com</value>
+            <value description="password_hint"><![CDATA[Not a female kitty.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+        </row>
+        <row>
+            <value description="id">-3</value>
+            <value description="username">service</value>
+            <value description="password">12dea96fec20593566ab75692c9949596833adc9</value>
+            <value description="first_name">Frau</value>
+            <value description="last_name">Bib</value>
+            <value description="address"></value>
+            <value description="city">Denver</value>
+            <value description="country">US</value>
+            <value description="email">matt@raibledesigns.com</value>
+            <value description="phone_number"></value>
+            <value description="postal_code">80210</value>
+            <value description="province">CO</value>
+            <value description="website">http://raibledesigns.com</value>
+            <value description="password_hint"><![CDATA[Not a female kitty.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+        </row>
+        <row>
+            <value description="id">-4</value>
+            <value description="username">user</value>
+            <value description="password">12dea96fec20593566ab75692c9949596833adc9</value>
+            <value description="first_name">HerrFrau</value>
+            <value description="last_name">Student</value>
+            <value description="address"></value>
+            <value description="city">Denver</value>
+            <value description="country">US</value>
+            <value description="email">matt_raible@yahoo.com</value>
+            <value description="phone_number"></value>
+            <value description="postal_code">80210</value>
+            <value description="province">CO</value>
+            <value description="website">http://tomcat.apache.org</value>
+            <value description="password_hint"><![CDATA[A male kitty.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+        </row>
+        <row>
+            <value description="id">-5</value>
+            <value description="username">project</value>
+            <value description="password">12dea96fec20593566ab75692c9949596833adc9</value>
+            <value description="first_name">HerrFrau</value>
+            <value description="last_name">Med</value>
+            <value description="address"></value>
+            <value description="city">Denver</value>
+            <value description="country">US</value>
+            <value description="email">mrMed@yahoo.com</value>
+            <value description="phone_number"></value>
+            <value description="postal_code">80210</value>
+            <value description="province">CO</value>
+            <value description="website">http://mrMed.org</value>
+            <value description="password_hint"><![CDATA[A male kitty.]]></value>
+            <value description="version">1</value>
+            <value description="account_enabled">1</value>
+            <value description="account_expired">0</value>
+            <value description="account_locked">0</value>
+            <value description="credentials_expired">0</value>
+        </row>
+
+    </table>
+    <table name="role">
+        <column>id</column>
+        <column>name</column>
+        <column>description</column>
+        <row>
+            <value description="id">-1</value>
+            <value description="name">ROLE_ADMIN</value>
+            <value description="description"><![CDATA[Administrator kann benutzer anlegen, z.B. Frau Borraccia]]></value>
+        </row>
+        <row>
+            <value description="id">-2</value>
+            <value description="name">ROLE_PFLEGE</value>
+            <value description="description"><![CDATA[Schreibender Zugriff, z.B. Frau Escherich]]></value>
+        </row>
+        <row>
+            <value description="id">-3</value>
+            <value description="name">ROLE_LESEN</value>
+            <value description="description"><![CDATA[Lesender Zugriff, z.B. Servicethekenmitarbeiter]]></value>
+        </row>
+        <row>
+            <value description="id">-4</value>
+            <value description="name">ROLE_EXTERN</value>
+            <value description="description"><![CDATA[Limitierte Information, z.B. Studenten]]></value>
+        </row>
+        <row>
+            <value description="id">-5</value>
+            <value description="name">ROLE_PROJECT</value>
+            <value description="description"><![CDATA[Lesender Zugriff, spezielle Projektrechte, z.B. Hr. Med]]></value>
+        </row>
+    </table>
+    <table name="user_role">
+        <column>user_id</column>
+        <column>role_id</column>
+        <row>
+            <value description="user_id">-1</value>
+            <value description="role_id">-1</value>
+        </row>
+        <row>
+            <value description="user_id">-2</value>
+            <value description="role_id">-2</value>
+        </row>
+        <row>
+            <value description="user_id">-3</value>
+            <value description="role_id">-3</value>
+        </row>
+        <row>
+            <value description="user_id">-4</value>
+            <value description="role_id">-4</value>
+        </row>
+        <row>
+            <value description="user_id">-5</value>
+            <value description="role_id">-5</value>
+        </row>
+    </table>
+
+    <table name="ezb1">
+        <column>ezbId</column>
+        <column>titel</column>
+        <column>ampelfarbe</column>
+        <column>typ</column>
+        <column>preistyp</column>
+        <column>zugangsbedingung</column>
+        <row>
+            <value>10</value>
+            <value>EZB Import 1</value>
+            <value>4</value>
+            <value>Volltext, Online und Druckausgabe</value>
+            <value>kostenlos mit Druckausgabe</value>
+            <value>Subscription</value>
+        </row>
+       <row>
+            <value>11</value>
+            <value>EZB Import 2</value>
+            <value>2</value>
+            <value>Volltext, Online und Druckausgabe</value>
+            <value>kostenpflichtig</value>
+            <value>Subscription</value>
+        </row>
+    </table>
+
+    <table name="bibliotheksmitarbeiter">
+        <column>bibId</column>
+        <column>name</column>
+        <column>abteilungsHauptstelle</column>
+        <column>fensterumschlagAdresse</column>
+        <column>hausanschrift</column>
+        <column>postanschrift</column>
+        <column>telefon</column>
+        <column>telefax</column>
+        <column>emailanschrift</column>
+        <column>url</column>
+        <column>umstId</column>
+        <column>mitarbeiter</column>
+        <column>dienstort</column>
+        <row>
+            <value>1</value>
+            <value>Technische Bib</value>
+            <value>Arbeitsamt</value>
+            <value>zu Haenden von Achim</value>
+            <value>lange gasse 4</value>
+            <value>kurze straße 5</value>
+            <value>112</value>
+            <value>55555555</value>
+            <value>horst@arbeitsamt.de</value>
+            <value>wwwwww</value>
+            <value>34343id</value>
+            <value>Walter Mustermann</value>
+            <value>nürnberg</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Bio Bib</value>
+            <value>london united</value>
+            <value>bergstraße</value>
+            <value>kellergasse</value>
+            <value>zu haenden von</value>
+            <value>666</value>
+            <value>444444444</value>
+            <value>meier@london.uk</value>
+            <value>wwwwwwwww</value>
+            <value>2354234id</value>
+            <value>Hans Meier</value>
+            <value>london</value>
+
+        </row>
+    </table>
+    <table name='sigel'>
+        <column>sigelId</column>
+        <column>name</column>
+        <column>bibliothek</column>
+        <column>fakultaet</column>
+        <column>persEmail</column>
+        <column>bibAnsprechpartner1</column>
+        <column>bibAnsprechpartner2</column>
+        <row>
+            <value>1</value>
+            <value>EB</value>
+            <value>TestBibliotheksmitarbeiter</value>
+            <value>TechFak</value>
+            <value>test@test.de</value>
+            <value>Borraccia</value>
+            <value>Escherich</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>FB</value>
+            <value>TestBibliotheksmitarbeiter</value>
+            <value>WiSo</value>
+            <value>test2@test2.de</value>
+            <value>Müller</value>
+            <value>Meier</value>
+        </row>
+    </table>
+
+
+    <table name='institution'>
+        <column>id</column>
+        <column>bibliotheksmitarbeiter_bibId</column>
+        <column>name</column>
+        <column>abteilung</column>
+        <column>strasse</column>
+        <column>postfach</column>
+        <column>plz_ort</column>
+        <column>bundesland</column>
+        <column>land</column>
+        <column>ansprechpartner</column>
+        <column>email</column>
+        <column>fax</column>
+        <column>telefon</column>
+        <column>bestellsprache</column>
+        <column>status</column>
+        <column>kommentar</column>
+        <column>kennwort</column>
+        <column>fernzugriff</column>
+        <column>bestellart</column>
+        <column>fernzugriffErlaeuterung</column>
+        <column>zugang</column>
+        <column>personengruppe</column>
+        <column>zugangsdaten</column>
+        <column>kommentarIntern</column>
+        <column>internetadresse</column>
+        <column>nutzungsURL</column>
+        <column>copyrightURL</column>
+        <column>accountURL</column>
+        <column>statstikURL</column>
+        <column>sfxURL</column>
+        <column>ublogoURL</column>
+        <column>statstikZugang</column>
+        <column>fernleihe</column>
+        <column>lizenzArt</column>
+        <column>lizenzAbbest</column>
+        <column>lizenzPaket</column>
+        <column>lizenzVorgang</column>
+        <column>lizenzZust</column>
+        <column>lizenzBes</column>
+
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>Ullstein Taschenbuch</value>
+            <value>Hinten</value>
+            <value>Hinterm Berge</value>
+            <value>123PF</value>
+            <value>99599 ullstein</value>
+            <value>Bayern</value>
+            <value>Deutschland</value>
+            <value>Arjen Robben</value>
+            <value>info@ullstein.de</value>
+            <value>011/123</value>
+            <value>011/3456423</value>
+            <value>dt.</value>
+            <value>Aktiv</value>
+            <value>Nur gute Buecher</value>
+            <value>pwpw</value>
+            <value>1</value>
+            <value>Email</value>
+            <value>fernzugriffErlaeuterung</value>
+            <value>IP</value>
+            <value>uniweit</value>
+            <value>zugangsdaten</value>
+            <value>interne infos</value>
+            <value>www.bla.de</value>
+            <value>www.nutzungsurl.de</value>
+            <value>www.copyright.de</value>
+            <value>www.account.de</value>
+            <value>www.statistik.de</value>
+            <value>www.sfx.de</value>
+            <value>www.logo.de</value>
+            <value>statstikZugang</value>
+            <value>Fernleihkopien nur für den Deutschen Leihverkehr möglich</value>
+            <value>lizenzArt</value>
+            <value>lizenzAbbest</value>
+            <value>lizenzPaket</value>
+            <value>lizenzVorgang</value>
+            <value>lizenzZust</value>
+            <value>lizenzBes</value>
+
+      </row>
+      <row>
+            <value>2</value>
+            <value>2</value>
+            <value>Springer</value>
+            <value>Oben</value>
+            <value>Hauptstrasse</value>
+            <value>11111</value>
+            <value>12300 Berlin</value>
+            <value>Berlin</value>
+            <value>engl.</value>
+            <value>Lionel Messi</value>
+            <value>info@springer.de</value>
+            <value>030/123</value>
+            <value>030/3456423</value>
+            <value>Deutsch</value>
+            <value>Aktiv</value>
+            <value>Nur gute Zeitungen</value>
+            <value>PW</value>
+            <value>1</value>
+            <value>Brief</value>
+            <value>fernzugriffErlaeuterung</value>
+            <value>Han-IP</value>
+            <value>Professoren</value>
+            <value>zugangsdaten</value>
+            <value>kommentarIntern</value>
+            <value>www.blabla.de</value>
+            <value>www.nutzung.de</value>
+            <value>www.copyright.de</value>
+            <value>www.account.de</value>
+            <value>www.statstik.de</value>
+            <value>www.sfx.de</value>
+            <value>www.ublogo.de</value>
+            <value>www.statistiken.de</value>
+            <value>Keine Fernleihkopien möglich</value>
+            <value>lizenzArt</value>
+            <value>lizenzAbbest</value>
+            <value>lizenzPaket</value>
+            <value>lizenzVorgang</value>
+            <value>lizenzZust</value>
+            <value>lizenzBes</value>
+
+      </row>
+    </table>
+
+    <table name="konsortium">
+        <column>konsortiumId</column>
+        <column>konsortiumName</column>
+        <row>
+            <value>1</value>
+            <value>Elsevier-K</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Springer/Kluwer-K</value>
+        </row>
+    </table>
+
+    <table name="lizenzdetail">
+        <column>lizenzId</column>
+        <column>verlag_id</column>
+        <column>beginn</column>
+        <column>laufzeit</column>
+        <column>verlaengerung</column>
+        <column>kosten</column>
+        <column>readmeAktualisiert</column>
+
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>2010-04-02 10:10:10</value>
+            <value>2010</value>
+            <value>1014</value>
+            <value>1223.10</value>
+            <value>aus Kostengruenden</value>
+        </row>
+
+        <row>
+            <value>2</value>
+            <value>1</value>
+            <value>2010-03-02 10:10:10</value>
+            <value>2011</value>
+            <value>1015</value>
+            <value>123.10</value>
+            <value>aus Interessengruenden</value>
+        </row>
+    </table>
+
+
+    <table name="paket">
+        <column>paketId</column>
+        <column>paketName</column>
+        <row>
+            <value>1</value>
+            <value>Kombi: Journal of allergy and clinical immunology</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Kombi: Journal of social issues</value>
+        </row>
+    </table>
+
+    <table name="fach">
+        <column>fachId</column>
+        <column>fachName</column>
+        <row>
+            <value>1</value>
+            <value>Mathe</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Informatik</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>Biologie</value>
+        </row>
+         <row>
+            <value>4</value>
+            <value>Linguistik</value>
+        </row>
+    </table>
+
+
+
+    <table name='journal'>
+        <column>id</column>
+        <column>bibliotheksmitarbeiter_bibId</column>
+        <column>titel</column>
+        <column>kurztitel</column>
+        <column>issn</column>
+        <column>issnPrint</column>
+        <column>verlag_id</column>
+        <column>eigentuemer_sigelId</column>
+        <column>aenderungsdatum</column>
+        <column>anker</column>
+        <column>anmeldedatum</column>
+        <column>freischaltdatum</column>
+        <column>zugangsId</column>
+        <column>zugangsPasswort</column>
+        <column>nutzungsbestimmungen</column>
+        <column>rotschaltungsdatum</column>
+        <column>rotschaltungsbemerkungen</column>
+        <column>status</column>
+        <column>zdbNummer</column>
+        <column>ezbId</column>
+        <column>readMeTitelbezogen</column>
+        <column>importId</column>
+        <column>provider_id</column>
+        <column>freischalter_bibId</column>
+        <column>konsortium_konsortiumId</column>
+        <column>paket_paketId</column>
+        <column>kommentar</column>
+        <column>kommentarAdmin</column>
+        <column>kommentarIntranet</column>
+        <column>herausgeber</column>
+        <column>zugangUeber</column>
+        <column>bearbeitungsdatum</column>
+
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>Die weiße Spinne</value>
+            <value>DwS</value>
+            <value>12345</value>
+            <value>9783</value>
+            <value>2</value>
+            <value>1</value>
+            <value>1901-01-02 10:10:10</value>
+            <value>1</value>
+            <value>1901-01-01 10:10:10</value>
+            <value>1902-01-01 11:11:11</value>
+            <value>3</value>
+            <value>4</value>
+            <value>5</value>
+            <value>1903-01-02 10:10:10</value>
+            <value>ich bin eine rotschaltungsbemerkung für die weiße spinne</value>
+            <value>bearbeitet</value>
+            <value>9</value>
+            <value>10</value>
+            <value>true</value>
+            <value>13</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>Ein Klassiker der Alpinliteratur</value>
+            <value>Unbedingt lesen!</value>
+            <value>Auch ihr da draussen. Lesen!</value>
+            <value>ich bin der herausgeber</value>
+            <value>Zugang ABCDE</value>
+            <value>2010-09-10 10:10:10</value>
+
+        </row>
+        <row>
+            <value>2</value>
+            <value>2</value>
+            <value>Am seidenen Faden</value>
+            <value>AsF</value>
+            <value>12225</value>
+            <value>6383</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1901-01-02 10:10:10</value>
+            <value>1</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>1903-01-02 10:10:10</value>
+            <value>3</value>
+            <value>4</value>
+            <value>5</value>
+            <value>1904-01-02 10:10:10</value>
+            <value>ich bin eine rotschaltungsbemerkung für den seidenen faden</value>
+            <value>bearbeitet</value>
+            <value>9</value>
+            <value>11</value>
+            <value>true</value>
+            <value>6</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>Hans Kammerlander in Aektschn</value>
+            <value>dringend</value>
+            <value>Lesebrille benoetigt!</value>
+            <value>ich bin auch herausgeber</value>
+            <value>Zugang DCNE</value>
+            <value>2010-08-11 10:10:10</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>2</value>
+            <value>Sicherheit und Risiko in Fels und Eis - Band 3</value>
+            <value>SuRiFuE3</value>
+            <value>12225</value>
+            <value>6383</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1901-01-02 10:10:10</value>
+            <value>1</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>1903-01-02 10:10:10</value>
+            <value>3</value>
+            <value>4</value>
+            <value>5</value>
+            <value>1904-01-02 10:10:10</value>
+            <value>ich bin eine rotschaltungsbemerkung für den seidenen faden</value>
+            <value>bearbeitet</value>
+            <value>9</value>
+            <value>10</value>
+            <value>true</value>
+            <value>6</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>Pit Schubert in Hochform</value>
+            <value>dringend</value>
+            <value>nichts für schwache Nerven</value>
+            <value>ich bin auch herausgeber</value>
+            <value>Zugang DCNE</value>
+            <value>2010-08-18 10:10:10</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>2</value>
+            <value>Das Telefonbuch</value>
+            <value>DT</value>
+            <value>55555</value>
+            <value>7643</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1991-01-02 10:10:10</value>
+            <value>1</value>
+            <value>1982-01-02 10:10:10</value>
+            <value>1983-01-02 10:10:10</value>
+            <value>3</value>
+            <value>4</value>
+            <value>5</value>
+            <value>1966-01-02 10:10:10</value>
+            <value>ich bin eine rotschaltungsbemerkung fÃ¼r das telefonbuch</value>
+            <value>bearbeitet</value>
+            <value>9</value>
+            <value>10</value>
+            <value>true</value>
+            <value>6</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>Pit Schubert in Hochform</value>
+            <value>dringend</value>
+            <value>nichts fÃ¼r schwache Nerven</value>
+            <value>ich bin auch herausgeber</value>
+            <value>Zugang DCNE</value>
+            <value>2010-06-18 10:10:10</value>
+        </row>
+        <row>
+            <value>5</value>
+            <value>2</value>
+            <value>On the rocks</value>
+            <value>Otr</value>
+            <value>34344</value>
+            <value>65634</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1901-01-02 10:10:10</value>
+            <value>1</value>
+            <value>1976-01-02 10:10:10</value>
+            <value>1978-01-02 10:10:10</value>
+            <value>3</value>
+            <value>4</value>
+            <value>5</value>
+            <value>1994-01-02 10:10:10</value>
+            <value>ich bin eine rotschaltungsbemerkung fÃ¼r on the rocks</value>
+            <value>bearbeitet</value>
+            <value>9</value>
+            <value>10</value>
+            <value>true</value>
+            <value>6</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>fels fels fels</value>
+            <value>dringend</value>
+            <value>nichts fÃ¼r schwache Nerven</value>
+            <value>ich bin auch herausgeber</value>
+            <value>Zugang DCNE</value>
+            <value>2010-06-18 10:10:10</value>
+        </row>
+        <row>
+            <value>6</value>
+            <value>2</value>
+            <value>Radsport aktiv</value>
+            <value>Ra</value>
+            <value>34345</value>
+            <value>65635</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1901-01-02 10:10:10</value>
+            <value>1</value>
+            <value>1976-01-02 10:10:10</value>
+            <value>1978-01-02 10:10:10</value>
+            <value>3</value>
+            <value>4</value>
+            <value>5</value>
+            <value>1994-01-02 10:10:10</value>
+            <value>ich bin eine rotschaltungsbemerkung für Radsport aktiv</value>
+            <value>bearbeitet</value>
+            <value>9</value>
+            <value>10</value>
+            <value>true</value>
+            <value>6</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>rollt</value>
+            <value>dringend</value>
+            <value>rollt schneller</value>
+            <value>ich bin auch herausgeber</value>
+            <value>Eigenes Abo.</value>
+            <value>2010-06-18 10:10:10</value>
+        </row>
+    </table>
+
+       <table name="journal_fach">
+        <column>journalId</column>
+        <column>fachId</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+
+        </row>
+        <row>
+            <value>1</value>
+            <value>2</value>
+        </row>
+        <row>
+            <value>1</value>
+            <value>3</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>1</value>
+
+        </row>
+        <row>
+            <value>2</value>
+            <value>2</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>3</value>
+        </row>
+    </table>
+
+    <table name="exemplar">
+        <column>exemplarId</column>
+        <column>zustaendigeBib_sigelId</column>
+        <column>besteller_sigelId</column>
+        <column>eigentuemer_sigelId</column>
+        <column>journal_id</column>
+        <column>lieferant_id</column>
+        <column>beteiligung</column>
+        <column>form</column>
+        <column>zugangsart</column>
+        <column>status</column>
+        <column>bestellnummer</column>
+        <column>kundennummer</column>
+        <column>abonummer</column>
+        <column>privatabo</column>
+        <column>exKommentar</column>
+        <column>printexBayern</column>
+        <column>abbestZum</column>
+        <column>abbestellung</column>
+        <column>umbestZum</column>
+        <column>umbestellung</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1</value>
+            <value>1</value>
+            <value>Autor</value>
+            <value>Online</value>
+            <value>Kauf</value>
+            <value>beendet</value>
+            <value>4711AB</value>
+            <value>1001</value>
+            <value>1001-2</value>
+            <value>true</value>
+            <value>exKommentar 1</value>
+            <value>printex Bayern 1</value>
+            <value>1901-01-02 10:10:10</value>
+            <value>Abbestellt 1</value>
+            <value>1901-01-02 10:10:10</value>
+            <value>Umbestellt 1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>Mitglied</value>
+            <value>Print</value>
+            <value>Geschenk / Spende</value>
+            <value>bearbeiten</value>
+            <value>A7856C</value>
+            <value>9874</value>
+            <value>9874-78</value>
+            <value>false</value>
+            <value>exKommentar 2</value>
+            <value>printex Bayern 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Abbestellt 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Umbestellt 2</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>Mitglied</value>
+            <value>Print</value>
+            <value>Geschenk / Spende</value>
+            <value>bearbeiten</value>
+            <value>A7856C</value>
+            <value>9874</value>
+            <value>9874-78</value>
+            <value>false</value>
+            <value>exKommentar 2</value>
+            <value>printex Bayern 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Abbestellt 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Umbestellt 2</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>Mitglied</value>
+            <value>Print</value>
+            <value>Geschenk / Spende</value>
+            <value>bearbeiten</value>
+            <value>A7856C</value>
+            <value>9874</value>
+            <value>9874-78</value>
+            <value>true</value>
+            <value>exKommentar 2</value>
+            <value>printex Bayern 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Abbestellt 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Umbestellt 2</value>
+        </row>
+        <row>
+            <value>5</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>Mitglied</value>
+            <value>Print</value>
+            <value>Geschenk / Spende</value>
+            <value>bearbeiten</value>
+            <value>A7856C</value>
+            <value>9874</value>
+            <value>9874-78</value>
+            <value>true</value>
+            <value>exKommentar 2</value>
+            <value>printex Bayern 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Abbestellt 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Umbestellt 2</value>
+        </row>
+        <row>
+            <value>6</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>Mitglied</value>
+            <value>Print</value>
+            <value>Geschenk / Spende</value>
+            <value>bearbeiten</value>
+            <value>A7856C</value>
+            <value>9874</value>
+            <value>9874-78</value>
+            <value>true</value>
+            <value>exKommentar 2</value>
+            <value>printex Bayern 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Abbestellt 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Umbestellt 2</value>
+        </row>
+        <row>
+            <value>7</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>Mitglied</value>
+            <value>Print</value>
+            <value>Geschenk / Spende</value>
+            <value>bearbeiten</value>
+            <value>A7856C</value>
+            <value>9874</value>
+            <value>9874-78</value>
+            <value>true</value>
+            <value>exKommentar 2</value>
+            <value>printex Bayern 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Abbestellt 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Umbestellt 2</value>
+        </row>
+        <row>
+            <value>8</value>
+            <value>1</value>
+            <value>2</value>
+            <value>1</value>
+            <value>2</value>
+            <value>2</value>
+            <value>Mitglied</value>
+            <value>Print</value>
+            <value>Geschenk / Spende</value>
+            <value>bearbeiten</value>
+            <value>A7856C</value>
+            <value>9874</value>
+            <value>9874-78</value>
+            <value>true</value>
+            <value>exKommentar 2</value>
+            <value>printex Bayern 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Abbestellt 2</value>
+            <value>1902-01-02 10:10:10</value>
+            <value>Umbestellt 2</value>
+        </row>
+    </table>
+
+    <table name="besteller">
+        <column>bestellerId</column>
+        <column>anrede</column>
+        <column>bestellerName</column>
+        <column>funktion</column>
+        <column>projekt</column>
+        <column>einzahlungErwuenscht</column>
+        <column>einzahlungFestgelegt</column>
+        <column>sigel_sigelId</column>
+
+        <row>
+            <value>1</value>
+            <value>Herr Prof. Dr.</value>
+            <value>Adam</value>
+            <value>A</value>
+            <value>Medizin</value>
+            <value>10.00</value>
+            <value>12.00</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Frau Prof. Dr.</value>
+            <value>Eva</value>
+            <value>B</value>
+            <value>Physik</value>
+            <value>9.00</value>
+            <value>14.00</value>
+            <value>2</value>
+        </row>
+    </table>
+
+    <table name="interesse">
+        <column>interesseId</column>
+        <column>interesse</column>
+        <column>journal_id</column>
+        <column>besteller_bestellerId</column>
+
+        <row>
+            <value>1</value>
+            <value>Interesse1</value>
+            <value>1</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Interesse2</value>
+            <value>2</value>
+            <value>2</value>
+        </row>
+    </table>
+    <table name="rechnung">
+        <column>rechnungId</column>
+        <column>exemplar_exemplarId</column>
+        <column>betrag</column>
+        <column>bezugsform</column>
+        <column>bezugsjahr</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>999.99</value>
+            <value>Irgendwas</value>
+            <value>2000</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>1</value>
+            <value>55.53</value>
+            <value>Beispiel</value>
+            <value>2009</value>
+        </row>
+    </table>
+
+    <table name="journalkosten">
+        <column>journalkostenId</column>
+        <column>oPreisPO</column>
+		<column>waehrungPO</column>
+		<column>mwStPO</column>
+		<column>oPreisO</column>
+		<column>waehrungO</column>
+		<column>mwStO</column>
+		<column>oPreisP</column>
+		<column>waehrungP</column>
+		<column>mwStP</column>
+		<column>iPreisPO</column>
+		<column>iWaehrungPO</column>
+		<column>iMwStPO</column>
+		<column>iPreisO</column>
+		<column>iWaehrungO</column>
+		<column>iMwStO</column>
+		<column>iPreisP</column>
+		<column>iWaehrungP</column>
+		<column>iMwStP</column>
+		<column>impact</column>
+		<column>impactDatum</column>
+		<column>journal_id</column>
+        <row>
+            <value>1</value>
+            <value>10.0</value>
+			<value>EUR</value>
+			<value>19.00</value>
+			<value>12.3</value>
+			<value>EUR</value>
+			<value>16.00</value>
+			<value>10.0</value>
+			<value>EUR</value>
+			<value>19.00</value>
+			<value>13.45</value>
+			<value>EUR</value>
+			<value>7.00</value>
+			<value>23.34</value>
+			<value>EUR</value>
+			<value>19.00</value>
+			<value>7.00</value>
+			<value>EUR</value>
+			<value>19.00</value>
+			<value>1.00</value>
+			<value>2010-08-11 10:10:10</value>
+			<value>1</value>
+        </row>
+		<row>
+            <value>2</value>
+            <value>10.0</value>
+			<value>EUR</value>
+			<value>19.00</value>
+			<value>12.3</value>
+			<value>EUR</value>
+			<value>16.00</value>
+			<value>10.0</value>
+			<value>EUR</value>
+			<value>19.00</value>
+			<value>13.45</value>
+			<value>EUR</value>
+			<value>7.00</value>
+			<value>23.34</value>
+			<value>EUR</value>
+			<value>19.00</value>
+			<value>7.00</value>
+			<value>EUR</value>
+			<value>19.00</value>
+			<value>1.00</value>
+			<value>2010-08-11 10:10:10</value>
+			<value>2</value>
+        </row>
+    </table>
+
+     <table name="nutzung">
+        <column>nutzungId</column>
+        <column>zugriffe</column>
+        <column>zeitraum</column>
+        <column>nutzungsjahr</column>
+        <column>rechnungsbetrag</column>
+        <column>journal_id</column>
+        <row>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1</value>
+            <value>1.0</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>2</value>
+            <value>2</value>
+            <value>2</value>
+            <value>2.0</value>
+            <value>2</value>
+        </row>
+    </table>
+
+    <table name="wechselkurs">
+        <column>wechselkursId</column>
+        <column>waehrung</column>
+        <column>umrechnungsfaktor</column>
+        <row>
+            <value>1</value>
+            <value>EUR</value>
+            <value>1</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>CHF</value>
+            <value>0.7</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>GBP</value>
+            <value>1.6</value>
+        </row>
+        <row>
+            <value>4</value>
+            <value>USD</value>
+            <value>0.9</value>
+        </row>
+    </table>
+</dataset>

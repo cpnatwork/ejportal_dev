@@ -1,0 +1,25 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <mapping class="org.appfuse.model.User"/>
+        <mapping class="org.appfuse.model.Role"/>
+        <mapping class="ejportal.model.Journal"/>
+        <mapping class="ejportal.model.Institution"/>
+        <mapping class="ejportal.model.Sigel"/>
+        <mapping class="ejportal.model.Bibliotheksmitarbeiter"/>
+        <mapping class="ejportal.model.Fach"/>
+        <mapping class="ejportal.model.Paket"/>
+        <mapping class="ejportal.model.Konsortium"/>
+        <mapping class="ejportal.model.Lizenzdetail"/>
+        <mapping class="ejportal.model.Exemplar"/>
+        <mapping class="ejportal.model.Nutzung"/>
+        <mapping class="ejportal.model.Besteller"/>
+        <mapping class="ejportal.model.Interesse"/>
+        <mapping class="ejportal.model.EzbDaten"/> 
+        <mapping class="ejportal.model.Rechnung"/>       
+        <mapping class="ejportal.model.Journalkosten"/>
+        <mapping class="ejportal.model.Wechselkurs"/>
+    </session-factory>
+</hibernate-configuration>

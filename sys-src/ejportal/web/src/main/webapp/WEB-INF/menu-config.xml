@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MenuConfig>
+    <Displayers>
+        <Displayer name="Velocity" type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
+    </Displayers>
+    <Menus>
+        <Menu name="MainMenu" title="Hauptmenü" page="/mainMenu.html" roles="ROLE_ADMIN,ROLE_PFLEGE,ROLE_LESEN,ROLE_EXTERN,ROLE_PROJECT"/>
+        <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile.html" roles="ROLE_ADMIN"/>
+        <Menu name="JournalMenu" title="Journal" description="Journal Menu" page="/searchJournals.html" roles="ROLE_ADMIN,ROLE_PFLEGE,ROLE_LESEN,ROLE_EXTERN,ROLE_PROJECT"/>
+        <!-- Menu name="JournalMenu" title="menu.viewJournals" page="/journals.html"/ -->
+        <Menu name="StammMenu" title="Stammdaten" page="/admin/masterdataMenu.html" roles="ROLE_ADMIN,ROLE_PFLEGE"/>
+        <Menu name="AdminMenu" title="Benutzer" description="Benutzerverwaltung" roles="ROLE_ADMIN" width="120" page="/admin/users.html"/>
+    </Menus>
+</MenuConfig>

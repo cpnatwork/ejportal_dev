@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<dataset>
+    <table name="app_user">
+            <column>id</column>
+            <column>username</column>
+            <column>password</column>
+            <column>first_name</column>
+            <column>last_name</column>
+            <column>address</column>
+            <column>city</column>
+            <column>country</column>
+            <column>email</column>
+            <column>phone_number</column>
+            <column>postal_code</column>
+            <column>province</column>
+            <column>website</column>
+            <column>password_hint</column>
+            <column>version</column>
+            <column>account_enabled</column>
+            <column>account_expired</column>
+            <column>account_locked</column>
+            <column>credentials_expired</column>
+            <row>
+                <value description="id">1</value>
+                <value description="username">admin</value>
+                <value description="password">d033e22ae348aeb5660fc2140aec35850c4da997</value>
+                <value description="first_name">Monika</value>
+                <value description="last_name">Borraccia</value>
+                <value description="address"></value>
+                <value description="city">Denver</value>
+                <value description="country">US</value>
+                <value description="email">Monika.Koehler@wiso.uni-erlangen.de</value>
+                <value description="phone_number"></value>
+                <value description="postal_code">80210</value>
+                <value description="province">CO</value>
+                <value description="website">http://tomcat.apache.org</value>
+                <value description="password_hint"><![CDATA[A male kitty.]]></value>
+                <value description="version">1</value>
+                <value description="account_enabled">1</value>
+                <value description="account_expired">0</value>
+                <value description="account_locked">0</value>
+                <value description="credentials_expired">0</value>
+            </row>
+            <row>
+                <value description="id">2</value>
+                <value description="username">power</value>
+                <value description="password">d033e22ae348aeb5660fc2140aec35850c4da997</value>
+                <value description="first_name">Heidrun</value>
+                <value description="last_name">Escherich</value>
+                <value description="address"></value>
+                <value description="city">Denver</value>
+                <value description="country">US</value>
+                <value description="email">Heidrun.Escherich@bib.uni-erlangen.de</value>
+                <value description="phone_number"></value>
+                <value description="postal_code">80210</value>
+                <value description="province">CO</value>
+                <value description="website">http://raibledesigns.com</value>
+                <value description="password_hint"><![CDATA[Not a female kitty.]]></value>
+                <value description="version">1</value>
+                <value description="account_enabled">1</value>
+                <value description="account_expired">0</value>
+                <value description="account_locked">0</value>
+                <value description="credentials_expired">0</value>
+            </row>
+            <row>
+                <value description="id">3</value>
+                <value description="username">service</value>
+                <value description="password">d033e22ae348aeb5660fc2140aec35850c4da997</value>
+                <value description="first_name">Frau</value>
+                <value description="last_name">Bib</value>
+                <value description="address"></value>
+                <value description="city">Denver</value>
+                <value description="country">US</value>
+                <value description="email">matt@raibledesigns.com</value>
+                <value description="phone_number"></value>
+                <value description="postal_code">80210</value>
+                <value description="province">CO</value>
+                <value description="website">http://raibledesigns.com</value>
+                <value description="password_hint"><![CDATA[Not a female kitty.]]></value>
+                <value description="version">1</value>
+                <value description="account_enabled">1</value>
+                <value description="account_expired">0</value>
+                <value description="account_locked">0</value>
+                <value description="credentials_expired">0</value>
+            </row>
+            <row>
+                <value description="id">4</value>
+                <value description="username">user</value>
+                <value description="password">12dea96fec20593566ab75692c9949596833adc9</value>
+                <value description="first_name">HerrFrau</value>
+                <value description="last_name">Student</value>
+                <value description="address"></value>
+                <value description="city">Denver</value>
+                <value description="country">US</value>
+                <value description="email">matt_raible@yahoo.com</value>
+                <value description="phone_number"></value>
+                <value description="postal_code">80210</value>
+                <value description="province">CO</value>
+                <value description="website">http://tomcat.apache.org</value>
+                <value description="password_hint"><![CDATA[A male kitty.]]></value>
+                <value description="version">1</value>
+                <value description="account_enabled">1</value>
+                <value description="account_expired">0</value>
+                <value description="account_locked">0</value>
+                <value description="credentials_expired">0</value>
+            </row>
+            <row>
+                <value description="id">5</value>
+                <value description="username">project</value>
+                <value description="password">12dea96fec20593566ab75692c9949596833adc9</value>
+                <value description="first_name">HerrFrau</value>
+                <value description="last_name">Med</value>
+                <value description="address"></value>
+                <value description="city">Denver</value>
+                <value description="country">US</value>
+                <value description="email">mrMed@yahoo.com</value>
+                <value description="phone_number"></value>
+                <value description="postal_code">80210</value>
+                <value description="province">CO</value>
+                <value description="website">http://mrMed.org</value>
+                <value description="password_hint"><![CDATA[A male kitty.]]></value>
+                <value description="version">1</value>
+                <value description="account_enabled">1</value>
+                <value description="account_expired">0</value>
+                <value description="account_locked">0</value>
+                <value description="credentials_expired">0</value>
+            </row>
+
+        </table>
+        <table name="role">
+            <column>id</column>
+            <column>name</column>
+            <column>description</column>
+            <row>
+                <value description="id">1</value>
+                <value description="name">ROLE_ADMIN</value>
+                <value description="description"><![CDATA[Administrator kann benutzer anlegen, z.B. Frau Borraccia]]></value>
+            </row>
+            <row>
+                <value description="id">2</value>
+                <value description="name">ROLE_PFLEGE</value>
+                <value description="description"><![CDATA[Schreibender Zugriff, z.B. Frau Escherich]]></value>
+            </row>
+            <row>
+                <value description="id">3</value>
+                <value description="name">ROLE_LESEN</value>
+                <value description="description"><![CDATA[Lesender Zugriff, z.B. Servicethekenmitarbeiter]]></value>
+            </row>
+            <row>
+                <value description="id">4</value>
+                <value description="name">ROLE_EXTERN</value>
+                <value description="description"><![CDATA[Limitierte Information, z.B. Studenten]]></value>
+            </row>
+            <row>
+                <value description="id">5</value>
+                <value description="name">ROLE_PROJECT</value>
+                <value description="description"><![CDATA[Lesender Zugriff, spezielle Projektrechte, z.B. Hr. Med]]></value>
+            </row>
+        </table>
+        <table name="user_role">
+            <column>user_id</column>
+            <column>role_id</column>
+            <row>
+                <value description="user_id">1</value>
+                <value description="role_id">1</value>
+            </row>
+            <row>
+                <value description="user_id">2</value>
+                <value description="role_id">2</value>
+            </row>
+            <row>
+                <value description="user_id">3</value>
+                <value description="role_id">3</value>
+            </row>
+            <row>
+                <value description="user_id">4</value>
+                <value description="role_id">4</value>
+            </row>
+            <row>
+                <value description="user_id">5</value>
+                <value description="role_id">5</value>
+            </row>
+        </table>
+
+   
+</dataset>
