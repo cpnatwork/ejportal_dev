@@ -1,0 +1,55 @@
+
++ Env Config
+
+++ DBS
+* jdbc.url: jdbc:mysql://faui6vm4/ejproductiondb?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8
+* jdbc.username: ejproduction
+* jdbc.password: sWa7
+
+++ Web Server:
+"SWAT Staging Server":
+* http://131.188.36.134:8765/swat/
+
++ Produktion
+
+++ Produktion-DBS anlegen [einmalig]
+
+> ejportal\core> mvn -P prodcreate,mysql install
+
+[ Wie "üblich" muss mans zweimal ausführen, das ist aber ein generelles Problem ]
+
+
+++ Produktion bauen [iterativ]
+
+> ejportal> mvn -P prod,mysql install
+
+
+++ Produktion starten
+> ejportal\web> mvn -P prod,mysql tomcat:run
+
+
+
++ Migration
+
+++ Migration vorbereiten
+> migration\input> subst_d_create.cmd
+> migration> mvn -P prod,mysql install
+
+++ Migration durchführen
+> migration> mvn -P prod,mysql exec:java -Dexec.mainClass=migration.App
+
+
+
++ EZB-Daten import
+
+> import> prod_01_create_tab.cmd
+> import> prod_02_import.cmd
+
+
+
++ Daten refresh
+
+> ejportal\core> mvn -P prodcreate,mysql install
+> migration> mvn -P prod,mysql exec:java -Dexec.mainClass=migration.App
+> import> prod_01_create_tab.cmd
+> import> prod_02_import.cmd

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       default-lazy-init="true">
+
+    <!-- Activates scanning of @Autowired -->
+    <context:annotation-config/>
+
+    <!-- Activates scanning of @Repository and @Service -->
+    <context:component-scan base-package="ejportal"/>
+
+    <!-- Add new DAOs here -->
+
+
+    <!-- Add new Managers here -->
+    <bean id="journalManager" class="ejportal.service.impl.JournalManagerImpl">
+        <constructor-arg index="0" ref="journalDao"/>
+        <constructor-arg index="1" ref="institutionDao"/>
+        <constructor-arg index="2" ref="konsortiumDao"/>
+        <constructor-arg index="3" ref="paketDao"/>
+        <constructor-arg index="4" ref="fachDao"/>
+        <constructor-arg index="5" ref="exemplarDao"/>
+        <constructor-arg index="6" ref="bibliotheksmitarbeiterDao"/>
+    </bean>
+    <bean id="institutionManager" class="ejportal.service.impl.InstitutionManagerImpl">
+        <constructor-arg ref="institutionDao"/>
+    </bean>
+    <bean id="sigelManager" class="ejportal.service.impl.SigelManagerImpl">
+        <constructor-arg ref="sigelDao"/>
+    </bean>
+    <bean id="fachManager" class="ejportal.service.impl.FachManagerImpl">
+        <constructor-arg ref="fachDao"/>
+    </bean>
+    <bean id="bibliotheksmitarbeiterManager" class="ejportal.service.impl.BibliotheksmitarbeiterManagerImpl">
+        <constructor-arg ref="bibliotheksmitarbeiterDao"/>
+    </bean>
+    <bean id="benutzerManager" class="ejportal.service.impl.BenutzerManagerImpl">
+        <constructor-arg ref="benutzerDao"/>
+    </bean>
+    <bean id="paketManager" class="ejportal.service.impl.PaketManagerImpl">
+        <constructor-arg ref="paketDao"/>
+    </bean>
+    <bean id="konsortiumManager" class="ejportal.service.impl.KonsortiumManagerImpl">
+        <constructor-arg ref="konsortiumDao"/>
+    </bean>
+    <bean id="lizenzdetailManager" class="ejportal.service.impl.LizenzdetailManagerImpl">
+        <constructor-arg index="0" ref="lizenzdetailDao"/>
+        <constructor-arg index="1" ref="institutionDao"/>
+    </bean>
+    <bean id="exemplarManager" class="ejportal.service.impl.ExemplarManagerImpl">
+        <constructor-arg index="0" ref="exemplarDao"/>
+        <constructor-arg index="1" ref="institutionDao"/>
+        <constructor-arg index="2" ref="sigelDao"/>
+        <constructor-arg index="3" ref="journalDao"/>
+    </bean>
+
+
+    <!--Test-->
+
+    <!--<bean id="dataSource"-->
+    <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+    <!--<property name="driverClassName" value="${jdbc.driverClassName}"/>-->
+    <!--<property name="url" value="${jdbc.url}"/>-->
+    <!--<property name="username" value="${jdbc.username}"/>-->
+    <!--<property name="password" value="${jdbc.password}"/>-->
+    <!--</bean>-->
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="maxActive" value="100"/>
+        <property name="maxWait" value="1000"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <!-- defaultAutoCommit:=false liefert eine ObjectRetrievalFailureException -->
+        <property name="defaultAutoCommit" value="true"/>
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="annotatedClasses">
+            <list>
+                <value>ejportal.model.Journal</value>
+                <value>org.appfuse.model.User</value>
+                <value>org.appfuse.model.Role</value>
+                <value>ejportal.model.Journal</value>
+                <value>ejportal.model.Institution</value>
+                <value>ejportal.model.Sigel</value>
+                <value>ejportal.model.Bibliotheksmitarbeiter</value>
+                <value>ejportal.model.Benutzer</value>
+                <value>ejportal.model.Fach</value>
+                <value>ejportal.model.Paket</value>
+                <value>ejportal.model.Konsortium</value>
+                <value>ejportal.model.Lizenzdetail</value>
+                <value>ejportal.model.Exemplar</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+                hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+            </value>
+            <!--hibernate.hbm2ddl.auto=create-->
+        </property>
+    </bean>
+
+    <!--<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+    <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--</bean>-->
+
+    <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+</beans>
